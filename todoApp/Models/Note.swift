@@ -8,9 +8,23 @@
 
 import Foundation
 
-class NoteModel {
+// MARK: NoteID
+
+struct NoteID {
+    
+    // MARK: Properties
+    
+    private var prefix: String
+    private var number: Int
+    
+}
+
+// MARK: Note
+
+class Note {
     private let dateCreated = Date()
-    private let id: Int
+    private let id: NoteID
     private var text = ""
+    private var getID
 }
 
