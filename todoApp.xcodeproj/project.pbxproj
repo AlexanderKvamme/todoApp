@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11718E31206A7D1600EC6C0D /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E30206A7D1500EC6C0D /* NoteModel.swift */; };
 		11E9CECE2595E8DEDE8345CB /* Pods_todoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7200701BDB3C3B44020CCC6D /* Pods_todoAppUITests.framework */; };
 		BFB77E954C9B51BF0B488293 /* Pods_todoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4675ED494EE69B3777E490CF /* Pods_todoApp.framework */; };
 		C681F7D1651B9663E961C82B /* Pods_todoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0BCCE69A11022E8214F07 /* Pods_todoAppTests.framework */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11718E30206A7D1500EC6C0D /* NoteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
 		276F321B032183564F7D5FD5 /* Pods-todoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		33497C3CABFFCEC248D9FC1B /* Pods-todoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39D2B7DEFA1FA62550C6F0F3 /* Pods-todoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppUITests/Pods-todoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -101,6 +103,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		11718E32206A7D1D00EC6C0D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				11718E30206A7D1500EC6C0D /* NoteModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		37B421347512FC49395801B9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +156,7 @@
 				DD370A1B203C1E3F00AEFEA1 /* LaunchScreen.storyboard */,
 				DD370A1E203C1E3F00AEFEA1 /* Info.plist */,
 				DD370A16203C1E3F00AEFEA1 /* todoApp.xcdatamodeld */,
+				11718E32206A7D1D00EC6C0D /* Models */,
 			);
 			path = todoApp;
 			sourceTree = "<group>";
@@ -462,6 +473,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD370A12203C1E3F00AEFEA1 /* ViewController.swift in Sources */,
+				11718E31206A7D1600EC6C0D /* NoteModel.swift in Sources */,
 				DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */,
 				DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */,
 			);

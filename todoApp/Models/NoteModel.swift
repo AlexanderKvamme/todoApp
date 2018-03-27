@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+class NoteModel {
+    private let dateCreated = Date()
+    private let id: Int
+    private var text = ""
+}
+
