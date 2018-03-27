@@ -8,7 +8,8 @@
 
 import Foundation
 
+/// Used to easily access and CRUD all notes
 protocol NoteRepository {
-    func getAllNotes() -> [NoteModel]
-    func getNote(withId: Int) {
+    func getAllNotes() -> [Note]
 }
+
