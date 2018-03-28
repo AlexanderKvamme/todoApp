@@ -18,6 +18,12 @@ class Note {
     init(_ str: String) {
         self.text = str
     }
+    
+    // ARRK: - Methods
+    
+    func getText() -> String {
+        return text
+    }
 }
 
 //  MARK: - Extension

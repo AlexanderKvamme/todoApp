@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100685D206B97D8009D2EB3 /* NoteStorage.swift */; };
 		11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */; };
 		11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */; };
 		11718E31206A7D1600EC6C0D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E30206A7D1500EC6C0D /* Note.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1100685D206B97D8009D2EB3 /* NoteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorage.swift; sourceTree = "<group>"; };
 		11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 		11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
 		11718E30206A7D1500EC6C0D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -111,6 +113,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1100685C206B97C3009D2EB3 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				1100685D206B97D8009D2EB3 /* NoteStorage.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		11718E32206A7D1D00EC6C0D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +184,7 @@
 				DD370A1B203C1E3F00AEFEA1 /* LaunchScreen.storyboard */,
 				DD370A1E203C1E3F00AEFEA1 /* Info.plist */,
 				11718E33206A88CC00EC6C0D /* NoteRepository.swift */,
+				1100685C206B97C3009D2EB3 /* Storage */,
 				11718E39206ABF8400EC6C0D /* Table */,
 				DD370A16203C1E3F00AEFEA1 /* todoApp.xcdatamodeld */,
 				11718E32206A7D1D00EC6C0D /* Models */,
@@ -502,6 +513,7 @@
 				DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */,
 				11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */,
 				DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */,
+				1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

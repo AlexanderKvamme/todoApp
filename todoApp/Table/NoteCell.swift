@@ -23,11 +23,32 @@ final class NoteCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubview(noteCellView)
+        addSubviewsAndConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
+    
+    private func addSubviewsAndConstraints() {
+        contentView.addSubview(noteCellView)
+        
+        noteCellView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top)
+            make.left.equalTo(contentView.snp.left)
+            make.right.equalTo(contentView.snp.right)
+            make.bottom.equalTo(contentView.snp.bottom)
+            make.height.equalTo(50)
+        }
+    }
+    
+    // MARK: internal methods
+    
+    func updateWith(node: Note) {
+        print("*would prepare with note*")
+        noteCellView.updateWith(note: node)
     }
 }
 

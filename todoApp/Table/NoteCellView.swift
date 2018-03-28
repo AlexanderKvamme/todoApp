@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 
 final class NoteCellView: UIView {
@@ -20,6 +21,8 @@ final class NoteCellView: UIView {
         self.label.text = "TEMP"
         super.init(frame: frame)
         
+        setupLabel()
+        
         addSubviewsAndConstraints()
     }
     
@@ -29,10 +32,23 @@ final class NoteCellView: UIView {
     
     // MAKR: Methods
     
-    func addSubviewsAndConstraints() {
+    private func setupLabel() {
+        label.backgroundColor = .blue
+    }
+    
+    private func addSubviewsAndConstraints() {
         addSubview(label)
         
+        label.sizeToFit()
         
+        label.snp.makeConstraints { (make) in
+            make.center.equalTo(snp.center)
+        }
+    }
+    
+    func updateWith(note: Note) {
+        print("*bam updating label*")
+        label.text = note.getText()
     }
 }
 
