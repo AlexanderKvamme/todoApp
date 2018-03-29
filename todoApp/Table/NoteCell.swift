@@ -46,9 +46,9 @@ final class NoteCell: UITableViewCell {
     
     // MARK: internal methods
     
-    func updateWith(node: Note) {
+    func updateWith(note: Note) {
         print("*would prepare with note*")
-        noteCellView.updateWith(note: node)
+        noteCellView.updateWith(note: note)
     }
 }
 

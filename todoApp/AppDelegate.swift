@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
-        let rootView: MainViewController = MainViewController()
+        let noteStorage = UserDefaultsStorage()
+        let rootView = MainViewController(withStorage: noteStorage)
         window?.rootViewController = rootView
         window?.makeKeyAndVisible()
         

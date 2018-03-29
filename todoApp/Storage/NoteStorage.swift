@@ -10,7 +10,6 @@ import Foundation
 
 
 protocol NoteStorage {
-    // CRUD
     func save(note: Note)
     func getNotes() -> [Note]
     func delete(note: Note)
