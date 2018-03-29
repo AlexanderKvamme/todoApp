@@ -40,7 +40,7 @@ final class NoteCell: UITableViewCell {
             make.left.equalTo(contentView.snp.left)
             make.right.equalTo(contentView.snp.right)
             make.bottom.equalTo(contentView.snp.bottom)
-            make.height.equalTo(50)
+            make.height.equalTo(200)
         }
     }
     

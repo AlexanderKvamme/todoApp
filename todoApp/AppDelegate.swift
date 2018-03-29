@@ -18,9 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
+
         let noteStorage = UserDefaultsStorage()
-        let rootView = MainViewController(withStorage: noteStorage)
-        window?.rootViewController = rootView
+        let rootViewController = TodoTableController(with: noteStorage)
+        let navcontroller = UINavigationController()
+        navcontroller.pushViewController(rootViewController, animated: false)
+        
+        window?.rootViewController = navcontroller
+        
         window?.makeKeyAndVisible()
         
         return true

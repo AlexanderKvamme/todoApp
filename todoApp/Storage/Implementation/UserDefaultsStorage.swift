@@ -9,11 +9,13 @@
 import Foundation
 
 class UserDefaultsStorage: NoteStorage {
+    
     func save(note: Note) {
         print("*would save*")
     }
     
     func getNotes() -> [Note] {
+        print("*getting notes*")
         return [Note("Take out the trash"),
                 Note("Go buy a donut"),
                 Note("Go to the donut"),

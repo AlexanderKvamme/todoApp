@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class NoteDataSource: UIViewController, UITableViewDataSource {
+class NoteDataSource: NSObject, UITableViewDataSource {
     
     // MARK: - Properties
     
@@ -22,8 +22,6 @@ class NoteDataSource: UIViewController, UITableViewDataSource {
     init(with storage: NoteStorage) {
         self.noteStorage = storage
         self.notes = noteStorage.getNotes()
-        
-        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,10 +42,12 @@ class NoteDataSource: UIViewController, UITableViewDataSource {
             let newCell = NoteCell(frame: .zero)
             let tempNode = notes[currentIndex]
             newCell.updateWith(note: tempNode)
+            print("*returning cell*")
             return newCell
         }
         
         cell.updateWith(note: notes[currentIndex])
+        print("*returning cell*")
         return cell
     }
 }

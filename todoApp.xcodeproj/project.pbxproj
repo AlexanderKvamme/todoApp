@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100685D206B97D8009D2EB3 /* NoteStorage.swift */; };
 		11006860206B98E7009D2EB3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100685F206B98E7009D2EB3 /* UserDefaultsStorage.swift */; };
+		110D1C95206D818200432800 /* NoteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110D1C94206D818200432800 /* NoteTableView.swift */; };
 		11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */; };
 		11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */; };
 		11718E31206A7D1600EC6C0D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E30206A7D1500EC6C0D /* Note.swift */; };
@@ -18,7 +19,7 @@
 		BFB77E954C9B51BF0B488293 /* Pods_todoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4675ED494EE69B3777E490CF /* Pods_todoApp.framework */; };
 		C681F7D1651B9663E961C82B /* Pods_todoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0BCCE69A11022E8214F07 /* Pods_todoAppTests.framework */; };
 		DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */; };
-		DD370A12203C1E3F00AEFEA1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD370A11203C1E3F00AEFEA1 /* MainViewController.swift */; };
+		DD370A12203C1E3F00AEFEA1 /* TodoTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */; };
 		DD370A15203C1E3F00AEFEA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD370A13203C1E3F00AEFEA1 /* Main.storyboard */; };
 		DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DD370A16203C1E3F00AEFEA1 /* todoApp.xcdatamodeld */; };
 		DD370A1A203C1E3F00AEFEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 /* Begin PBXFileReference section */
 		1100685D206B97D8009D2EB3 /* NoteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorage.swift; sourceTree = "<group>"; };
 		1100685F206B98E7009D2EB3 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
+		110D1C94206D818200432800 /* NoteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableView.swift; sourceTree = "<group>"; };
 		11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 		11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
 		11718E30206A7D1500EC6C0D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -61,7 +63,7 @@
 		84F5E43927B5DDE911424B22 /* Pods-todoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoApp/Pods-todoApp.release.xcconfig"; sourceTree = "<group>"; };
 		DD370A0C203C1E3F00AEFEA1 /* todoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DD370A11203C1E3F00AEFEA1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableController.swift; sourceTree = "<group>"; };
 		DD370A14203C1E3F00AEFEA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DD370A17203C1E3F00AEFEA1 /* todoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = todoApp.xcdatamodel; sourceTree = "<group>"; };
 		DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		11718E39206ABF8400EC6C0D /* Table */ = {
 			isa = PBXGroup;
 			children = (
+				110D1C94206D818200432800 /* NoteTableView.swift */,
 				11718E3C206ABFD200EC6C0D /* NoteCell.swift */,
 				11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */,
 				11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */,
@@ -188,7 +191,7 @@
 		DD370A0E203C1E3F00AEFEA1 /* todoApp */ = {
 			isa = PBXGroup;
 			children = (
-				DD370A11203C1E3F00AEFEA1 /* MainViewController.swift */,
+				DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */,
 				DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */,
 				DD370A13203C1E3F00AEFEA1 /* Main.storyboard */,
 				DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */,
@@ -519,10 +522,11 @@
 				11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */,
 				11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */,
 				11006860206B98E7009D2EB3 /* UserDefaultsStorage.swift in Sources */,
-				DD370A12203C1E3F00AEFEA1 /* MainViewController.swift in Sources */,
+				DD370A12203C1E3F00AEFEA1 /* TodoTableController.swift in Sources */,
 				11718E31206A7D1600EC6C0D /* Note.swift in Sources */,
 				11718E3D206ABFD200EC6C0D /* NoteCell.swift in Sources */,
 				DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */,
+				110D1C95206D818200432800 /* NoteTableView.swift in Sources */,
 				11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */,
 				DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */,
 				1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */,
