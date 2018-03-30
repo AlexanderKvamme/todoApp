@@ -54,6 +54,8 @@ open class DGElasticPullToRefreshView: UIView {
     fileprivate(set) var state: DGElasticPullToRefreshState {
         get { return _state }
         set {
+            
+            print("*bam didSet state*, so:")
             let previousValue = state
             _state = newValue
             
@@ -62,6 +64,7 @@ open class DGElasticPullToRefreshView: UIView {
                 print("*bam start animating*")
                 animateBounce()
             } else if newValue == .loading && actionHandler != nil {
+                print("*newvalue was .loadingm and it has an actionHandler*")
                 print("*performing actionhandler*")
                 actionHandler()
             } else if newValue == .animatingToStopped {
@@ -70,6 +73,8 @@ open class DGElasticPullToRefreshView: UIView {
             } else if newValue == .stopped {
                 print("*bam stoploading*")
                 loadingView?.stopLoading()
+            } else {
+                print("*bam was neither*")
             }
         }
     }
@@ -314,11 +319,10 @@ open class DGElasticPullToRefreshView: UIView {
         guard let scrollView = scrollView() else { return }
         if (!self.observing) { return }
         
-        
         resetScrollViewContentInset(shouldAddObserverWhenFinished: false, animated: false, completion: nil)
         
         let centerY = DGElasticPullToRefreshConstants.LoadingContentInset
-        let duration = 0.9
+        let duration = 0.7
         
         scrollView.isScrollEnabled = false
         startDisplayLink()
