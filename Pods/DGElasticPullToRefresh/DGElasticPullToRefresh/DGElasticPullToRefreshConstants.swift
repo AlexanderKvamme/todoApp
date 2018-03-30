@@ -37,7 +37,8 @@ public struct DGElasticPullToRefreshConstants {
     
     public static var WaveMaxHeight: CGFloat = 70.0
     public static var MinOffsetToPull: CGFloat = 95.0
-    public static var LoadingContentInset: CGFloat = 50.0
-    public static var LoadingViewSize: CGFloat = 30.0
+//    public static var LoadingContentInset: CGFloat = 50.0
+    public static var LoadingContentInset: CGFloat = 200.0
+    public static var LoadingViewSize: CGFloat = 60.0
 	
 }

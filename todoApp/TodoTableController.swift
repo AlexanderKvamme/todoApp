@@ -22,6 +22,11 @@ class TodoTableController: UITableViewController {
         
         super.init(nibName: nil, bundle: nil)
         
+        // Position refresh below navbar
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
         setupTableView()
     }
     
@@ -32,24 +37,37 @@ class TodoTableController: UITableViewController {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
+        addPullToRefresh()
         tableView.reloadData()
     }
     
     // MARK: - Methods
     
     private func setupTableView() {
-        
+        // tableView
         tableView.dataSource = dataSource
         tableView.backgroundColor = .red
         tableView.estimatedRowHeight = 100
-        tableView.separatorStyle = .none
-        
+        tableView.separatorStyle = .singleLine
+//        tableView.separatorStyle = .none
+
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.bottom.equalTo(view.snp.bottom)
         }
+    }
+    
+    private func addPullToRefresh() {
+        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+        loadingView.tintColor = UIColor.green
+        
+        // Add pull to refresh
+        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            self?.tableView.dg_stopLoading()
+            }, loadingView: loadingView)
+        tableView.dg_setPullToRefreshBackgroundColor(UIColor.red)
     }
 }
 

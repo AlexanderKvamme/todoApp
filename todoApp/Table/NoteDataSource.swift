@@ -42,12 +42,10 @@ class NoteDataSource: NSObject, UITableViewDataSource {
             let newCell = NoteCell(frame: .zero)
             let tempNode = notes[currentIndex]
             newCell.updateWith(note: tempNode)
-            print("*returning cell*")
             return newCell
         }
         
         cell.updateWith(note: notes[currentIndex])
-        print("*returning cell*")
         return cell
     }
 }

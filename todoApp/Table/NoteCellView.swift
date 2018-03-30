@@ -47,7 +47,6 @@ final class NoteCellView: UIView {
     }
     
     func updateWith(note: Note) {
-        print("*bam updating label*")
         label.text = note.getText()
     }
 }
