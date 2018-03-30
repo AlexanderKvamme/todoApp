@@ -26,8 +26,6 @@ class TodoTableController: UITableViewController {
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        
-        setupTableView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,11 +35,21 @@ class TodoTableController: UITableViewController {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
+        setupView()
+        setupTableView()
         addPullToRefresh()
         tableView.reloadData()
     }
     
     // MARK: - Methods
+    
+    private func setupView() {
+        guard let navHeight = navigationController?.navigationBar.frame.height else { return }
+
+        self.tableView.contentInset = UIEdgeInsetsMake(navHeight + 20,0,0,0);
+        
+        self.edgesForExtendedLayout = []
+    }
     
     private func setupTableView() {
         // tableView
@@ -49,10 +57,11 @@ class TodoTableController: UITableViewController {
         tableView.backgroundColor = .red
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .singleLine
+//        tableView.contentInsetAdjustmentBehavior = .never
 //        tableView.separatorStyle = .none
 
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.snp.top)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.bottom.equalTo(view.snp.bottom)
@@ -60,14 +69,12 @@ class TodoTableController: UITableViewController {
     }
     
     private func addPullToRefresh() {
-        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = UIColor.green
-        
-        // Add pull to refresh
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            
+            print("*BAM did finish at \(Date())")
             self?.tableView.dg_stopLoading()
-            }, loadingView: loadingView)
-        tableView.dg_setPullToRefreshBackgroundColor(UIColor.red)
+            }, loadingView: nil)
+        tableView.dg_setPullToRefreshBackgroundColor(UIColor.clear)
     }
 }
 
