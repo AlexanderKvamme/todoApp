@@ -13,6 +13,8 @@ import SnapKit
 
 final class NoteCellView: UIView {
 
+    // MARK: - Properties
+    
     let label = UILabel()
     
     // MAKR: - Initializers
