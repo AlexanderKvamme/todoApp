@@ -21,10 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let noteStorage = UserDefaultsStorage()
         let rootViewController = TodoTableController(with: noteStorage)
-//        let navcontroller = UINavigationController()
-        let navcontroller = UINavigationController(rootViewController: rootViewController)
-//        navcontroller.pushViewController(rootViewController, animated: false)
-        navcontroller.view.backgroundColor = .orange
+        let navcontroller = MyNavigationController(rootViewController: rootViewController)
         
         window?.rootViewController = navcontroller
         window?.makeKeyAndVisible()

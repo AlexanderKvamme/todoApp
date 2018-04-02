@@ -10,6 +10,10 @@
 		1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100685D206B97D8009D2EB3 /* NoteStorage.swift */; };
 		11006860206B98E7009D2EB3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100685F206B98E7009D2EB3 /* UserDefaultsStorage.swift */; };
 		110D1C97206E99DD00432800 /* NoteMakerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110D1C96206E99DD00432800 /* NoteMakerController.swift */; };
+		111D01A2207054FD009D3BA5 /* FlipPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D01A1207054FD009D3BA5 /* FlipPresentAnimationController.swift */; };
+		111D01A42070DA4F009D3BA5 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D01A32070DA4F009D3BA5 /* AnimationHelper.swift */; };
+		111D01A72070F097009D3BA5 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D01A62070F097009D3BA5 /* MyNavigationController.swift */; };
+		111D01A92072391A009D3BA5 /* SlideAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D01A82072391A009D3BA5 /* SlideAnimator.swift */; };
 		11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */; };
 		11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */; };
 		11718E31206A7D1600EC6C0D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E30206A7D1500EC6C0D /* Note.swift */; };
@@ -49,6 +53,10 @@
 		1100685D206B97D8009D2EB3 /* NoteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorage.swift; sourceTree = "<group>"; };
 		1100685F206B98E7009D2EB3 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		110D1C96206E99DD00432800 /* NoteMakerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteMakerController.swift; sourceTree = "<group>"; };
+		111D01A1207054FD009D3BA5 /* FlipPresentAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipPresentAnimationController.swift; sourceTree = "<group>"; };
+		111D01A32070DA4F009D3BA5 /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		111D01A62070F097009D3BA5 /* MyNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
+		111D01A82072391A009D3BA5 /* SlideAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideAnimator.swift; sourceTree = "<group>"; };
 		11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 		11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
 		11718E30206A7D1500EC6C0D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -134,6 +142,16 @@
 			path = Implementation;
 			sourceTree = "<group>";
 		};
+		111D01A0207053BA009D3BA5 /* Custom transitions */ = {
+			isa = PBXGroup;
+			children = (
+				111D01A1207054FD009D3BA5 /* FlipPresentAnimationController.swift */,
+				111D01A82072391A009D3BA5 /* SlideAnimator.swift */,
+				111D01A32070DA4F009D3BA5 /* AnimationHelper.swift */,
+			);
+			path = "Custom transitions";
+			sourceTree = "<group>";
+		};
 		11718E32206A7D1D00EC6C0D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,8 +208,10 @@
 		DD370A0E203C1E3F00AEFEA1 /* todoApp */ = {
 			isa = PBXGroup;
 			children = (
+				111D01A62070F097009D3BA5 /* MyNavigationController.swift */,
 				DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */,
 				110D1C96206E99DD00432800 /* NoteMakerController.swift */,
+				111D01A0207053BA009D3BA5 /* Custom transitions */,
 				DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */,
 				DD370A13203C1E3F00AEFEA1 /* Main.storyboard */,
 				DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */,
@@ -522,6 +542,7 @@
 				11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */,
 				11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */,
 				11006860206B98E7009D2EB3 /* UserDefaultsStorage.swift in Sources */,
+				111D01A2207054FD009D3BA5 /* FlipPresentAnimationController.swift in Sources */,
 				110D1C97206E99DD00432800 /* NoteMakerController.swift in Sources */,
 				DD370A12203C1E3F00AEFEA1 /* TodoTableController.swift in Sources */,
 				11718E31206A7D1600EC6C0D /* Note.swift in Sources */,
@@ -529,7 +550,10 @@
 				DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */,
 				11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */,
 				DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */,
+				111D01A72070F097009D3BA5 /* MyNavigationController.swift in Sources */,
+				111D01A42070DA4F009D3BA5 /* AnimationHelper.swift in Sources */,
 				1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */,
+				111D01A92072391A009D3BA5 /* SlideAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

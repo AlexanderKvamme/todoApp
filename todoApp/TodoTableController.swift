@@ -37,6 +37,7 @@ class TodoTableController: UITableViewController {
         setupNavbar()
         setupTableView()
         addPullToRefresh()
+        setTransitioningDelegate()
         
         tableView.reloadData()
     }
@@ -46,6 +47,10 @@ class TodoTableController: UITableViewController {
     }
     
     // MARK: - Methods
+    
+    private func setTransitioningDelegate() {
+        transitioningDelegate = self
+    }
     
     private func setupNavbar() {
         self.navigationController?.navigationBar.isTranslucent = false
@@ -71,11 +76,23 @@ class TodoTableController: UITableViewController {
     private func addPullToRefresh() {
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             
-            print("*BAM did finish at \(Date())")
-            
             if let storage = self?.noteStorage, let nav = self?.navigationController {
                 let maker = NoteMakerController(withStorage: storage)
-                nav.pushViewController(maker, animated: true)
+                maker.transitioningDelegate = self
+//                nav.pushViewController(maker, animated: true)
+                if let storage = self?.noteStorage, let nav = self?.navigationController {
+                    let maker = NoteMakerController(withStorage: storage)
+                    maker.transitioningDelegate = self
+                    nav.pushViewController(maker, animated: true)
+
+                    //                    print("*bama gonna transition*")
+                    
+//                    if let topViewController = nav.topViewController {
+//                        print("bama had topvc")
+//                        let segue = UIStoryboardSegue(identifier: "mySegue", source: topViewController, destination: maker)
+//                        nav.performSegue(withIdentifier: segue.identifier!, sender: self)
+//                    }
+                }
             }
             
             self?.tableView.dg_stopLoading()
@@ -84,3 +101,19 @@ class TodoTableController: UITableViewController {
     }
 }
 
+// MARK: - Custom transitions
+
+extension TodoTableController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController,source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            // FIXME: Use black center frams
+            print("bama tryna flip")
+            return FlipPresentAnimationController(originFrame: view.frame)
+    }
+}
+
+extension TodoTableController {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("*bama preparing for segue in todo*")
+    }
+}
