@@ -1,15 +1,18 @@
 PODS:
   - DGElasticPullToRefresh (1.1)
   - SnapKit (4.0.0)
+  - SwiftyBeaver (1.5.2)
 
 DEPENDENCIES:
   - DGElasticPullToRefresh
   - SnapKit
+  - SwiftyBeaver
 
 SPEC CHECKSUMS:
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftyBeaver: 85daaaa2b3ae6e31b7b55c99430e8b91dac088af
 
-PODFILE CHECKSUM: 991412bbbf799954e4c482b38d747e2c818a4c7e
+PODFILE CHECKSUM: c2831a0d9f1ced3dc0ce2820d7f6da407ac28b32
 
 COCOAPODS: 1.4.0

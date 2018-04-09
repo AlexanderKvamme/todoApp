@@ -9,7 +9,7 @@ target 'todoApp' do
 
 	pod "DGElasticPullToRefresh"
 	pod "SnapKit"
-
+	pod "SwiftyBeaver"
   target 'todoAppTests' do
     inherit! :search_paths
     # Pods for testing

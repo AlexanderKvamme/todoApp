@@ -8,6 +8,10 @@
 
 import UIKit
 import CoreData
+import SwiftyBeaver
+
+// SwiftyBeaver
+let log = SwiftyBeaver.self
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        setupSwiftyBeaver()
         
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -51,6 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+    }
+    
+    // MARK: - Private methods
+    
+    private func setupSwiftyBeaver() {
+        let console = ConsoleDestination()
+        SwiftyBeaver.addDestination(console)
     }
 
     // MARK: - Core Data stack
