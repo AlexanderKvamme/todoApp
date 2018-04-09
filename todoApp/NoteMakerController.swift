@@ -10,12 +10,21 @@ import Foundation
 import UIKit
 
 
+
+
 // Makes notes
 final class NoteMakerController: UIViewController {
     
     // MARK: - Properties
     
-    let storage: NoteStorage
+    private let storage: NoteStorage
+    var textField: UITextField = {
+        let field = UITextField()
+        field.backgroundColor = .white
+        field.placeholder = "What you gonna do?"
+        field.textAlignment = .center
+        return field
+    }()
     
     // MARK: - Initializer
     

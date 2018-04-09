@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DGElasticPullToRefresh:
-    :commit: c525935d32f2989b3f0b24bd45b0fe1278aa2097
+    :commit: c5be88ea61495425667aa12c9943431abd10e331
     :git: https://github.com/AlexanderKvamme/DGElasticPullToRefresh.git
 
 SPEC CHECKSUMS:
@@ -22,6 +22,6 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftyBeaver: 85daaaa2b3ae6e31b7b55c99430e8b91dac088af
 
-PODFILE CHECKSUM: 0541dd3a5dc20d44a63472687c897ecbc1681bae
+PODFILE CHECKSUM: 8dbc1ebe79235fc26f0fe1c3d24d2ac1f684cfc0
 
 COCOAPODS: 1.4.0

@@ -85,11 +85,11 @@ class TodoTableController: UITableViewController {
     private func addPullToRefresh() {
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             
-            guard let storage = self?.noteStorage,
-                let tableView = self?.tableView else {
-                    log.debug("Missing values")
-                    return
-            }
+//            guard let storage = self?.noteStorage,
+//                let tableView = self?.tableView else {
+//                    log.debug("Missing values")
+//                    return
+//            }
             
             // Add NoteMaker
 //            self?.noteMaker = NoteMakerController(withStorage: storage)
