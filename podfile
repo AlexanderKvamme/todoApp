@@ -7,7 +7,7 @@ target 'todoApp' do
 
   # Pods for todoApp
 
-	pod "DGElasticPullToRefresh"
+	pod 'DGElasticPullToRefresh', :git => 'https://github.com/AlexanderKvamme/DGElasticPullToRefresh.git'
 	pod "SnapKit"
 	pod "SwiftyBeaver"
   target 'todoAppTests' do

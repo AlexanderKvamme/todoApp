@@ -54,27 +54,18 @@ open class DGElasticPullToRefreshView: UIView {
     fileprivate(set) var state: DGElasticPullToRefreshState {
         get { return _state }
         set {
-            
-            print("*bam didSet state*, so:")
             let previousValue = state
             _state = newValue
             
             if previousValue == .dragging && newValue == .animatingBounce {
                 loadingView?.startAnimating()
-                print("*bam start animating*")
                 animateBounce()
             } else if newValue == .loading && actionHandler != nil {
-                print("*newvalue was .loadingm and it has an actionHandler*")
-                print("*performing actionhandler*")
                 actionHandler()
             } else if newValue == .animatingToStopped {
-                print("*bam animating to stopped*")
                 resetScrollViewContentInset(shouldAddObserverWhenFinished: true, animated: true, completion: { [weak self] () -> () in self?.state = .stopped })
             } else if newValue == .stopped {
-                print("*bam stoploading*")
                 loadingView?.stopLoading()
-            } else {
-                print("*bam was neither*")
             }
         }
     }
@@ -202,7 +193,7 @@ open class DGElasticPullToRefreshView: UIView {
     // MARK: -
     // MARK: Notifications
     
-    @objc func applicationWillEnterForeground() {
+    func applicationWillEnterForeground() {
         if state == .loading {
             layoutSubviews()
         }
@@ -281,8 +272,6 @@ open class DGElasticPullToRefreshView: UIView {
     fileprivate func resetScrollViewContentInset(shouldAddObserverWhenFinished: Bool, animated: Bool, completion: (() -> ())?) {
         guard let scrollView = scrollView() else { return }
         
-        print("*resetScrollViewContentInset*")
-        
         var contentInset = scrollView.contentInset
         contentInset.top = originalContentInsetTop
         
@@ -319,10 +308,11 @@ open class DGElasticPullToRefreshView: UIView {
         guard let scrollView = scrollView() else { return }
         if (!self.observing) { return }
         
+        
         resetScrollViewContentInset(shouldAddObserverWhenFinished: false, animated: false, completion: nil)
         
         let centerY = DGElasticPullToRefreshConstants.LoadingContentInset
-        let duration = 0.7
+        let duration = 0.9
         
         scrollView.isScrollEnabled = false
         startDisplayLink()
@@ -337,7 +327,6 @@ open class DGElasticPullToRefreshView: UIView {
             self?.r2ControlPointView.center.y = centerY
             self?.r3ControlPointView.center.y = centerY
             }, completion: { [weak self] _ in
-                print("*bam completed bounce animation*")
                 self?.stopDisplayLink()
                 self?.resetScrollViewContentInset(shouldAddObserverWhenFinished: true, animated: false, completion: nil)
                 if let strongSelf = self, let scrollView = strongSelf.scrollView() {
@@ -366,7 +355,7 @@ open class DGElasticPullToRefreshView: UIView {
         displayLink.isPaused = true
     }
     
-    @objc func displayLinkTick() {
+    func displayLinkTick() {
         let width = bounds.width
         var height: CGFloat = 0.0
         

@@ -23,7 +23,7 @@ final class NoteMakerController: UIViewController {
         self.storage = storage
         super.init(nibName: nil, bundle: nil)
         
-        addWhiteView()
+        addSubviewsAndConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,13 +36,28 @@ final class NoteMakerController: UIViewController {
         view.backgroundColor = .green
     }
     
-    fileprivate func addWhiteView() {
-        let whiteView = UIView()
-        whiteView.backgroundColor = .red
+    // MARK: - Methods
+    
+    private func addSubviewsAndConstraints() {
+        addRedView()
+        addTextField()
+    }
+    
+    private func addTextField() {
+        view.addSubview(textField)
         
-        view.addSubview(whiteView)
+        textField.snp.makeConstraints { (make) in
+            make.center.equalTo(self.view.snp.center)
+        }
+    }
+    
+    fileprivate func addRedView() {
+        let redView = UIView()
+        redView.backgroundColor = .red
         
-        whiteView.snp.makeConstraints { (make) in
+        view.addSubview(redView)
+        
+        redView.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)

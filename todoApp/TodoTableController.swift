@@ -10,11 +10,21 @@ import UIKit
 import DGElasticPullToRefresh
 import SnapKit
 
+
+class test: DGElasticPullToRefreshLoadingView {
+    
+}
+
 /// Contains a tableview with a pull to refresh
 class TodoTableController: UITableViewController {
 
-    let noteStorage: NoteStorage
-    let dataSource: NoteDataSource
+    private let noteStorage: NoteStorage
+    private let dataSource: NoteDataSource
+    private var noteMaker: NoteMakerController?
+    
+    lazy var navHeight = {
+        return self.navigationController?.navigationBar.frame.height ?? 0
+    }()
     
     // MARK: - Initializers
     
@@ -60,8 +70,6 @@ class TodoTableController: UITableViewController {
     }
     
     private func setupView() {
-        guard let navHeight = navigationController?.navigationBar.frame.height else { return }
-
         self.tableView.contentInset = UIEdgeInsetsMake(navHeight + 20,0,0,0);
         self.edgesForExtendedLayout = []
     }
@@ -72,34 +80,53 @@ class TodoTableController: UITableViewController {
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .singleLine
     }
-    
+
+    /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     private func addPullToRefresh() {
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             
-            if let storage = self?.noteStorage, let nav = self?.navigationController {
-                let maker = NoteMakerController(withStorage: storage)
-                maker.transitioningDelegate = self
-//                nav.pushViewController(maker, animated: true)
-                if let storage = self?.noteStorage, let nav = self?.navigationController {
-                    let maker = NoteMakerController(withStorage: storage)
-                    maker.transitioningDelegate = self
-                    nav.pushViewController(maker, animated: true)
-
-                    //                    print("*bama gonna transition*")
-                    
-//                    if let topViewController = nav.topViewController {
-//                        print("bama had topvc")
-//                        let segue = UIStoryboardSegue(identifier: "mySegue", source: topViewController, destination: maker)
-//                        nav.performSegue(withIdentifier: segue.identifier!, sender: self)
-//                    }
-                }
+            guard let storage = self?.noteStorage,
+                let tableView = self?.tableView else {
+                    log.debug("Missing values")
+                    return
             }
             
+            // Add NoteMaker
+//            self?.noteMaker = NoteMakerController(withStorage: storage)
+//            guard let noteMaker = self?.noteMaker else { fatalError() }
+//            noteMaker.textField.delegate = self
+//
+//            self?.addChildViewController(noteMaker)
+//            self?.view.addSubview(noteMaker.view)
+            
+//            noteMaker.transitioningDelegate = self
+            
+//            if let firstCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) {
+//                // use first cell
+//                let firstCellFrame = firstCell.frame
+//
+//                noteMaker.view.snp.makeConstraints({ (make) in
+//                    //make.size.equalTo(firstCellFrame.size)
+//                    //make.center.equalTo(firstCell.snp.center)
+//                    make.top.equalTo(self!.navigationController.view.snp.top)
+//                    make.left.equalTo(tableView.snp.left)
+//                    make.right.equalTo(tableView.snp.right)
+//                    make.bottom.equalTo(firstCell.snp.top)
+//                })
+//            } else {
+//                // No first cell to model after
+//            }
+            
             self?.tableView.dg_stopLoading()
-            }, loadingView: nil)
+            }, loadingView: NoteMakerView(frame: CGRect(x: 0, y: 0, width: 200, height: 200)))
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.clear)
     }
+    
+    func dismissNoteMaker() {
+        log.debug("would dismiss notemaker")
+    }
 }
+
 
 // MARK: - Custom transitions
 
@@ -115,5 +142,21 @@ extension TodoTableController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("*bama preparing for segue in todo*")
+    }
+}
+
+extension TodoTableController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        log.debug("did begin")
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        log.debug("Should return")
+        textField.resignFirstResponder()
+        
+        dismissNoteMaker()
+        
+        return true
     }
 }
