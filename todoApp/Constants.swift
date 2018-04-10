@@ -20,5 +20,9 @@ enum Constants {
             return UIScreen.main.bounds.width
         }()
     }
+    
+    enum cells {
+        static let defaultHeight: CGFloat = 100
+    }
 }
 

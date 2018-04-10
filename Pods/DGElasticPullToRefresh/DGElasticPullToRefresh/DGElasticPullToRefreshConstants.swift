@@ -37,8 +37,7 @@ public struct DGElasticPullToRefreshConstants {
     
     public static var WaveMaxHeight: CGFloat = 70.0
     public static var MinOffsetToPull: CGFloat = 95.0
-    public static var LoadingContentInset: CGFloat = 200.0 // dette er den totale loadingview høyden?gjør noe med hvor mye du må dra ogsåa
-    //public static var LoadingViewSize: CGFloat = 30.0 // Loadingview er den lille firanten
+    public static var LoadingContentInset: CGFloat = 0
     
     // Lets user set height of the little centered shown while loading.
     // - Should be equal to a cell size

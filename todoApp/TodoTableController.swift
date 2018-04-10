@@ -76,57 +76,39 @@ class TodoTableController: UITableViewController {
     
     private func setupTableView() {
         tableView.dataSource = dataSource
-        tableView.backgroundColor = .red
+        tableView.backgroundColor = .white
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .singleLine
+        
     }
 
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     private func addPullToRefresh() {
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            let todoTextField = (self?.noteMaker.view as! NoteMakerView).textField
+            todoTextField.delegate = self
+            todoTextField.becomeFirstResponder()
             
-//            guard let storage = self?.noteStorage,
-//                let tableView = self?.tableView else {
-//                    log.debug("Missing values")
-//                    return
-//            }
-            
-            // Add NoteMaker
-//            self?.noteMaker = NoteMakerController(withStorage: storage)
-//            guard let noteMaker = self?.noteMaker else { fatalError() }
-//            noteMaker.textField.delegate = self
-//
-//            self?.addChildViewController(noteMaker)
-//            self?.view.addSubview(noteMaker.view)
-            
-//            noteMaker.transitioningDelegate = self
-            
-//            if let firstCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) {
-//                // use first cell
-//                let firstCellFrame = firstCell.frame
-//
-//                noteMaker.view.snp.makeConstraints({ (make) in
-//                    //make.size.equalTo(firstCellFrame.size)
-//                    //make.center.equalTo(firstCell.snp.center)
-//                    make.top.equalTo(self!.navigationController.view.snp.top)
-//                    make.left.equalTo(tableView.snp.left)
-//                    make.right.equalTo(tableView.snp.right)
-//                    make.bottom.equalTo(firstCell.snp.top)
-//                })
-//            } else {
-//                // No first cell to model after
-//            }
-            
-            self?.tableView.dg_stopLoading()
+
             }, loadingView: self.noteMaker.view as? DGElasticPullToRefreshLoadingView)
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.clear)
     }
     
     func dismissNoteMaker() {
-        log.debug("would dismiss notemaker")
+        guard let textOfNewNote = (self.noteMaker.view as! NoteMakerView).textField.text else {
+            self.tableView.dg_stopLoading()
+            return
+        }
+        
+        // insert new note as a cell
+        let newNote = Note(textOfNewNote)
+        dataSource.injectNote(newNote, at: 0)
+        tableView.beginUpdates()
+        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+        tableView.endUpdates()
+        self.tableView.dg_stopLoading()
     }
 }
-
 
 // MARK: - Custom transitions
 

@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 
-class NoteDataSource: NSObject, UITableViewDataSource {
+class NoteDataSource: NSObject {
     
     // MARK: - Properties
     
     let noteStorage: NoteStorage
-    let notes: [Note]
+    var notes: [Note]
     
     // MARK: - Initializer
     
@@ -29,7 +29,16 @@ class NoteDataSource: NSObject, UITableViewDataSource {
     }
     
     // MARK: - Methods
-    
+
+    func injectNote(_ note: Note, at index: Int) {
+        noteStorage.add(note)
+        notes.insert(note, at: index)
+    }
+}
+
+// MARK: - UITableViewDataSource conformance
+
+extension NoteDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notes.count
     }

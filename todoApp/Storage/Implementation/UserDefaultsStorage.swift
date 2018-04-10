@@ -10,7 +10,7 @@ import Foundation
 
 class UserDefaultsStorage: NoteStorage {
     
-    func save(note: Note) {
+    func add(_ note: Note) {
         print("*would save*")
     }
     

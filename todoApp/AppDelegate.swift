@@ -42,8 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func updateDGElasticPullDownConstants() {
         DGElasticPullToRefreshConstants.loadingViewWidth = Constants.screen.width
-        DGElasticPullToRefreshConstants.loadingViewHeight = NoteCellView.defaultHeight
-//        DGElasticPullToRefreshConstants.LoadingContentInset = 0
+        DGElasticPullToRefreshConstants.loadingViewHeight = Constants.cells.defaultHeight
+        DGElasticPullToRefreshConstants.LoadingContentInset = Constants.cells.defaultHeight
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

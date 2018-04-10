@@ -15,7 +15,7 @@ final class NoteCellView: UIView {
 
     // MARK: - Properties
     
-    static let defaultHeight: CGFloat = 200
+    static let defaultHeight: CGFloat = Constants.cells.defaultHeight
     static let defaultWidth: CGFloat = {
         return Constants.screen.width
     }()
@@ -28,8 +28,6 @@ final class NoteCellView: UIView {
         self.label.text = "TEMP"
         super.init(frame: frame)
         
-        setupLabel()
-        
         addSubviewsAndConstraints()
     }
     
@@ -38,10 +36,6 @@ final class NoteCellView: UIView {
     }
     
     // MAKR: Methods
-    
-    private func setupLabel() {
-        label.backgroundColor = .blue
-    }
     
     private func addSubviewsAndConstraints() {
         addSubview(label)

@@ -9,7 +9,7 @@
 import Foundation
 
 /// MARK: Note
-class Note {
+struct Note {
     private let dateCreated  = Date()
     private var text = ""
     
@@ -26,7 +26,7 @@ class Note {
     }
 }
 
-//  MARK: - Extension
+//  MARK: - Stub Extension
 
 extension Note {
     func getStub() -> Note {
