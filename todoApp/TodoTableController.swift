@@ -20,7 +20,7 @@ class TodoTableController: UITableViewController {
 
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
-    private var noteMaker: NoteMakerController?
+    private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
@@ -118,7 +118,7 @@ class TodoTableController: UITableViewController {
 //            }
             
             self?.tableView.dg_stopLoading()
-            }, loadingView: NoteMakerView(frame: CGRect(x: 0, y: 0, width: 200, height: 200)))
+            }, loadingView: self.noteMaker.view as? DGElasticPullToRefreshLoadingView)
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.clear)
     }
     

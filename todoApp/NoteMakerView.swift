@@ -13,6 +13,15 @@ import DGElasticPullToRefresh
 
 /// Small view that is basically a pretty textfield to be shown over a new cell before it has content
 class NoteMakerView: DGElasticPullToRefreshLoadingView {
+    
+    static var height: CGFloat = {
+       return NoteCellView.defaultHeight
+    }()
+    
+    static var width: CGFloat = {
+        return Constants.screen.width
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

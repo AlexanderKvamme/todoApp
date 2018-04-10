@@ -40,7 +40,7 @@ final class NoteCell: UITableViewCell {
             make.left.equalTo(contentView.snp.left)
             make.right.equalTo(contentView.snp.right)
             make.bottom.equalTo(contentView.snp.bottom)
-            make.height.equalTo(200)
+            make.height.equalTo(NoteCellView.defaultHeight).priority(999) // this proprity removes apple bug error print
         }
     }
     

@@ -32,6 +32,8 @@ final class NoteMakerController: UIViewController {
         self.storage = storage
         super.init(nibName: nil, bundle: nil)
         
+        view = NoteMakerView(frame: .zero)
+        
         addSubviewsAndConstraints()
     }
     
@@ -42,13 +44,17 @@ final class NoteMakerController: UIViewController {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
-        view.backgroundColor = .green
+        view.backgroundColor = .purple
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        log.debug("view did appear")
     }
     
     // MARK: - Methods
     
     private func addSubviewsAndConstraints() {
-        addRedView()
+//        addRedView()
         addTextField()
     }
     
@@ -60,19 +66,19 @@ final class NoteMakerController: UIViewController {
         }
     }
     
-    fileprivate func addRedView() {
-        let redView = UIView()
-        redView.backgroundColor = .red
-        
-        view.addSubview(redView)
-        
-        redView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
-            make.bottom.equalTo(view.snp.bottom)
-        }
-    }
+//    fileprivate func addRedView() {
+//        let redView = UIView()
+//        redView.backgroundColor = .red
+//
+//        view.addSubview(redView)
+//
+//        redView.snp.makeConstraints { (make) in
+//            make.top.equalTo(view.snp.top)
+//            make.left.equalTo(view.snp.left)
+//            make.right.equalTo(view.snp.right)
+//            make.bottom.equalTo(view.snp.bottom)
+//        }
+//    }
 }
 
 // MARK: - Custom transition

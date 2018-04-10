@@ -20,6 +20,7 @@
 		11718E31206A7D1600EC6C0D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E30206A7D1500EC6C0D /* Note.swift */; };
 		11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E33206A88CC00EC6C0D /* NoteRepository.swift */; };
 		11718E3D206ABFD200EC6C0D /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E3C206ABFD200EC6C0D /* NoteCell.swift */; };
+		11B899CB207CB62400F98877 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B899CA207CB62400F98877 /* Constants.swift */; };
 		11E9CECE2595E8DEDE8345CB /* Pods_todoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7200701BDB3C3B44020CCC6D /* Pods_todoAppUITests.framework */; };
 		BFB77E954C9B51BF0B488293 /* Pods_todoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4675ED494EE69B3777E490CF /* Pods_todoApp.framework */; };
 		C681F7D1651B9663E961C82B /* Pods_todoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0BCCE69A11022E8214F07 /* Pods_todoAppTests.framework */; };
@@ -63,6 +64,7 @@
 		11718E30206A7D1500EC6C0D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		11718E33206A88CC00EC6C0D /* NoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRepository.swift; sourceTree = "<group>"; };
 		11718E3C206ABFD200EC6C0D /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
+		11B899CA207CB62400F98877 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		276F321B032183564F7D5FD5 /* Pods-todoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		33497C3CABFFCEC248D9FC1B /* Pods-todoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39D2B7DEFA1FA62550C6F0F3 /* Pods-todoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppUITests/Pods-todoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				111D01A62070F097009D3BA5 /* MyNavigationController.swift */,
 				DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */,
 				110D1C96206E99DD00432800 /* NoteMakerController.swift */,
+				11B899CA207CB62400F98877 /* Constants.swift */,
 				111D01AA20724439009D3BA5 /* NoteMakerView.swift */,
 				111D01A0207053BA009D3BA5 /* Custom transitions */,
 				DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */,
@@ -541,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */,
+				11B899CB207CB62400F98877 /* Constants.swift in Sources */,
 				11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */,
 				11006860206B98E7009D2EB3 /* UserDefaultsStorage.swift in Sources */,
 				111D01A2207054FD009D3BA5 /* FlipPresentAnimationController.swift in Sources */,

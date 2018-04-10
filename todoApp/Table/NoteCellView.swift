@@ -15,6 +15,11 @@ final class NoteCellView: UIView {
 
     // MARK: - Properties
     
+    static let defaultHeight: CGFloat = 200
+    static let defaultWidth: CGFloat = {
+        return Constants.screen.width
+    }()
+    
     let label = UILabel()
     
     // MAKR: - Initializers

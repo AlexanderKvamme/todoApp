@@ -64,6 +64,7 @@ open class DGElasticPullToRefreshView: UIView {
                 actionHandler()
             } else if newValue == .animatingToStopped {
                 resetScrollViewContentInset(shouldAddObserverWhenFinished: true, animated: true, completion: { [weak self] () -> () in self?.state = .stopped })
+                // FIXME: Animate size to Fill the view
             } else if newValue == .stopped {
                 loadingView?.stopLoading()
             }
@@ -385,11 +386,23 @@ open class DGElasticPullToRefreshView: UIView {
         let width = bounds.width
         let height: CGFloat = bounds.height
         
-        let loadingViewSize: CGFloat = DGElasticPullToRefreshConstants.LoadingViewSize
-        let minOriginY = (DGElasticPullToRefreshConstants.LoadingContentInset - loadingViewSize) / 2.0
-        let originY: CGFloat = max(min((height - loadingViewSize) / 2.0, minOriginY), 0.0)
+//        let loadingViewSize: CGFloat = DGElasticPullToRefreshConstants.LoadingViewSize // The small centered loading view
+//        let minOriginY = (DGElasticPullToRefreshConstants.LoadingContentInset - loadingViewSize) / 2.0
+//        let originY: CGFloat = max(min((height - loadingViewSize) / 2.0, minOriginY), 0.0)
+//
+//        loadingView?.frame = CGRect(x: (width - loadingViewSize) / 2.0, y: originY, width: loadingViewSize, height: loadingViewSize)
+//        loadingView?.maskLayer.frame = convert(shapeLayer.frame, to: loadingView)
+//        loadingView?.maskLayer.path = shapeLayer.path
         
-        loadingView?.frame = CGRect(x: (width - loadingViewSize) / 2.0, y: originY, width: loadingViewSize, height: loadingViewSize)
+
+        // Loadingview (used to be small centered thingy
+        
+        let minOriginY = (DGElasticPullToRefreshConstants.LoadingContentInset - DGElasticPullToRefreshConstants.loadingViewWidth) / 2.0
+        let originY: CGFloat = max(min((height - DGElasticPullToRefreshConstants.loadingViewHeight) / 2.0, minOriginY), 0.0)
+        
+        loadingView?.frame = CGRect(x: (width - DGElasticPullToRefreshConstants.loadingViewWidth) / 2.0, y: originY,
+                                    width: DGElasticPullToRefreshConstants.loadingViewWidth,
+                                    height: DGElasticPullToRefreshConstants.loadingViewHeight)
         loadingView?.maskLayer.frame = convert(shapeLayer.frame, to: loadingView)
         loadingView?.maskLayer.path = shapeLayer.path
     }
