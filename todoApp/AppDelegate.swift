@@ -27,10 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSwiftyBeaver()
         updateDGElasticPullDownConstants()
         
+        let domain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
+        
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        let noteStorage = UserDefaultsStorage()
+        let noteStorage = CoreDataStorage()
         let rootViewController = TodoTableController(with: noteStorage)
         let navcontroller = MyNavigationController(rootViewController: rootViewController)
         

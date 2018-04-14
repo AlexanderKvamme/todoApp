@@ -21,7 +21,7 @@ class NoteDataSource: NSObject {
     
     init(with storage: NoteStorage) {
         self.noteStorage = storage
-        self.notes = noteStorage.getNotes()
+        self.notes = noteStorage.getAllNotes()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,7 +31,7 @@ class NoteDataSource: NSObject {
     // MARK: - Methods
 
     func injectNote(_ note: Note, at index: Int) {
-        noteStorage.add(note)
+        
         notes.insert(note, at: index)
     }
 }

@@ -11,10 +11,6 @@ import DGElasticPullToRefresh
 import SnapKit
 
 
-class test: DGElasticPullToRefreshLoadingView {
-    
-}
-
 /// Contains a tableview with a pull to refresh
 class TodoTableController: UITableViewController {
 
@@ -88,8 +84,6 @@ class TodoTableController: UITableViewController {
             let todoTextField = (self?.noteMaker.view as! NoteMakerView).textField
             todoTextField.delegate = self
             todoTextField.becomeFirstResponder()
-            
-
             }, loadingView: self.noteMaker.view as? DGElasticPullToRefreshLoadingView)
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.clear)
     }
@@ -101,7 +95,7 @@ class TodoTableController: UITableViewController {
         }
         
         // insert new note as a cell
-        let newNote = Note(textOfNewNote)
+        let newNote = noteStorage.makeNote(withText: textOfNewNote)
         dataSource.injectNote(newNote, at: 0)
         tableView.beginUpdates()
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)

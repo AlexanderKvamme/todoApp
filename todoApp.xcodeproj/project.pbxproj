@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100685D206B97D8009D2EB3 /* NoteStorage.swift */; };
-		11006860206B98E7009D2EB3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100685F206B98E7009D2EB3 /* UserDefaultsStorage.swift */; };
 		110D1C97206E99DD00432800 /* NoteMakerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110D1C96206E99DD00432800 /* NoteMakerController.swift */; };
 		111D01A2207054FD009D3BA5 /* FlipPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D01A1207054FD009D3BA5 /* FlipPresentAnimationController.swift */; };
 		111D01A42070DA4F009D3BA5 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D01A32070DA4F009D3BA5 /* AnimationHelper.swift */; };
@@ -21,6 +20,10 @@
 		11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E33206A88CC00EC6C0D /* NoteRepository.swift */; };
 		11718E3D206ABFD200EC6C0D /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E3C206ABFD200EC6C0D /* NoteCell.swift */; };
 		11B899CB207CB62400F98877 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B899CA207CB62400F98877 /* Constants.swift */; };
+		11D3AC44207D2D1D005CD575 /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC43207D2D1D005CD575 /* CoreDataStorage.swift */; };
+		11D3AC46207D2D47005CD575 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC45207D2D47005CD575 /* CoreDataManager.swift */; };
+		11D3AC48207D42DD005CD575 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC47207D42DD005CD575 /* CoreDataFacade.swift */; };
+		11D3AC4A20825DF8005CD575 /* NoteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC4920825DF8005CD575 /* NoteExtensions.swift */; };
 		11E9CECE2595E8DEDE8345CB /* Pods_todoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7200701BDB3C3B44020CCC6D /* Pods_todoAppUITests.framework */; };
 		BFB77E954C9B51BF0B488293 /* Pods_todoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4675ED494EE69B3777E490CF /* Pods_todoApp.framework */; };
 		C681F7D1651B9663E961C82B /* Pods_todoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0BCCE69A11022E8214F07 /* Pods_todoAppTests.framework */; };
@@ -52,7 +55,6 @@
 
 /* Begin PBXFileReference section */
 		1100685D206B97D8009D2EB3 /* NoteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorage.swift; sourceTree = "<group>"; };
-		1100685F206B98E7009D2EB3 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		110D1C96206E99DD00432800 /* NoteMakerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteMakerController.swift; sourceTree = "<group>"; };
 		111D01A1207054FD009D3BA5 /* FlipPresentAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipPresentAnimationController.swift; sourceTree = "<group>"; };
 		111D01A32070DA4F009D3BA5 /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
@@ -65,6 +67,10 @@
 		11718E33206A88CC00EC6C0D /* NoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRepository.swift; sourceTree = "<group>"; };
 		11718E3C206ABFD200EC6C0D /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		11B899CA207CB62400F98877 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		11D3AC43207D2D1D005CD575 /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
+		11D3AC45207D2D47005CD575 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		11D3AC47207D42DD005CD575 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
+		11D3AC4920825DF8005CD575 /* NoteExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteExtensions.swift; sourceTree = "<group>"; };
 		276F321B032183564F7D5FD5 /* Pods-todoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		33497C3CABFFCEC248D9FC1B /* Pods-todoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39D2B7DEFA1FA62550C6F0F3 /* Pods-todoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppUITests/Pods-todoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -131,17 +137,19 @@
 			isa = PBXGroup;
 			children = (
 				1100685D206B97D8009D2EB3 /* NoteStorage.swift */,
-				110D1C93206D1AD100432800 /* Implementation */,
+				110D1C93206D1AD100432800 /* Core Data Implementation */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		110D1C93206D1AD100432800 /* Implementation */ = {
+		110D1C93206D1AD100432800 /* Core Data Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				1100685F206B98E7009D2EB3 /* UserDefaultsStorage.swift */,
+				11D3AC43207D2D1D005CD575 /* CoreDataStorage.swift */,
+				11D3AC45207D2D47005CD575 /* CoreDataManager.swift */,
+				11D3AC47207D42DD005CD575 /* CoreDataFacade.swift */,
 			);
-			path = Implementation;
+			path = "Core Data Implementation";
 			sourceTree = "<group>";
 		};
 		111D01A0207053BA009D3BA5 /* Custom transitions */ = {
@@ -188,6 +196,7 @@
 		DD370A03203C1E3F00AEFEA1 = {
 			isa = PBXGroup;
 			children = (
+				11D3AC4920825DF8005CD575 /* NoteExtensions.swift */,
 				DD370A0E203C1E3F00AEFEA1 /* todoApp */,
 				DD370A26203C1E3F00AEFEA1 /* todoAppTests */,
 				DD370A31203C1E3F00AEFEA1 /* todoAppUITests */,
@@ -210,19 +219,19 @@
 		DD370A0E203C1E3F00AEFEA1 /* todoApp */ = {
 			isa = PBXGroup;
 			children = (
+				11718E39206ABF8400EC6C0D /* Table */,
+				1100685C206B97C3009D2EB3 /* Storage */,
+				111D01A0207053BA009D3BA5 /* Custom transitions */,
 				111D01A62070F097009D3BA5 /* MyNavigationController.swift */,
 				DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */,
 				110D1C96206E99DD00432800 /* NoteMakerController.swift */,
 				11B899CA207CB62400F98877 /* Constants.swift */,
 				111D01AA20724439009D3BA5 /* NoteMakerView.swift */,
-				111D01A0207053BA009D3BA5 /* Custom transitions */,
 				DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */,
 				DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */,
 				DD370A1B203C1E3F00AEFEA1 /* LaunchScreen.storyboard */,
 				DD370A1E203C1E3F00AEFEA1 /* Info.plist */,
 				11718E33206A88CC00EC6C0D /* NoteRepository.swift */,
-				1100685C206B97C3009D2EB3 /* Storage */,
-				11718E39206ABF8400EC6C0D /* Table */,
 				DD370A16203C1E3F00AEFEA1 /* todoApp.xcdatamodeld */,
 				11718E32206A7D1D00EC6C0D /* Models */,
 			);
@@ -544,11 +553,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */,
+				11D3AC4A20825DF8005CD575 /* NoteExtensions.swift in Sources */,
+				11D3AC44207D2D1D005CD575 /* CoreDataStorage.swift in Sources */,
 				11B899CB207CB62400F98877 /* Constants.swift in Sources */,
 				11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */,
-				11006860206B98E7009D2EB3 /* UserDefaultsStorage.swift in Sources */,
 				111D01A2207054FD009D3BA5 /* FlipPresentAnimationController.swift in Sources */,
 				110D1C97206E99DD00432800 /* NoteMakerController.swift in Sources */,
+				11D3AC46207D2D47005CD575 /* CoreDataManager.swift in Sources */,
 				DD370A12203C1E3F00AEFEA1 /* TodoTableController.swift in Sources */,
 				11718E31206A7D1600EC6C0D /* Note.swift in Sources */,
 				11718E3D206ABFD200EC6C0D /* NoteCell.swift in Sources */,
@@ -558,6 +569,7 @@
 				111D01A72070F097009D3BA5 /* MyNavigationController.swift in Sources */,
 				111D01A42070DA4F009D3BA5 /* AnimationHelper.swift in Sources */,
 				1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */,
+				11D3AC48207D42DD005CD575 /* CoreDataFacade.swift in Sources */,
 				111D01A92072391A009D3BA5 /* SlideAnimator.swift in Sources */,
 				111D01AB20724439009D3BA5 /* NoteMakerView.swift in Sources */,
 			);

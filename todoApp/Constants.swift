@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 enum Constants {
     enum screen {
         static let height: CGFloat = {
@@ -23,6 +22,10 @@ enum Constants {
     
     enum cells {
         static let defaultHeight: CGFloat = 100
+    }
+    
+    enum keys {
+        static let didSeedKey = "didSeedCoreDataWithMockNotes"
     }
 }
 

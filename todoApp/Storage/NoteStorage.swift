@@ -10,8 +10,8 @@ import Foundation
 
 
 protocol NoteStorage {
-    func add(_ note: Note)
-    func getNotes() -> [Note]
+    func getAllNotes() -> [Note]
     func delete(note: Note)
+    func makeNote(withText text: String) -> Note
 }
 
