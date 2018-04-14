@@ -36,9 +36,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let noteStorage = CoreDataStorage()
         let rootViewController = NoteTableController(with: noteStorage)
-        let navcontroller = MyNavigationController(rootViewController: rootViewController)
+//        let navcontroller = MyNavigationController(rootViewController: rootViewController)
+//
+//        window?.rootViewController = navcontroller
         
-        window?.rootViewController = navcontroller
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
         
         return true
