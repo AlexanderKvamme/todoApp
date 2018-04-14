@@ -10,7 +10,8 @@ target 'todoApp' do
 	pod 'DGElasticPullToRefresh', :git => 'https://github.com/AlexanderKvamme/DGElasticPullToRefresh.git'
 	pod "SnapKit"
 	pod "SwiftyBeaver"
-  target 'todoAppTests' do
+	pod "SwipeCellKit"  
+target 'todoAppTests' do
     inherit! :search_paths
     # Pods for testing
   end

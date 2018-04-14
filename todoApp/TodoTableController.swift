@@ -75,7 +75,6 @@ class TodoTableController: UITableViewController {
         tableView.backgroundColor = .white
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .singleLine
-        
     }
 
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
