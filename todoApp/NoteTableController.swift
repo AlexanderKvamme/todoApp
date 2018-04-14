@@ -12,7 +12,7 @@ import SnapKit
 
 
 /// Contains a tableview with a pull to refresh
-class TodoTableController: UITableViewController {
+class NoteTableController: UITableViewController {
 
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
@@ -105,7 +105,7 @@ class TodoTableController: UITableViewController {
 
 // MARK: - Custom transitions
 
-extension TodoTableController: UIViewControllerTransitioningDelegate {
+extension NoteTableController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController,source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
             // FIXME: Use black center frams
             print("bama tryna flip")
@@ -113,14 +113,14 @@ extension TodoTableController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension TodoTableController {
+extension NoteTableController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("*bama preparing for segue in todo*")
     }
 }
 
-extension TodoTableController: UITextFieldDelegate {
+extension NoteTableController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         log.debug("did begin")

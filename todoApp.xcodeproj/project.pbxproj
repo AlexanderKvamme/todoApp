@@ -28,7 +28,7 @@
 		BFB77E954C9B51BF0B488293 /* Pods_todoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4675ED494EE69B3777E490CF /* Pods_todoApp.framework */; };
 		C681F7D1651B9663E961C82B /* Pods_todoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0BCCE69A11022E8214F07 /* Pods_todoAppTests.framework */; };
 		DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */; };
-		DD370A12203C1E3F00AEFEA1 /* TodoTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */; };
+		DD370A12203C1E3F00AEFEA1 /* NoteTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */; };
 		DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DD370A16203C1E3F00AEFEA1 /* todoApp.xcdatamodeld */; };
 		DD370A1A203C1E3F00AEFEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */; };
 		DD370A1D203C1E3F00AEFEA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD370A1B203C1E3F00AEFEA1 /* LaunchScreen.storyboard */; };
@@ -80,7 +80,7 @@
 		84F5E43927B5DDE911424B22 /* Pods-todoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoApp/Pods-todoApp.release.xcconfig"; sourceTree = "<group>"; };
 		DD370A0C203C1E3F00AEFEA1 /* todoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableController.swift; sourceTree = "<group>"; };
+		DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableController.swift; sourceTree = "<group>"; };
 		DD370A17203C1E3F00AEFEA1 /* todoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = todoApp.xcdatamodel; sourceTree = "<group>"; };
 		DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD370A1C203C1E3F00AEFEA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 				1100685C206B97C3009D2EB3 /* Storage */,
 				111D01A0207053BA009D3BA5 /* Custom transitions */,
 				111D01A62070F097009D3BA5 /* MyNavigationController.swift */,
-				DD370A11203C1E3F00AEFEA1 /* TodoTableController.swift */,
+				DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */,
 				110D1C96206E99DD00432800 /* NoteMakerController.swift */,
 				11B899CA207CB62400F98877 /* Constants.swift */,
 				111D01AA20724439009D3BA5 /* NoteMakerView.swift */,
@@ -562,7 +562,7 @@
 				111D01A2207054FD009D3BA5 /* FlipPresentAnimationController.swift in Sources */,
 				110D1C97206E99DD00432800 /* NoteMakerController.swift in Sources */,
 				11D3AC46207D2D47005CD575 /* CoreDataManager.swift in Sources */,
-				DD370A12203C1E3F00AEFEA1 /* TodoTableController.swift in Sources */,
+				DD370A12203C1E3F00AEFEA1 /* NoteTableController.swift in Sources */,
 				11718E31206A7D1600EC6C0D /* Note.swift in Sources */,
 				11718E3D206ABFD200EC6C0D /* NoteCell.swift in Sources */,
 				DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */,

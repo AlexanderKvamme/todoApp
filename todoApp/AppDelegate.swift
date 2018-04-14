@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
 
         let noteStorage = CoreDataStorage()
-        let rootViewController = TodoTableController(with: noteStorage)
+        let rootViewController = NoteTableController(with: noteStorage)
         let navcontroller = MyNavigationController(rootViewController: rootViewController)
         
         window?.rootViewController = navcontroller

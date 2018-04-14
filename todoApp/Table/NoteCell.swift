@@ -9,8 +9,10 @@
 
 import Foundation
 import UIKit
+import SwipeCellKit
 
-final class NoteCell: UITableViewCell {
+
+final class NoteCell: SwipeTableViewCell {
     
     // MARK: Properties
     
