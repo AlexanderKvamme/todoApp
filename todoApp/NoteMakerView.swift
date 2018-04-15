@@ -39,7 +39,7 @@ class NoteMakerView: DGElasticPullToRefreshLoadingView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .green
+        backgroundColor = .secondary
         
         addTextField()
     }

@@ -27,21 +27,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSwiftyBeaver()
         updateDGElasticPullDownConstants()
         
-        let domain = Bundle.main.bundleIdentifier!
-        UserDefaults.standard.removePersistentDomain(forName: domain)
-        UserDefaults.standard.synchronize()
-        
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
 
         let noteStorage = CoreDataStorage()
         let rootViewController = NoteTableController(with: noteStorage)
+
+        // wrap in navigationController
 //        let navcontroller = MyNavigationController(rootViewController: rootViewController)
-//
 //        window?.rootViewController = navcontroller
         
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
+        
+        customizeAppearence()
         
         return true
     }
@@ -128,5 +127,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+private func customizeAppearence() {
+    UITextField.appearance(whenContainedInInstancesOf: [NoteMakerView.self]).tintColor = .primary
 }
 

@@ -129,7 +129,7 @@ open class DGElasticPullToRefreshView: UIView {
         displayLink.isPaused = true
         
         shapeLayer.backgroundColor = UIColor.clear.cgColor
-        shapeLayer.fillColor = UIColor.//UIColor.red.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor//UIColor.red.cgColor
         shapeLayer.actions = ["path" : NSNull(), "position" : NSNull(), "bounds" : NSNull()]
         layer.addSublayer(shapeLayer)
         

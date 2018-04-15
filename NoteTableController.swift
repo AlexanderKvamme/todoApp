@@ -70,7 +70,7 @@ class NoteTableController: UITableViewController {
     
     private func setupTableView() {
         tableView.dataSource = dataSource
-        tableView.backgroundColor = .primaryLight
+        tableView.backgroundColor = .primary
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
     }
@@ -83,6 +83,7 @@ class NoteTableController: UITableViewController {
             todoTextField.becomeFirstResponder()
             }, loadingView: self.noteMaker.view as? DGElasticPullToRefreshLoadingView)
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.clear)
+        tableView.dg_setPullToRefreshFillColor(UIColor.secondary)
     }
     
     func dismissNoteMaker() {
@@ -106,20 +107,17 @@ class NoteTableController: UITableViewController {
 extension NoteTableController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController,source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
             // FIXME: Use black center frams
-            print("bama tryna flip")
             return FlipPresentAnimationController(originFrame: view.frame)
     }
 }
 
 extension NoteTableController {
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("*bama preparing for segue in todo*")
     }
 }
 
 extension NoteTableController: UITextFieldDelegate {
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         log.debug("did begin Editing")
     }
