@@ -29,6 +29,8 @@ class NoteMakerView: DGElasticPullToRefreshLoadingView {
         let field = UITextField()
         field.textAlignment = .center
         field.clearsOnBeginEditing = true
+        field.textColor = .primaryContrast
+        field.font = .custom(style: .bold, ofSize: .bigger)
         return field
     }()
     

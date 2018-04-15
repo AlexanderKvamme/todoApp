@@ -90,19 +90,21 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
-        log.warning("editActionsForRowAt")
-        
         switch orientation {
         case .left:
-            log.warning(" - Swipe from left")
-            let deleteAction = SwipeAction(style: .destructive, title: "DELETE") { (action, ip) in
+            let deleteAction = SwipeAction(style: .destructive, title: nil) { (action, ip) in
                 self.deleteNote(at: ip.row)
             }
+            deleteAction.image = UIImage.checkmarIcon
+            deleteAction.backgroundColor = .green
             return [deleteAction]
         case .right:
-            let pinAction = SwipeAction(style: .default, title: "PIN") { (action, ip) in
+            // TODO: - Make switch. If already pinned, unpin with another color than dijon
+            let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
                 print("pin action triggered: \(action): for ip:", ip)
             }
+            pinAction.image = .starIcon
+            pinAction.backgroundColor = .dijon
             return [pinAction]
         }
     }

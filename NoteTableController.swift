@@ -29,8 +29,6 @@ class NoteTableController: UITableViewController {
         self.dataSource = NoteDataSource(with: storage)
         
         super.init(nibName: nil, bundle: nil)
-        
-        setupNavbar()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,9 +70,9 @@ class NoteTableController: UITableViewController {
     
     private func setupTableView() {
         tableView.dataSource = dataSource
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .primaryLight
         tableView.estimatedRowHeight = 100
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
     }
 
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table

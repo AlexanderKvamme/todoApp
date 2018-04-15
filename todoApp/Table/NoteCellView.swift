@@ -16,17 +16,24 @@ final class NoteCellView: UIView {
     // MARK: - Properties
     
     static let defaultHeight: CGFloat = Constants.cells.defaultHeight
-    static let defaultWidth: CGFloat = {
-        return Constants.screen.width
-    }()
+    static let defaultWidth: CGFloat = Constants.screen.width
     
-    let label = UILabel()
+    // Computed properties
+    
+    let label: UILabel = {
+        let lbl = UILabel()
+        lbl.font = UIFont.custom(style: .bold, ofSize: .big)
+        lbl.textColor = .primaryContrast
+        return lbl
+    }()
     
     // MAKR: - Initializers
     
     override init(frame: CGRect) {
         self.label.text = "TEMP"
         super.init(frame: frame)
+        
+        backgroundColor = .primary
         
         addSubviewsAndConstraints()
     }
