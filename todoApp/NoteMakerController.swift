@@ -38,10 +38,6 @@ final class NoteMakerController: UIViewController {
         view.backgroundColor = .purple
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        log.debug("view did appear")
-    }
-    
     // MARK: - Methods
     
     private func addSubviewsAndConstraints() {

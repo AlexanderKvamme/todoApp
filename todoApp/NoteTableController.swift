@@ -123,11 +123,10 @@ extension NoteTableController {
 extension NoteTableController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        log.debug("did begin")
+        log.debug("did begin Editing")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        log.debug("Should return")
         textField.resignFirstResponder()
         
         dismissNoteMaker()

@@ -91,12 +91,11 @@ final class DatabaseFacade {
         
         do {
             let fr = NSFetchRequest<Note>(entityName: Entity.Note.rawValue)
+            fr.sortDescriptors = [NSSortDescriptor(key: #keyPath(Note.dateCreated), ascending: false)]
             result = try context.fetch(fr)
         } catch let error {
             log.warning(error)
         }
-        
-        log.debug("fetched all")
         
         return result
     }

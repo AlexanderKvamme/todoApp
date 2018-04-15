@@ -7,9 +7,9 @@
 
 import Foundation
 
+// MARK: - Methods
+
 extension Note {
-    
-    // MARK: - Methods
     
     func getText() -> String {
         return content ?? "TEXT MISSING"
@@ -18,4 +18,11 @@ extension Note {
     func setText(_ string: String) {
         content = string
     }
+
+    // MARK: AwakeFromInsert
+
+    public override func awakeFromInsert() {
+        self.dateCreated = Date()
+    }
 }
+

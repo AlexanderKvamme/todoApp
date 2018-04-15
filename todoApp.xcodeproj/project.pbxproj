@@ -16,7 +16,6 @@
 		111D01AB20724439009D3BA5 /* NoteMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D01AA20724439009D3BA5 /* NoteMakerView.swift */; };
 		11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */; };
 		11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */; };
-		11718E31206A7D1600EC6C0D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E30206A7D1500EC6C0D /* Note.swift */; };
 		11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E33206A88CC00EC6C0D /* NoteRepository.swift */; };
 		11718E3D206ABFD200EC6C0D /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E3C206ABFD200EC6C0D /* NoteCell.swift */; };
 		11B899CB207CB62400F98877 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B899CA207CB62400F98877 /* Constants.swift */; };
@@ -63,7 +62,6 @@
 		111D01AA20724439009D3BA5 /* NoteMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteMakerView.swift; sourceTree = "<group>"; };
 		11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 		11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
-		11718E30206A7D1500EC6C0D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		11718E33206A88CC00EC6C0D /* NoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRepository.swift; sourceTree = "<group>"; };
 		11718E3C206ABFD200EC6C0D /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		11B899CA207CB62400F98877 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -162,14 +160,6 @@
 			path = "Custom transitions";
 			sourceTree = "<group>";
 		};
-		11718E32206A7D1D00EC6C0D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				11718E30206A7D1500EC6C0D /* Note.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		11718E39206ABF8400EC6C0D /* Table */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,7 +223,6 @@
 				DD370A1E203C1E3F00AEFEA1 /* Info.plist */,
 				11718E33206A88CC00EC6C0D /* NoteRepository.swift */,
 				DD370A16203C1E3F00AEFEA1 /* todoApp.xcdatamodeld */,
-				11718E32206A7D1D00EC6C0D /* Models */,
 			);
 			path = todoApp;
 			sourceTree = "<group>";
@@ -563,7 +552,6 @@
 				110D1C97206E99DD00432800 /* NoteMakerController.swift in Sources */,
 				11D3AC46207D2D47005CD575 /* CoreDataManager.swift in Sources */,
 				DD370A12203C1E3F00AEFEA1 /* NoteTableController.swift in Sources */,
-				11718E31206A7D1600EC6C0D /* Note.swift in Sources */,
 				11718E3D206ABFD200EC6C0D /* NoteCell.swift in Sources */,
 				DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */,
 				11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */,
