@@ -2,7 +2,7 @@
 //  Note+CoreDataProperties.swift
 //  
 //
-//  Created by Alexander K on 10/04/2018.
+//  Created by Alexander K on 15/04/2018.
 //
 //
 
@@ -17,6 +17,6 @@ extension Note {
     }
 
     @NSManaged public var content: String?
-    @NSManaged public var dateCreated: NSDate?
-
+    @NSManaged public var dateCreated: NSDate
+    @NSManaged private(set) var isPinned: Bool
 }

@@ -2,7 +2,7 @@
 //  Note+CoreDataClass.swift
 //  
 //
-//  Created by Alexander K on 10/04/2018.
+//  Created by Alexander K on 15/04/2018.
 //
 //
 

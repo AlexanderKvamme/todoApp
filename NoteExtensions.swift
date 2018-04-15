@@ -11,12 +11,21 @@ import Foundation
 
 extension Note {
     
+    // MARK: Text methods
+    
     func getText() -> String {
         return content ?? "TEXT MISSING"
     }
     
     func setText(_ string: String) {
         content = string
+    }
+    
+    // MARK: isPinned methods
+    
+    func setPinned(_ bool: Bool) {
+        log.debug("pinning")
+        isPinned = bool
     }
 
     // MARK: AwakeFromInsert

@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:todoApp/Core Data Models/Note+CoreDataClass.swift">
+      location = "group:Note+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:todoApp/Core Data Models/Note+CoreDataProperties.swift">
+      location = "group:Note+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:todoApp.xcodeproj">

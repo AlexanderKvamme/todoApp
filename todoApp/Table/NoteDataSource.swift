@@ -40,6 +40,11 @@ class NoteDataSource: NSObject {
         notes.remove(at: index)
         noteStorage.delete(note: noteToRemove)
     }
+    
+    func pinNote(at index: Int) {
+        let noteToPin = notes[index]
+        noteToPin.setPinned(true)
+    }
 }
 
 // MARK: - UITableViewDataSource conformance
@@ -102,6 +107,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             // TODO: - Make switch. If already pinned, unpin with another color than dijon
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
                 print("pin action triggered: \(action): for ip:", ip)
+                self.pinNote(at: ip.row)
             }
             pinAction.image = .starIcon
             pinAction.backgroundColor = .dijon
