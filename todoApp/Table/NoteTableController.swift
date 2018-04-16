@@ -42,7 +42,7 @@ class NoteTableController: UITableViewController {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
-        setupNavbar()
+//        setupNavbar()
         setupTableView()
         addPullToRefresh()
         setTransitioningDelegate()
@@ -67,9 +67,8 @@ class NoteTableController: UITableViewController {
         navigationController?.setToolbarHidden(true, animated: false)
     }
     
-    private func setupView() {
-        self.tableView.contentInset = UIEdgeInsetsMake(navHeight + 20,0,0,0);
-        self.edgesForExtendedLayout = []
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     private func setupTableView() {
@@ -78,6 +77,8 @@ class NoteTableController: UITableViewController {
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
