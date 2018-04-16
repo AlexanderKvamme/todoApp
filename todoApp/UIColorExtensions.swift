@@ -19,7 +19,7 @@ extension UIColor {
     static let secondary = UIColor(hexString: "BC4553") // noteMakerView
 
     // Static
-    static let green = UIColor(hexString: "41af66")
+    static let green = UIColor(hexString: "7ED99C")
     static let dijon = UIColor(hexString: "ffae5e")
 
     /// Initializer for Hex colors
