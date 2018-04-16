@@ -29,6 +29,8 @@ class NoteTableController: UITableViewController {
         self.dataSource = NoteDataSource(with: storage)
         
         super.init(nibName: nil, bundle: nil)
+        
+        dataSource.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {

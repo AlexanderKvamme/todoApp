@@ -18,11 +18,13 @@ class NoteDataSource: NSObject {
     let noteStorage: NoteStorage
     var notes: [Note]
     
+    weak var delegate: NoteTableController?
+    
     // MARK: - Initializer
     
     init(with storage: NoteStorage) {
         self.noteStorage = storage
-        self.notes = noteStorage.getAllNotes()
+        self.notes = noteStorage.getNotes(pinned: true) + noteStorage.getNotes(pinned: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,7 +32,7 @@ class NoteDataSource: NSObject {
     }
     
     // MARK: - Methods
-
+    
     func add(_ note: Note) {
         notes.insert(note, at: 0)
     }
@@ -41,9 +43,40 @@ class NoteDataSource: NSObject {
         noteStorage.delete(note: noteToRemove)
     }
     
+    func togglePinned(at index: Int) {
+        if notes[index].isPinned {
+            unpinNote(at: index)
+        } else {
+            pinNote(at: index)
+        }
+    }
+    
     func pinNote(at index: Int) {
         let noteToPin = notes[index]
+        notes.remove(at: index)
         noteToPin.setPinned(true)
+        notes.insert(noteToPin, at: 0)
+        
+        let fromIndex = IndexPath(row: index, section: 0)
+        let toIndex = IndexPath(row: 0, section: 0)
+        
+        if let table = delegate?.tableView {
+            table.moveRow(at: fromIndex, to: toIndex)
+        }
+    }
+    
+    func unpinNote(at index: Int) {
+        let noteToUnpin = notes[index]
+        notes.remove(at: index)
+        noteToUnpin.setPinned(false)
+        notes.append(noteToUnpin)
+        
+        let fromIndex = IndexPath(row: index, section: 0)
+        let toIndex = IndexPath(row: notes.count-1, section: 0)
+        
+        if let table = delegate?.tableView {
+            table.moveRow(at: fromIndex, to: toIndex)
+        }
     }
     
     func index(of note: Note) -> IndexPath {
@@ -110,8 +143,8 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         case .right:
             // TODO: - Make switch. If already pinned, unpin with another color than dijon
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
-                print("pin action triggered: \(action): for ip:", ip)
-                self.pinNote(at: ip.row)
+//                self.pinNote(at: ip.row)
+                self.togglePinned(at: ip.row)
             }
             pinAction.image = .starIcon
             pinAction.backgroundColor = .dijon
