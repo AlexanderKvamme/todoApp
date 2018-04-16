@@ -77,6 +77,7 @@ class NoteTableController: UITableViewController {
         tableView.backgroundColor = .primary
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
     }
 
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table

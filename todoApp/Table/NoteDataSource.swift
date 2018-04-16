@@ -62,7 +62,10 @@ class NoteDataSource: NSObject {
         let toIndex = IndexPath(row: 0, section: 0)
         
         if let table = delegate?.tableView {
-            table.moveRow(at: fromIndex, to: toIndex)
+            table.beginUpdates()
+            table.deleteRows(at: [fromIndex], with: .automatic)
+            table.insertRows(at: [toIndex], with: .automatic)
+            table.endUpdates()
         }
     }
     
@@ -76,7 +79,10 @@ class NoteDataSource: NSObject {
         let toIndex = IndexPath(row: notes.count-1, section: 0)
         
         if let table = delegate?.tableView {
-            table.moveRow(at: fromIndex, to: toIndex)
+            table.beginUpdates()
+            table.deleteRows(at: [fromIndex], with: .automatic)
+            table.insertRows(at: [toIndex], with: .automatic)
+            table.endUpdates()
         }
     }
     
@@ -89,7 +95,7 @@ class NoteDataSource: NSObject {
         
         var currentIndex = 0
         
-        while notes[currentIndex].isPinned {
+        while currentIndex < notes.count && notes[currentIndex].isPinned {
             currentIndex += 1
         }
         return currentIndex
