@@ -34,7 +34,8 @@ class NoteDataSource: NSObject {
     // MARK: - Methods
     
     func add(_ note: Note) {
-        notes.insert(note, at: 0)
+        let firstIndexUnderPinned = getFirstIndexUnderPinnedRows()
+        notes.insert(note, at: firstIndexUnderPinned)
     }
     
     func deleteNote(at index: Int) {
@@ -82,11 +83,24 @@ class NoteDataSource: NSObject {
     func index(of note: Note) -> IndexPath {
         return IndexPath(row: notes.index(of: note)!, section: 0)
     }
+    
+    func getFirstIndexUnderPinnedRows() -> Int {
+        guard notes.count > 0 else { return 0 }
+        
+        var currentIndex = 0
+        
+        while notes[currentIndex].isPinned {
+            currentIndex += 1
+        }
+        return currentIndex
+    }
 }
 
 // MARK: - UITableViewDataSource conformance
 
 extension NoteDataSource: UITableViewDataSource {
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notes.count
     }
@@ -141,9 +155,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             deleteAction.backgroundColor = .green
             return [deleteAction]
         case .right:
-            // TODO: - Make switch. If already pinned, unpin with another color than dijon
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
-//                self.pinNote(at: ip.row)
                 self.togglePinned(at: ip.row)
             }
             pinAction.image = .starIcon

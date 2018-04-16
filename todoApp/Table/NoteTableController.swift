@@ -15,6 +15,7 @@ import SnapKit
 class NoteTableController: UITableViewController {
 
     private let noteStorage: NoteStorage
+    private let tableViewDelegate: NoteDelegate
     private let dataSource: NoteDataSource
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
@@ -27,6 +28,7 @@ class NoteTableController: UITableViewController {
     init(with storage: NoteStorage) {
         self.noteStorage = storage
         self.dataSource = NoteDataSource(with: storage)
+        self.tableViewDelegate = NoteDelegate()
         
         super.init(nibName: nil, bundle: nil)
         
@@ -97,8 +99,8 @@ class NoteTableController: UITableViewController {
         // insert new note as a cell
         let newNote = noteStorage.makeNote(withText: textOfNewNote)
         dataSource.add(newNote)
-        let indexOfNewNote = dataSource.index(of: newNote)
-        tableView.insertRows(at: [indexOfNewNote], with: .automatic)
+        let insertionRow = dataSource.index(of: newNote)
+        tableView.insertRows(at: [insertionRow], with: .automatic)
         self.tableView.dg_stopLoading()
     }
 }
