@@ -52,9 +52,28 @@ class NoteTableController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setupTableView()
+        updateDGColors()
     }
     
     // MARK: - Methods
+    
+    /// Sets the color of the pulldown wave to dijon if top note is pinned
+    func updateDGColors() {
+        let hasPins = dataSource.hasPinnedNotes
+        print("has pins:", hasPins)
+        setDGColors(hasPins: hasPins)
+    }
+    
+    private func setDGColors(hasPins: Bool) {
+        switch hasPins {
+        case true:
+            tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
+            tableView.backgroundColor = UIColor.dijon
+        case false:
+            tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
+            tableView.backgroundColor = UIColor.primary
+        }
+    }
     
     private func setTransitioningDelegate() {
         transitioningDelegate = self
@@ -73,7 +92,6 @@ class NoteTableController: UITableViewController {
     
     private func setupTableView() {
         tableView.dataSource = dataSource
-        tableView.backgroundColor = .primary
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -88,7 +106,6 @@ class NoteTableController: UITableViewController {
             todoTextField.delegate = self
             todoTextField.becomeFirstResponder()
             }, loadingView: self.noteMaker.view as? DGElasticPullToRefreshLoadingView)
-        tableView.dg_setPullToRefreshBackgroundColor(UIColor.clear)
         tableView.dg_setPullToRefreshFillColor(UIColor.secondary)
     }
     

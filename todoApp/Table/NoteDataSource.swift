@@ -20,6 +20,18 @@ class NoteDataSource: NSObject {
     
     weak var delegate: NoteTableController?
     
+    // Computed
+    
+    var hasPinnedNotes: Bool {
+        guard hasNotes else { return false }
+        guard let firstNote = notes.first  else { return false }
+        return firstNote.isPinned
+    }
+    
+    var hasNotes: Bool {
+        return self.notes.count > 0
+    }
+    
     // MARK: - Initializer
     
     init(with storage: NoteStorage) {
@@ -50,6 +62,7 @@ class NoteDataSource: NSObject {
         } else {
             pinNote(at: index)
         }
+        delegate?.updateDGColors()
     }
     
     func pinNote(at index: Int) {

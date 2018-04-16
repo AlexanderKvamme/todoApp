@@ -16,7 +16,7 @@ extension UIColor {
     static let primaryContrast = UIColor(hexString: "f7eff6")
     static let primaryLight = UIColor(hexString: "2e2c3a")
     
-    static let secondary = UIColor(hexString: "BC4553")
+    static let secondary = UIColor(hexString: "BC4553") // noteMakerView
 
     // Static
     static let green = UIColor(hexString: "41af66")
