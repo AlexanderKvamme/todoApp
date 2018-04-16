@@ -187,6 +187,7 @@
 		11718E39206ABF8400EC6C0D /* Table */ = {
 			isa = PBXGroup;
 			children = (
+				DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */,
 				11718E3C206ABFD200EC6C0D /* NoteCell.swift */,
 				11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */,
 				11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */,
@@ -210,7 +211,6 @@
 		DD370A03203C1E3F00AEFEA1 = {
 			isa = PBXGroup;
 			children = (
-				DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */,
 				11D3AC4920825DF8005CD575 /* NoteExtensions.swift */,
 				DD370A0E203C1E3F00AEFEA1 /* todoApp */,
 				DD370A26203C1E3F00AEFEA1 /* todoAppTests */,

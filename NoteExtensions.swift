@@ -24,7 +24,6 @@ extension Note {
     // MARK: isPinned methods
     
     func setPinned(_ bool: Bool) {
-        log.debug("pinning")
         isPinned = bool
     }
 
@@ -34,4 +33,5 @@ extension Note {
         self.dateCreated = Date()
     }
 }
+
 

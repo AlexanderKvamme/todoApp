@@ -10,6 +10,16 @@ import Foundation
 
 class CoreDataStorage: NoteStorage {
 
+    // MARK: - Properties
+    
+    var pinnedNotesCount: Int {
+        return DatabaseFacade.pinnedNotesCount
+    }
+    
+    var unpinnedNotesCount: Int {
+        return DatabaseFacade.unpinnedNotesCount
+    }
+    
     // MARK: - Methods
     
     func makeNote(withText text: String) -> Note {
@@ -19,9 +29,17 @@ class CoreDataStorage: NoteStorage {
         return newNote
     }
     
+    // MARK: Getters
+    
     func getAllNotes() -> [Note] {
         return DatabaseFacade.getAllNotes() ?? []
     }
+    
+    func getNotes(pinned: Bool) -> [Note] {
+        return DatabaseFacade.getNotes(pinned: pinned)
+    }
+    
+    // MARK: Deletion
     
     func delete(note: Note) {
         DatabaseFacade.delete(note)

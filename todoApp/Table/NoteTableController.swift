@@ -94,10 +94,9 @@ class NoteTableController: UITableViewController {
         
         // insert new note as a cell
         let newNote = noteStorage.makeNote(withText: textOfNewNote)
-        dataSource.injectNote(newNote, at: 0)
-        tableView.beginUpdates()
-        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-        tableView.endUpdates()
+        dataSource.add(newNote)
+        let indexOfNewNote = dataSource.index(of: newNote)
+        tableView.insertRows(at: [indexOfNewNote], with: .automatic)
         self.tableView.dg_stopLoading()
     }
 }

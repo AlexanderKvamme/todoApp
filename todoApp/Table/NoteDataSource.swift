@@ -31,8 +31,8 @@ class NoteDataSource: NSObject {
     
     // MARK: - Methods
 
-    func injectNote(_ note: Note, at index: Int) {
-        notes.insert(note, at: index)
+    func add(_ note: Note) {
+        notes.insert(note, at: 0)
     }
     
     func deleteNote(at index: Int) {
@@ -44,6 +44,10 @@ class NoteDataSource: NSObject {
     func pinNote(at index: Int) {
         let noteToPin = notes[index]
         noteToPin.setPinned(true)
+    }
+    
+    func index(of note: Note) -> IndexPath {
+        return IndexPath(row: notes.index(of: note)!, section: 0)
     }
 }
 

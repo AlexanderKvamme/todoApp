@@ -19,7 +19,40 @@ final class DatabaseFacade {
     
     private init(){}
     
+    
     // MARK: - Properties
+    
+    static var pinnedNotesCount: Int {
+        var count = 0
+        
+        do {
+            let fr = NSFetchRequest<Note>(entityName: Entity.Note.rawValue)
+            fr.predicate = NSPredicate(format: "isPinned = true")
+            let result = try context.fetch(fr)
+            count = result.count
+        } catch let error {
+            log.warning(error)
+        }
+        
+        return count
+    }
+
+    static var unpinnedNotesCount: Int {
+        var count = 0
+
+        do {
+            let fr = NSFetchRequest<Note>(entityName: Entity.Note.rawValue)
+            fr.predicate = NSPredicate(format: "isPinned = false")
+            let result = try context.fetch(fr)
+            count = result.count
+        } catch let error {
+            log.warning(error)
+        }
+        
+        return count
+    }
+    
+    // MARK: Fundamentals
     
     static var persistentContainer: NSPersistentContainer = {
         let persistentContainer = NSPersistentContainer(name: "todoApp")
@@ -97,6 +130,20 @@ final class DatabaseFacade {
             log.warning(error)
         }
         
+        return result
+    }
+    
+    static func getNotes(pinned: Bool) -> [Note] {
+        
+        var result: [Note] = []
+        
+        do {
+            let fetchRequest = NSFetchRequest<Note>(entityName: Entity.Note.rawValue)
+            fetchRequest.predicate = NSPredicate(format: "isPinned == \(pinned)")
+            result = try context.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("error fetching pinned/unpinned notes: \(error.localizedDescription)")
+        }
         return result
     }
     
