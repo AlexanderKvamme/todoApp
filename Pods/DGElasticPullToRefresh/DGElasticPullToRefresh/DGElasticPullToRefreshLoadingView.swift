@@ -59,7 +59,7 @@ open class DGElasticPullToRefreshLoadingView: UIView {
     // MARK: Methods
     
     open func setPullProgress(_ progress: CGFloat) {
-        
+
     }
     
     open func startAnimating() {

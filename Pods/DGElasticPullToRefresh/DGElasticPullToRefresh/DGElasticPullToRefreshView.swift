@@ -1,34 +1,10 @@
-/*
 
-The MIT License (MIT)
-
-Copyright (c) 2015 Danil Gontovnik
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-*/
 
 import UIKit
 
 extension Notification.Name {
-    public static let DidResetStatistics = Notification.Name(rawValue: "DidResetStatistics")
     public static let DGPulledEnoughToTrigger = Notification.Name("DGPulledEnoughToTrigger")
+    public static let DGPulledEnoughToTriggerAndReleased = Notification.Name("DGPulledEnoughToTriggerAndReleased")
 }
 
 // MARK: -
@@ -55,6 +31,14 @@ open class DGElasticPullToRefreshView: UIView {
     // MARK: -
     // MARK: Vars
     
+    fileprivate var pullSurpassedTriggerTreshold: Bool = false {
+        willSet {
+            newValue == true {
+                NotificationCenter.default.post(Notification(name: Notification.Name.DGPulledEnoughToTrigger, object: nil))
+            }
+        }
+    }
+    
     fileprivate var _state: DGElasticPullToRefreshState = .stopped
     fileprivate(set) var state: DGElasticPullToRefreshState {
         get { return _state }
@@ -63,7 +47,7 @@ open class DGElasticPullToRefreshView: UIView {
             _state = newValue
             
             if previousValue == .dragging && newValue == .animatingBounce {
-                NotificationCenter.default.post(Notification(name: Notification.Name.DGPulledEnoughToTrigger,object: nil))
+                NotificationCenter.default.post(Notification(name: Notification.Name.DGPulledEnoughToTriggerAndReleased,object: nil))
                 loadingView?.startAnimating()
                 animateBounce()
             } else if newValue == .loading && actionHandler != nil {
@@ -184,13 +168,16 @@ open class DGElasticPullToRefreshView: UIView {
                 layoutSubviews()
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.ContentInset {
+            print("2")
             if let newContentInset = change?[NSKeyValueChangeKey.newKey] {
                 let newContentInsetTop = (newContentInset as AnyObject).uiEdgeInsetsValue.top
                 originalContentInsetTop = newContentInsetTop
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.Frame {
+            print("3")
             layoutSubviews()
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.PanGestureRecognizerState {
+            print("4")
             if let gestureState = scrollView()?.panGestureRecognizer.state, gestureState.dg_isAnyOf([.ended, .cancelled, .failed]) {
                 scrollViewDidChangeContentOffset(dragging: false)
             }
@@ -262,15 +249,27 @@ open class DGElasticPullToRefreshView: UIView {
     fileprivate func scrollViewDidChangeContentOffset(dragging: Bool) {
         let offsetY = actualContentOffsetY()
         
+        if state == .dragging
+            && offsetY >= DGElasticPullToRefreshConstants.MinOffsetToPull
+            && pullSurpassedTriggerTreshold == false {
+            // Is correct, but is triggered many times
+            pullSurpassedTriggerTreshold = true
+        }
+        
         if state == .stopped && dragging {
             state = .dragging
         } else if state == .dragging && dragging == false {
+            // *Released finger*
             if offsetY >= DGElasticPullToRefreshConstants.MinOffsetToPull {
+                // Pulled hard enough to trigger
                 state = .animatingBounce
             } else {
+                // Pulled too soft to trigger
                 state = .stopped
             }
+            pullSurpassedTriggerTreshold = false
         } else if state.isAnyOf([.dragging, .stopped]) {
+            // send offset status to loadingView for animation
             let pullProgress: CGFloat = offsetY / DGElasticPullToRefreshConstants.MinOffsetToPull
             loadingView?.setPullProgress(pullProgress)
         }

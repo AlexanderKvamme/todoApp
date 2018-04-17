@@ -104,7 +104,7 @@ class NoteTableController: UITableViewController {
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     private func addPullToRefresh() {
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-           print("Pull to refresh action handler triggered")
+            self?.handlePullToRefreshCompletion()
             }, loadingView: noteMaker.view as? DGElasticPullToRefreshLoadingView)
         tableView.dg_setPullToRefreshFillColor(UIColor.secondary)
     }
@@ -126,13 +126,24 @@ class NoteTableController: UITableViewController {
     
     private func addObservers(){
         // Observe when pulled enough to trigger
-        NotificationCenter.default.addObserver(self, selector: #selector(doSomething), name: .DGPulledEnoughToTrigger,object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHardPull), name: .DGPulledEnoughToTrigger, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHardPullAndRelease), name: .DGPulledEnoughToTriggerAndReleased,object: nil)
     }
     
-    @objc func doSomething() {
+    // MARK: Handlers
+    
+    @objc func handleHardPull() {
+        VibrationController.vibrate()
+    }
+    
+    @objc func handleHardPullAndRelease() {
         let todoTextField = noteMaker.noteMakerView.textField
         todoTextField.delegate = self
         todoTextField.becomeFirstResponder()
+    }
+    
+    func handlePullToRefreshCompletion() {
+        print("Pull to refresh action handler triggered")
     }
 }
 
@@ -152,9 +163,6 @@ extension NoteTableController {
 }
 
 extension NoteTableController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        log.debug("did begin Editing")
-    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
