@@ -104,25 +104,22 @@ class NoteTableController: UITableViewController {
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     private func addPullToRefresh() {
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            let todoTextField = (self?.noteMaker.view as! NoteMakerView).textField
-            todoTextField.delegate = self
-            todoTextField.becomeFirstResponder()
+           print("Pull to refresh action handler triggered")
             }, loadingView: noteMaker.view as? DGElasticPullToRefreshLoadingView)
         tableView.dg_setPullToRefreshFillColor(UIColor.secondary)
     }
     
     func dismissNoteMaker() {
-        guard let textOfNewNote = (self.noteMaker.view as! NoteMakerView).textField.text else {
+        // Make note only if it has text
+        if let newNote = noteMaker.makeNoteFromInput() {
+            // insert new note as a cell
+            dataSource.add(newNote)
+            let insertionRow = dataSource.index(of: newNote)
+            tableView.insertRows(at: [insertionRow], with: .automatic)
             self.tableView.dg_stopLoading()
-            return
+        } else {
+            self.tableView.dg_stopLoading()
         }
-        
-        // insert new note as a cell
-        let newNote = noteStorage.makeNote(withText: textOfNewNote)
-        dataSource.add(newNote)
-        let insertionRow = dataSource.index(of: newNote)
-        tableView.insertRows(at: [insertionRow], with: .automatic)
-        self.tableView.dg_stopLoading()
     }
     
     // MARK: - Observer Methods
@@ -133,11 +130,10 @@ class NoteTableController: UITableViewController {
     }
     
     @objc func doSomething() {
-        print("----------")
-        print("SUCCESS I DID SOMETHING")
-        print("----------")
+        let todoTextField = noteMaker.noteMakerView.textField
+        todoTextField.delegate = self
+        todoTextField.becomeFirstResponder()
     }
-    
 }
 
 // MARK: - Custom transitions
@@ -162,10 +158,15 @@ extension NoteTableController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        
+        print("should return")
         dismissNoteMaker()
+        noteMaker.animateEndOfEditing()
         
         return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        print("textFieldDidEndEditing")
     }
 }
 
