@@ -25,8 +25,8 @@ class NoteMakerView: DGElasticPullToRefreshLoadingView {
         return Constants.screen.width
     }()
     
-    var textField: UITextField = {
-        let field = UITextField()
+    var textField: BigCaretTextField = {
+        let field = BigCaretTextField()
         field.textAlignment = .center
         field.clearsOnBeginEditing = true
         field.textColor = .primaryContrast

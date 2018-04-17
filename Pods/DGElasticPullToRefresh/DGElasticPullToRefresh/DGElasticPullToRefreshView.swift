@@ -33,7 +33,7 @@ open class DGElasticPullToRefreshView: UIView {
     
     fileprivate var pullSurpassedTriggerTreshold: Bool = false {
         willSet {
-            newValue == true {
+            if newValue == true {
                 NotificationCenter.default.post(Notification(name: Notification.Name.DGPulledEnoughToTrigger, object: nil))
             }
         }
@@ -168,16 +168,13 @@ open class DGElasticPullToRefreshView: UIView {
                 layoutSubviews()
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.ContentInset {
-            print("2")
             if let newContentInset = change?[NSKeyValueChangeKey.newKey] {
                 let newContentInsetTop = (newContentInset as AnyObject).uiEdgeInsetsValue.top
                 originalContentInsetTop = newContentInsetTop
             }
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.Frame {
-            print("3")
             layoutSubviews()
         } else if keyPath == DGElasticPullToRefreshConstants.KeyPaths.PanGestureRecognizerState {
-            print("4")
             if let gestureState = scrollView()?.panGestureRecognizer.state, gestureState.dg_isAnyOf([.ended, .cancelled, .failed]) {
                 scrollViewDidChangeContentOffset(dragging: false)
             }

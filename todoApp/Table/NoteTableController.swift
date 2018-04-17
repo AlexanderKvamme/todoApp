@@ -143,7 +143,7 @@ class NoteTableController: UITableViewController {
     }
     
     func handlePullToRefreshCompletion() {
-        print("Pull to refresh action handler triggered")
+        //
     }
 }
 
@@ -166,15 +166,10 @@ extension NoteTableController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        print("should return")
         dismissNoteMaker()
         noteMaker.animateEndOfEditing()
         
         return true
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        print("textFieldDidEndEditing")
     }
 }
 
