@@ -10,6 +10,7 @@ import UIKit
 import DGElasticPullToRefresh
 import SnapKit
 
+// MARK: - Custom Notifications
 
 /// Contains a tableview with a pull to refresh
 class NoteTableController: UITableViewController {
@@ -33,6 +34,8 @@ class NoteTableController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
         
         dataSource.delegate = self
+        
+        addObservers()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,13 +57,12 @@ class NoteTableController: UITableViewController {
         setupTableView()
         updateDGColors()
     }
-    
+
     // MARK: - Methods
     
     /// Sets the color of the pulldown wave to dijon if top note is pinned
     func updateDGColors() {
         let hasPins = dataSource.hasPinnedNotes
-        print("has pins:", hasPins)
         setDGColors(hasPins: hasPins)
     }
     
@@ -105,7 +107,7 @@ class NoteTableController: UITableViewController {
             let todoTextField = (self?.noteMaker.view as! NoteMakerView).textField
             todoTextField.delegate = self
             todoTextField.becomeFirstResponder()
-            }, loadingView: self.noteMaker.view as? DGElasticPullToRefreshLoadingView)
+            }, loadingView: noteMaker.view as? DGElasticPullToRefreshLoadingView)
         tableView.dg_setPullToRefreshFillColor(UIColor.secondary)
     }
     
@@ -122,6 +124,20 @@ class NoteTableController: UITableViewController {
         tableView.insertRows(at: [insertionRow], with: .automatic)
         self.tableView.dg_stopLoading()
     }
+    
+    // MARK: - Observer Methods
+    
+    private func addObservers(){
+        // Observe when pulled enough to trigger
+        NotificationCenter.default.addObserver(self, selector: #selector(doSomething), name: .DGPulledEnoughToTrigger,object: nil)
+    }
+    
+    @objc func doSomething() {
+        print("----------")
+        print("SUCCESS I DID SOMETHING")
+        print("----------")
+    }
+    
 }
 
 // MARK: - Custom transitions
@@ -152,3 +168,4 @@ extension NoteTableController: UITextFieldDelegate {
         return true
     }
 }
+

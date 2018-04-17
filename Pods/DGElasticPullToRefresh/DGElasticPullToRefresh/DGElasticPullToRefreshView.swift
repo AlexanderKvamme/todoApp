@@ -26,6 +26,11 @@ SOFTWARE.
 
 import UIKit
 
+extension Notification.Name {
+    public static let DidResetStatistics = Notification.Name(rawValue: "DidResetStatistics")
+    public static let DGPulledEnoughToTrigger = Notification.Name("DGPulledEnoughToTrigger")
+}
+
 // MARK: -
 // MARK: DGElasticPullToRefreshState
 
@@ -58,6 +63,7 @@ open class DGElasticPullToRefreshView: UIView {
             _state = newValue
             
             if previousValue == .dragging && newValue == .animatingBounce {
+                NotificationCenter.default.post(Notification(name: Notification.Name.DGPulledEnoughToTrigger,object: nil))
                 loadingView?.startAnimating()
                 animateBounce()
             } else if newValue == .loading && actionHandler != nil {
