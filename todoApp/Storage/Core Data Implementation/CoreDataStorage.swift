@@ -22,7 +22,10 @@ class CoreDataStorage: NoteStorage {
     
     // MARK: - Methods
     
-    func makeNote(withText text: String) -> Note {
+    func makeNote(withText text: String?) -> Note? {
+        guard let text = text else { return nil }
+        guard text != "" else { return nil }
+        
         let newNote = DatabaseFacade.makeNote()
         newNote.setText(text)
         DatabaseFacade.saveContext()

@@ -35,11 +35,7 @@ final class NoteMakerController: UIViewController {
     // MARK: - Methods
     
     func makeNoteFromInput() -> Note? {
-        if let currentText = noteMakerView.textField.text {
-            return storage.makeNote(withText: currentText)
-        } else {
-            return nil
-        }
+        return storage.makeNote(withText: noteMakerView.textField.text)
     }
     
     func animateEndOfEditing() {

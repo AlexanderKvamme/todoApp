@@ -17,6 +17,6 @@ protocol NoteStorage {
     func getNotes(pinned: Bool) -> [Note]
     
     func delete(note: Note)
-    func makeNote(withText text: String) -> Note
+    func makeNote(withText text: String?) -> Note?
 }
 
