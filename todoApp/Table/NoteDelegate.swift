@@ -11,13 +11,8 @@ import UIKit
 
 
 class NoteDelegate: NSObject, UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return NoteCellView.defaultHeight
     }
-    
-    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
-        print("did end editing")
-    }
-    
 }
+

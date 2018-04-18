@@ -169,6 +169,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         case .left:
             let deleteAction = SwipeAction(style: .destructive, title: nil) { (action, ip) in
                 self.deleteNote(at: ip.row)
+                self.delegate?.playDoneSound()
             }
             deleteAction.image = UIImage.checkmarIcon
             deleteAction.backgroundColor = .green
@@ -176,6 +177,12 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         case .right:
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
                 self.togglePinned(at: ip.row)
+                // sound based on isPInned
+                if self.notes[indexPath.row].isPinned {
+                    self.delegate?.playPinSound()
+                } else {
+                    self.delegate?.playUnpinSound()
+                }
             }
             pinAction.image = .starIcon
             pinAction.backgroundColor = .dijon
