@@ -66,6 +66,7 @@ class NoteDataSource: NSObject {
     }
     
     func pinNote(at index: Int) {
+        delegate?.playPinSound()
         let noteToPin = notes[index]
         notes.remove(at: index)
         noteToPin.setPinned(true)
@@ -83,6 +84,7 @@ class NoteDataSource: NSObject {
     }
     
     func unpinNote(at index: Int) {
+        delegate?.playUnpinSound()
         let noteToUnpin = notes[index]
         notes.remove(at: index)
         noteToUnpin.setPinned(false)
@@ -177,12 +179,6 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         case .right:
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
                 self.togglePinned(at: ip.row)
-                // sound based on isPInned
-                if self.notes[indexPath.row].isPinned {
-                    self.delegate?.playPinSound()
-                } else {
-                    self.delegate?.playUnpinSound()
-                }
             }
             pinAction.image = .starIcon
             pinAction.backgroundColor = .dijon
