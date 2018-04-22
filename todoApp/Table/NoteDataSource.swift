@@ -62,6 +62,7 @@ class NoteDataSource: NSObject {
         } else {
             pinNote(at: index)
         }
+        DatabaseFacade.saveContext()
         delegate?.updateDGColors()
     }
     
@@ -121,7 +122,6 @@ class NoteDataSource: NSObject {
 
 extension NoteDataSource: UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notes.count
     }
@@ -134,12 +134,12 @@ extension NoteDataSource: UITableViewDataSource {
             let newCell = NoteCell(frame: .zero)
             newCell.delegate = self
             let tempNode = notes[currentIndex]
-            newCell.updateWith(note: tempNode)
+            newCell.updateWith(note: tempNode, at: currentIndex)
             return newCell
         }
         
         cell.delegate = self
-        cell.updateWith(note: notes[currentIndex])
+        cell.updateWith(note: notes[currentIndex], at: currentIndex)
         return cell
     }
 }

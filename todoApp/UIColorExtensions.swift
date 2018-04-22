@@ -12,15 +12,22 @@ import UIKit
 
 extension UIColor {
     // Theme
-    static let primary = UIColor(hexString: "22202d")
+    static let primary = UIColor(hexString: "383644")
     static let primaryContrast = UIColor(hexString: "f7eff6")
-    static let primaryLight = UIColor(hexString: "2e2c3a")
+    static let primaryLight = UIColor(hexString: "363443")
+    
+    
+//    static let primary = UIColor(hexString: "383644")
+//    //    static let primaryLight = UIColor(hexString:  "2e2c3a")
+//    static let primaryLight = UIColor(hexString: "2e2c3a")
+    
     
     static let secondary = UIColor(hexString: "BC4553") // noteMakerView
 
     // Static
     static let green = UIColor(hexString: "7ED99C")
     static let dijon = UIColor(hexString: "ffae5e")
+    static let dijonLight = UIColor(hexString: "FFA955")
 
     /// Initializer for Hex colors
     convenience init(hexString: String) {

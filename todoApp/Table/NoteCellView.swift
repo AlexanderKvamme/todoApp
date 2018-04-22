@@ -54,12 +54,13 @@ final class NoteCellView: UIView {
         }
     }
     
-    func updateWith(note: Note) {
+    func updateWith(note: Note, at index: Int) {
         label.text = note.getText()
-        updateBackgroundColor(for: note)
+        updateBackgroundColor(for: note, at: index)
     }
     
-    private func updateBackgroundColor(for note: Note) {
+    private func updateBackgroundColor(for note: Note, at index: Int) {
+        
         if note.isPinned {
             backgroundColor = .dijon
         } else {

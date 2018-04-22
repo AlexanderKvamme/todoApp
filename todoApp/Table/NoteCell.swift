@@ -48,8 +48,8 @@ final class NoteCell: SwipeTableViewCell {
     
     // MARK: internal methods
     
-    func updateWith(note: Note) {
-        noteCellView.updateWith(note: note)
+    func updateWith(note: Note, at index: Int) {
+        noteCellView.updateWith(note: note, at: index)
     }
 }
 
