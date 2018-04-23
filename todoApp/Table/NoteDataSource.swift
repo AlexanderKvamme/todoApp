@@ -48,12 +48,14 @@ class NoteDataSource: NSObject {
     func add(_ note: Note) {
         let firstIndexUnderPinned = getFirstIndexUnderPinnedRows()
         notes.insert(note, at: firstIndexUnderPinned)
+        delegate?.updateColors()
     }
     
     func deleteNote(at index: Int) {
         let noteToRemove = notes[index]
         notes.remove(at: index)
         noteStorage.delete(note: noteToRemove)
+        delegate?.updateColors()
     }
     
     func togglePinned(at index: Int) {
@@ -63,7 +65,7 @@ class NoteDataSource: NSObject {
             pinNote(at: index)
         }
         DatabaseFacade.saveContext()
-        delegate?.updateDGColors()
+        delegate?.updateColors()
     }
     
     func pinNote(at index: Int) {
@@ -122,12 +124,15 @@ class NoteDataSource: NSObject {
 
 extension NoteDataSource: UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?, for orientation: SwipeActionsOrientation) {
+        delegate?.updateColors()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let currentIndex = indexPath.row
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {

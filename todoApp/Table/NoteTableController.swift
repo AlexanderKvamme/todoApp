@@ -18,9 +18,9 @@ enum globals {
     static var screenWidth = UIScreen.main.bounds.height
 }
 
+
 /// Contains a tableview with a pull to refresh
 class NoteTableController: UIViewController, UITableViewDelegate{
-
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
@@ -29,6 +29,8 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     
     fileprivate var bottomView = UIView()
     fileprivate var heightConstraint: Constraint? = nil
+    fileprivate var initialFooterOffset: CGFloat = 0
+    fileprivate var transitioning = false
     
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
@@ -47,6 +49,10 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         addObservers()
     }
     
+    deinit {
+        removeObservers()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,23 +63,56 @@ class NoteTableController: UIViewController, UITableViewDelegate{
 //        setupNavbar()
         setupTableView()
         addPullToRefresh()
+        setColors(hasPins: dataSource.hasPinnedNotes)
         
         tableView.reloadData()
+        
+        initialFooterOffset = calculateFooterHeight(for: tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupTableView()
-        updateDGColors()
+        updateColors()
         addSubviewAndConstraints()
+        updateColors()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        updateColors()
+    }
     // MARK: - Methods
+    
+    @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "contentSize" {
+            updateColors()
+        }
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            shakeHandler()
+        }
+    }
+    
+    fileprivate func shakeHandler() {
+        print("handle shake")
+    }
+    
+    fileprivate func checkContentSize() {
+        let screenHeight = UIScreen.main.bounds.height
+        let contentSize = tableView.contentSize.height
+        
+        if contentSize < screenHeight {
+            bottomView.backgroundColor = .primary
+        } else {
+            bottomView.backgroundColor = .green
+        }
+    }
     
     fileprivate func addSubviewAndConstraints() {
         view.addSubview(tableView)
         view.addSubview(bottomView)
         
-
         tableView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom)
             make.left.equalTo(view.snp.left)
@@ -82,26 +121,23 @@ class NoteTableController: UIViewController, UITableViewDelegate{
             make.width.equalTo(view.snp.width)
         }
         
-        // FIXME: BottomView
-        
         bottomView.snp.makeConstraints { (make) in
             make.bottom.equalTo(view.snp.bottom)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.width.equalTo(view.snp.width)
-            self.heightConstraint = make.height.equalTo(0).offset(0).constraint
+            self.heightConstraint = make.height.equalTo(0).offset(initialFooterOffset).constraint
         }
-        
-        bottomView.backgroundColor = .green
     }
     
     /// Sets the color of the pulldown wave to dijon if top note is pinned
-    func updateDGColors() {
+    func updateColors() {
         let hasPins = dataSource.hasPinnedNotes
-        setDGColors(hasPins: hasPins)
+        setColors(hasPins: hasPins)
+        checkContentSize()
     }
     
-    private func setDGColors(hasPins: Bool) {
+    private func setColors(hasPins: Bool) {
         switch hasPins {
         case true:
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
@@ -128,8 +164,6 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
@@ -156,12 +190,26 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         }
     }
     
+    // MARK: - Transition
+    
+    func animateToNextController(from view: UIView) {
+//        let frame = view.frame
+        print("would transition from: ", view.frame)
+    }
+    
     // MARK: - Observer Methods
     
     private func addObservers(){
+        // Observe size changed to update footer colors
+        tableView.addObserver(self, forKeyPath: "contentSize", options: [.new, .old, .prior], context: nil)
+        
         // Observe when pulled enough to trigger
         NotificationCenter.default.addObserver(self, selector: #selector(handleHardPull), name: .DGPulledEnoughToTrigger, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleHardPullAndRelease), name: .DGPulledEnoughToTriggerAndReleased,object: nil)
+    }
+    
+    private func removeObservers() {
+        tableView.removeObserver(self, forKeyPath: "contentSize")
     }
     
     // MARK: Handlers
@@ -185,22 +233,30 @@ class NoteTableController: UIViewController, UITableViewDelegate{
 // MARK: - Delegate
 
 extension NoteTableController {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let screenheight = UIScreen.main.bounds.height
-        let contentSize = scrollView.contentSize.height
-        let contentOffset = scrollView.contentOffset.y
-        let testHeight = (contentSize - screenheight - contentOffset) * -1
+        let newFooterHeight = calculateFooterHeight(for: scrollView)
         
-        heightConstraint?.update(offset: testHeight)
+        if newFooterHeight > 100 && transitioning == false {
+            print("Would trigger transition")
+            transitioning = true
+            animateToNextController(from: bottomView)
+        }
+        
+        heightConstraint?.update(offset: newFooterHeight)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let screenheight = UIScreen.main.bounds.height
+        heightConstraint?.update(offset: calculateFooterHeight(for: scrollView))
+    }
+    
+    private func calculateFooterHeight(for scrollView: UIScrollView) -> CGFloat {
+        let screenHeight = UIScreen.main.bounds.height
         let contentSize = scrollView.contentSize.height
         let contentOffset = scrollView.contentOffset.y
-        let bottomViewHeight = (contentSize - screenheight - contentOffset) * -1
+        let bottomViewHeight = (contentSize - screenHeight - contentOffset) * -1
 
-        heightConstraint?.update(offset: bottomViewHeight)
+        return bottomViewHeight
     }
 }
 
