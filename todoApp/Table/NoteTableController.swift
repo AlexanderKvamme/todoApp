@@ -17,9 +17,7 @@ import AVFoundation
 class NoteTableController: UITableViewController {
 
     private var audioPlayer = AVAudioPlayer()
-    
     private let noteStorage: NoteStorage
-    private let tableViewDelegate: NoteDelegate
     private let dataSource: NoteDataSource
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
@@ -31,12 +29,12 @@ class NoteTableController: UITableViewController {
     
     init(with storage: NoteStorage) {
         self.noteStorage = storage
-        self.tableViewDelegate = NoteDelegate()
         self.dataSource = NoteDataSource(with: storage)
         
         super.init(nibName: nil, bundle: nil)
         
         dataSource.delegate = self
+        tableView.delegate = self
         addObservers()
     }
     
@@ -150,6 +148,18 @@ class NoteTableController: UITableViewController {
     
     func handlePullToRefreshCompletion() {
         //
+    }
+}
+
+// MARK: - Delegate
+
+extension NoteTableController {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let screenheight = UIScreen.main.bounds.height
+        let contentSize = scrollView.contentSize.height
+        let contentOffset = scrollView.contentOffset.y
+        
+        print("scrolledbeyond zero:", contentSize - screenheight - contentOffset)
     }
 }
 
