@@ -13,13 +13,22 @@ import AVFoundation
 
 // MARK: - Custom Notifications
 
+enum globals {
+    static var screenHeight = UIScreen.main.bounds.height
+    static var screenWidth = UIScreen.main.bounds.height
+}
+
 /// Contains a tableview with a pull to refresh
-class NoteTableController: UITableViewController {
+class NoteTableController: UIViewController, UITableViewDelegate{
 
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
+    private(set) var tableView = UITableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
+    
+    fileprivate var bottomView = UIView()
+    fileprivate var heightConstraint: Constraint? = nil
     
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
@@ -55,9 +64,36 @@ class NoteTableController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         setupTableView()
         updateDGColors()
+        addSubviewAndConstraints()
     }
 
     // MARK: - Methods
+    
+    fileprivate func addSubviewAndConstraints() {
+        view.addSubview(tableView)
+        view.addSubview(bottomView)
+        
+
+        tableView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.snp.bottom)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+            make.top.equalTo(view.snp.top)
+            make.width.equalTo(view.snp.width)
+        }
+        
+        // FIXME: BottomView
+        
+        bottomView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(view.snp.bottom)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+            make.width.equalTo(view.snp.width)
+            self.heightConstraint = make.height.equalTo(0).offset(0).constraint
+        }
+        
+        bottomView.backgroundColor = .green
+    }
     
     /// Sets the color of the pulldown wave to dijon if top note is pinned
     func updateDGColors() {
@@ -149,12 +185,22 @@ class NoteTableController: UITableViewController {
 // MARK: - Delegate
 
 extension NoteTableController {
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let screenheight = UIScreen.main.bounds.height
         let contentSize = scrollView.contentSize.height
         let contentOffset = scrollView.contentOffset.y
+        let testHeight = (contentSize - screenheight - contentOffset) * -1
         
-        print("scrolledbeyond zero:", contentSize - screenheight - contentOffset)
+        heightConstraint?.update(offset: testHeight)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let screenheight = UIScreen.main.bounds.height
+        let contentSize = scrollView.contentSize.height
+        let contentOffset = scrollView.contentOffset.y
+        let bottomViewHeight = (contentSize - screenheight - contentOffset) * -1
+
+        heightConstraint?.update(offset: bottomViewHeight)
     }
 }
 
