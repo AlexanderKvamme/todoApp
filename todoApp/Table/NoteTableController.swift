@@ -48,7 +48,6 @@ class NoteTableController: UITableViewController {
 //        setupNavbar()
         setupTableView()
         addPullToRefresh()
-        setTransitioningDelegate()
         
         tableView.reloadData()
     }
@@ -75,10 +74,6 @@ class NoteTableController: UITableViewController {
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
             tableView.backgroundColor = UIColor.primary
         }
-    }
-    
-    private func setTransitioningDelegate() {
-        transitioningDelegate = self
     }
     
     private func setupNavbar() {
@@ -164,19 +159,6 @@ extension NoteTableController {
 }
 
 // MARK: - Custom transitions
-
-extension NoteTableController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController,source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            // FIXME: Use black center frams
-            return FlipPresentAnimationController(originFrame: view.frame)
-    }
-}
-
-extension NoteTableController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("*bama preparing for segue in todo*")
-    }
-}
 
 extension NoteTableController: UITextFieldDelegate {
     
