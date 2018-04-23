@@ -40,6 +40,8 @@
 		11CEFFE32087D27B00849DA0 /* Peak_Error3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11CEFFE22087D27B00849DA0 /* Peak_Error3.wav */; };
 		11CEFFE52087D38200849DA0 /* Peak_Notification12.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11CEFFE42087D38200849DA0 /* Peak_Notification12.wav */; };
 		11CEFFE72087D38E00849DA0 /* Peak_Notification8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11CEFFE62087D38E00849DA0 /* Peak_Notification8.wav */; };
+		11CEFFE9208DDC4D00849DA0 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CEFFE8208DDC4C00849DA0 /* URLExtensions.swift */; };
+		11CEFFEB208DDCD000849DA0 /* SoundEffectPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CEFFEA208DDCD000849DA0 /* SoundEffectPlayer.swift */; };
 		11D3AC44207D2D1D005CD575 /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC43207D2D1D005CD575 /* CoreDataStorage.swift */; };
 		11D3AC46207D2D47005CD575 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC45207D2D47005CD575 /* CoreDataManager.swift */; };
 		11D3AC48207D42DD005CD575 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC47207D42DD005CD575 /* CoreDataFacade.swift */; };
@@ -107,6 +109,8 @@
 		11CEFFE22087D27B00849DA0 /* Peak_Error3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Peak_Error3.wav; sourceTree = "<group>"; };
 		11CEFFE42087D38200849DA0 /* Peak_Notification12.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Peak_Notification12.wav; sourceTree = "<group>"; };
 		11CEFFE62087D38E00849DA0 /* Peak_Notification8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Peak_Notification8.wav; sourceTree = "<group>"; };
+		11CEFFE8208DDC4C00849DA0 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
+		11CEFFEA208DDCD000849DA0 /* SoundEffectPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffectPlayer.swift; sourceTree = "<group>"; };
 		11D3AC43207D2D1D005CD575 /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
 		11D3AC45207D2D47005CD575 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		11D3AC47207D42DD005CD575 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 				111D9F6D2083A3B2006B1B66 /* UIImageExtensions.swift */,
 				111D9F702083A4E4006B1B66 /* UIColorExtensions.swift */,
 				111D9F722083A7FE006B1B66 /* UIFontExtensions.swift */,
+				11CEFFE8208DDC4C00849DA0 /* URLExtensions.swift */,
 			);
 			name = "Native Extensions";
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				112D961D20867D9C0052BBC6 /* SoundManager.swift */,
+				11CEFFEA208DDCD000849DA0 /* SoundEffectPlayer.swift */,
 			);
 			name = Sound;
 			sourceTree = "<group>";
@@ -656,6 +662,7 @@
 				11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */,
 				111D9F712083A4E4006B1B66 /* UIColorExtensions.swift in Sources */,
 				11D3AC4A20825DF8005CD575 /* NoteExtensions.swift in Sources */,
+				11CEFFE9208DDC4D00849DA0 /* URLExtensions.swift in Sources */,
 				11D3AC44207D2D1D005CD575 /* CoreDataStorage.swift in Sources */,
 				11B899CB207CB62400F98877 /* Constants.swift in Sources */,
 				11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */,
@@ -672,6 +679,7 @@
 				112D961E20867D9D0052BBC6 /* SoundManager.swift in Sources */,
 				DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */,
 				111D01A72070F097009D3BA5 /* MyNavigationController.swift in Sources */,
+				11CEFFEB208DDCD000849DA0 /* SoundEffectPlayer.swift in Sources */,
 				111D01A42070DA4F009D3BA5 /* AnimationHelper.swift in Sources */,
 				1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */,
 				11D3AC48207D42DD005CD575 /* CoreDataFacade.swift in Sources */,

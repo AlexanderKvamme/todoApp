@@ -191,43 +191,9 @@ extension NoteTableController: UITextFieldDelegate {
 
 // MARK: - Sound
 
-extension URL {
-    enum sounds {
-        enum note {
-            static let _1 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Note1", ofType: "wav")!)
-            static let _2 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Note2", ofType: "wav")!)
-            static let _3 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Note3", ofType: "wav")!)
-            static let _4 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Note4", ofType: "wav")!)
-            static let _5 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Note5", ofType: "wav")!)
-        }
-        
-        enum done {
-            static let _1 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done1", ofType: "wav")!)
-            static let _2 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done2", ofType: "wav")!)
-            static let _5 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done5", ofType: "wav")!)
-            static let _8 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done8", ofType: "wav")!)
-        }
-        
-        enum error {
-            static let _2 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Error2", ofType: "wav")!)
-            static let _3 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Error3", ofType: "wav")!)
-        }
-        
-        enum notification {
-            static let _4 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Notification4", ofType: "wav")!)
-            static let _8 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Notification8", ofType: "wav")!)
-            static let _12 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Notification12", ofType: "wav")!)
-        }
-    }
-}
-
-protocol SoundEffectPlayer: class {
-    func play(songAt url: URL)
-}
-
 extension NoteTableController: SoundEffectPlayer {
     
-    // FIXME: User multiple sounds when completing multiple tasks
+    // FIXME: User multiple sounds when completing multiple tasks sequentially
     
     static var lastCompletion: Date? = nil
     static var completionStreak = 0
