@@ -57,6 +57,10 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+    }
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -85,6 +89,9 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentSize" {
             updateColors()
+
+            let newFooterHeight = calculateFooterHeight(for: tableView)
+            heightConstraint?.update(offset: newFooterHeight)
         }
     }
     
@@ -112,6 +119,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     fileprivate func addSubviewAndConstraints() {
         view.addSubview(tableView)
         view.addSubview(bottomView)
+        bottomView.isUserInteractionEnabled = false
         
         tableView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom)
@@ -126,6 +134,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.width.equalTo(view.snp.width)
+
             self.heightConstraint = make.height.equalTo(0).offset(initialFooterOffset).constraint
         }
     }
@@ -248,6 +257,10 @@ extension NoteTableController {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         heightConstraint?.update(offset: calculateFooterHeight(for: scrollView))
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        print("end scrolling")
     }
     
     private func calculateFooterHeight(for scrollView: UIScrollView) -> CGFloat {
