@@ -27,9 +27,10 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     private(set) var tableView = UITableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
-    fileprivate var bottomView = UIView()
-    fileprivate var heightConstraint: Constraint? = nil
-    fileprivate var initialFooterOffset: CGFloat = 0
+    fileprivate var footerView = UIView()
+    fileprivate var topBackground = UIView()
+//    fileprivate var heightConstraint: Constraint? = nil
+//    fileprivate var initialFooterOffset: CGFloat = 0
     fileprivate var transitioning = false
     
     lazy var navHeight = {
@@ -70,7 +71,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         
         tableView.reloadData()
         
-        initialFooterOffset = calculateFooterHeight(for: tableView)
+//        initialFooterOffset = calculateFooterHeight(for: tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,8 +91,8 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         if keyPath == "contentSize" {
             updateColors()
 
-            let newFooterHeight = calculateFooterHeight(for: tableView)
-            self.heightConstraint?.update(offset: newFooterHeight)
+//            let newFooterHeight = calculateFooterHeight(for: tableView)
+//            self.heightConstraint?.update(offset: newFooterHeight)
         }
     }
     
@@ -116,21 +117,31 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         }
     }
     
-    fileprivate func checkContentSize() {
-        let screenHeight = UIScreen.main.bounds.height
-        let contentSize = tableView.contentSize.height
-        
-        if contentSize < screenHeight {
-            bottomView.backgroundColor = .primary
-        } else {
-            bottomView.backgroundColor = .green
-        }
-    }
+//    fileprivate func checkContentSize() {
+//        let screenHeight = UIScreen.main.bounds.height
+//        let contentSize = tableView.contentSize.height
+//
+//        if contentSize < screenHeight {
+//            bottomView.backgroundColor = .primary
+//        } else {
+//            bottomView.backgroundColor = .green
+//        }
+//    }
     
     fileprivate func addSubviewAndConstraints() {
+        topBackground.backgroundColor = .green
+        
+        view.addSubview(topBackground)
+        view.addSubview(footerView)
         view.addSubview(tableView)
-        view.addSubview(bottomView)
-        bottomView.isUserInteractionEnabled = false
+        footerView.isUserInteractionEnabled = false
+        
+        topBackground.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+            make.bottom.equalTo(view.snp.centerY)
+        }
         
         tableView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom)
@@ -140,13 +151,11 @@ class NoteTableController: UIViewController, UITableViewDelegate{
             make.width.equalTo(view.snp.width)
         }
         
-        bottomView.snp.makeConstraints { (make) in
+        footerView.snp.makeConstraints { (make) in
             make.bottom.equalTo(view.snp.bottom)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
-            make.width.equalTo(view.snp.width)
-
-            self.heightConstraint = make.height.equalTo(0).offset(initialFooterOffset).constraint
+            make.top.equalTo(view.snp.top)
         }
     }
     
@@ -154,17 +163,19 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     func updateColors() {
         let hasPins = dataSource.hasPinnedNotes
         setColors(hasPins: hasPins)
-        checkContentSize()
+//        checkContentSize()
     }
     
     private func setColors(hasPins: Bool) {
         switch hasPins {
         case true:
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
-            tableView.backgroundColor = UIColor.dijon
+            topBackground.backgroundColor = .dijon
+//            tableView.backgroundColor = UIColor.dijon
         case false:
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
-            tableView.backgroundColor = UIColor.primary
+            topBackground.backgroundColor = .primary
+//            tableView.backgroundColor = UIColor.primary
         }
     }
     
@@ -184,6 +195,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.backgroundColor = .clear
     }
 
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
@@ -260,16 +272,21 @@ extension NoteTableController {
         if newFooterHeight > 100 && transitioning == false {
             print("Would trigger transition")
             transitioning = true
-            animateToNextController(from: bottomView)
+            animateToNextController(from: footerView)
         }
         
-        heightConstraint?.update(offset: newFooterHeight)
+        if newFooterHeight == 0 {
+            print("was 0 resetting transition")
+            transitioning = false
+        }
+        
+//        heightConstraint?.update(offset: newFooterHeight)
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        heightConstraint?.update(offset: calculateFooterHeight(for: scrollView))
-    }
-    
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        heightConstraint?.update(offset: calculateFooterHeight(for: scrollView))
+//    }
+//
     private func calculateFooterHeight(for scrollView: UIScrollView) -> CGFloat {
         let screenHeight = UIScreen.main.bounds.height
         let contentSize = scrollView.contentSize.height
