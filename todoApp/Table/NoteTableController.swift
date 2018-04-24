@@ -91,7 +91,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
             updateColors()
 
             let newFooterHeight = calculateFooterHeight(for: tableView)
-            heightConstraint?.update(offset: newFooterHeight)
+            self.heightConstraint?.update(offset: newFooterHeight)
         }
     }
     
@@ -102,7 +102,18 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     }
     
     fileprivate func shakeHandler() {
-        print("handle shake")
+        attemptRecoverDeletedNote()
+    }
+    
+    private func attemptRecoverDeletedNote() {
+        if let previouslyDeletedNote = noteStorage.undoDeletion() {
+            dataSource.add(previouslyDeletedNote)
+            playRecoveredSound()
+            let insertionRow = dataSource.index(of: previouslyDeletedNote)
+            tableView.insertRows(at: [insertionRow], with: .automatic)
+        } else {
+            playCouldNotRecoverSound()
+        }
     }
     
     fileprivate func checkContentSize() {
@@ -259,10 +270,6 @@ extension NoteTableController {
         heightConstraint?.update(offset: calculateFooterHeight(for: scrollView))
     }
     
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        print("end scrolling")
-    }
-    
     private func calculateFooterHeight(for scrollView: UIScrollView) -> CGFloat {
         let screenHeight = UIScreen.main.bounds.height
         let contentSize = scrollView.contentSize.height
@@ -331,6 +338,14 @@ extension NoteTableController: SoundEffectPlayer {
     
     func playPullSound() {
         play(songAt: URL.sounds.note._2)
+    }
+    
+    func playRecoveredSound() {
+        play(songAt: URL.sounds.done._9)
+    }
+    
+    func playCouldNotRecoverSound() {
+        play(songAt: URL.sounds.error._2)
     }
 }
 

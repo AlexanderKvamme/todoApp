@@ -10,7 +10,11 @@ import Foundation
 
 class CoreDataStorage: NoteStorage {
 
-    // MARK: - Properties
+    // MARK: Static Properties
+    
+    static var recoverableNote: Note?
+    
+    // MARK: Properties
     
     var pinnedNotesCount: Int {
         return DatabaseFacade.pinnedNotesCount
@@ -45,8 +49,24 @@ class CoreDataStorage: NoteStorage {
     // MARK: Deletion
     
     func delete(note: Note) {
-        DatabaseFacade.delete(note)
+        CoreDataStorage.deleteRecoverableNote()
+        CoreDataStorage.recoverableNote = note
         DatabaseFacade.saveContext()
+    }
+    
+    func undoDeletion() -> Note? {
+        if let recoveredNote = CoreDataStorage.recoverableNote {
+            CoreDataStorage.recoverableNote = nil
+            return recoveredNote
+        } else {
+            return nil
+        }
+    }
+    
+    static func deleteRecoverableNote() {
+        if let recoverable = CoreDataStorage.recoverableNote {
+            DatabaseFacade.delete(recoverable)
+        }
     }
 }
 

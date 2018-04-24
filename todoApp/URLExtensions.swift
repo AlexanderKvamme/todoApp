@@ -24,6 +24,7 @@ extension URL {
             static let _2 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done2", ofType: "wav")!)
             static let _5 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done5", ofType: "wav")!)
             static let _8 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done8", ofType: "wav")!)
+            static let _9 = URL(fileURLWithPath: Bundle.main.path(forResource: "Peak_Done9", ofType: "wav")!)
         }
         
         enum error {
