@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import SwiftyBeaver
 import DGElasticPullToRefresh
+import AVFoundation
 
 // SwiftyBeaver
 let log = SwiftyBeaver.self
@@ -39,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         customizeAppearence()
+        setupAVSessions()
         
         return true
     }
@@ -78,6 +80,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupSwiftyBeaver() {
         let console = ConsoleDestination()
         SwiftyBeaver.addDestination(console)
+    }
+    
+    private func setupAVSessions() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryAmbient)
+        } catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
     }
 
     // MARK: - Core Data stack

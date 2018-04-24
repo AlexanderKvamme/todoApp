@@ -57,7 +57,6 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
     }
@@ -84,6 +83,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     override func viewDidAppear(_ animated: Bool) {
         updateColors()
     }
+    
     // MARK: - Methods
     
     @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
