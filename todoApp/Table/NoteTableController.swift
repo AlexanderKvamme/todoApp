@@ -28,7 +28,10 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     private(set) var tableView = UITableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
-//    fileprivate var footerView = UIView()
+    private var topbackgroundHeight: Constraint? = nil
+    
+    // Backgrounds to enable scrolling from missing cells
+    fileprivate var bottomBackground = UIView()
     fileprivate var topBackground = UIView()
     fileprivate var transitioning = false
     fileprivate var beganScrollingAt: CGPoint!
@@ -112,34 +115,33 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     }
     
     fileprivate func addSubviewAndConstraints() {
-        topBackground.backgroundColor = .green
-        
+        view.addSubview(bottomBackground)
         view.addSubview(topBackground)
-//        view.addSubview(footerView)
         view.addSubview(tableView)
-//        footerView.isUserInteractionEnabled = false
+        
+        bottomBackground.isUserInteractionEnabled = false
         
         topBackground.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
-            make.bottom.equalTo(view.snp.centerY)
+//            make.bottom.equalTo(view.snp.bottom)
+            self.topbackgroundHeight = make.height.equalTo(200).offset(0).constraint
         }
-        
+
         tableView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.top.equalTo(view.snp.top)
-            make.width.equalTo(view.snp.width)
         }
         
-//        footerView.snp.makeConstraints { (make) in
-//            make.bottom.equalTo(view.snp.bottom)
-//            make.left.equalTo(view.snp.left)
-//            make.right.equalTo(view.snp.right)
-//            make.top.equalTo(view.snp.top)
-//        }
+        bottomBackground.snp.makeConstraints { (make) in
+            make.bottom.equalTo(view.snp.bottom)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+            make.top.equalTo(view.snp.top)
+        }
     }
     
     /// Sets the color of the pulldown wave to dijon if top note is pinned
@@ -157,6 +159,19 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         case false:
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
             topBackground.backgroundColor = .primary
+        }
+        setBottomFooterColor()
+    }
+    
+    private func setBottomFooterColor() {
+        if let lastNote = dataSource.getLastNote() {
+            if lastNote.isPinned {
+                bottomBackground.backgroundColor = .dijon
+            } else {
+                bottomBackground.backgroundColor = .primary
+            }
+        } else {
+            bottomBackground.backgroundColor = .primary
         }
     }
     
@@ -256,7 +271,8 @@ extension NoteTableController {
         if overscroll > 100 && transitioning == false {
             print("Would trigger transition")
             transitioning = true
-            animateToNextController(from: footerView)
+            VibrationController.vibrate()
+//            animateToNextController(from: footerView)
         }
     }
     
@@ -266,8 +282,13 @@ extension NoteTableController {
         let contentOffset = scrollView.contentOffset.y
 
         if contentSize > screenHeight {
-            return (contentSize - screenHeight - contentOffset) * -1
+            // table is scrollable
+            let overscroll = (contentSize - screenHeight - contentOffset) * -1
+            topbackgroundHeight?.update(offset: overscroll * -1)
+            return overscroll
         } else {
+            // table is not scrollable
+            topbackgroundHeight?.update(offset: contentOffset * -1)
             return contentOffset
         }
     }

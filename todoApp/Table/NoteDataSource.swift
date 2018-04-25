@@ -68,6 +68,11 @@ class NoteDataSource: NSObject {
         delegate?.updateColors()
     }
     
+    func getLastNote() -> Note? {
+        if notes.count == 0 { return nil }
+        return notes[notes.count-1]
+    }
+    
     func pinNote(at index: Int) {
         delegate?.playPinSound()
         let noteToPin = notes[index]
