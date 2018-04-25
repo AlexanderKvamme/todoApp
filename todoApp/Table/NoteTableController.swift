@@ -24,14 +24,14 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
+    
     private(set) var tableView = UITableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
-    fileprivate var footerView = UIView()
+//    fileprivate var footerView = UIView()
     fileprivate var topBackground = UIView()
-//    fileprivate var heightConstraint: Constraint? = nil
-//    fileprivate var initialFooterOffset: CGFloat = 0
     fileprivate var transitioning = false
+    fileprivate var beganScrollingAt: CGPoint!
     
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
@@ -58,9 +58,6 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-    }
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -70,8 +67,6 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         setColors(hasPins: dataSource.hasPinnedNotes)
         
         tableView.reloadData()
-        
-//        initialFooterOffset = calculateFooterHeight(for: tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,7 +85,6 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentSize" {
             updateColors()
-
 //            let newFooterHeight = calculateFooterHeight(for: tableView)
 //            self.heightConstraint?.update(offset: newFooterHeight)
         }
@@ -117,24 +111,13 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         }
     }
     
-//    fileprivate func checkContentSize() {
-//        let screenHeight = UIScreen.main.bounds.height
-//        let contentSize = tableView.contentSize.height
-//
-//        if contentSize < screenHeight {
-//            bottomView.backgroundColor = .primary
-//        } else {
-//            bottomView.backgroundColor = .green
-//        }
-//    }
-    
     fileprivate func addSubviewAndConstraints() {
         topBackground.backgroundColor = .green
         
         view.addSubview(topBackground)
-        view.addSubview(footerView)
+//        view.addSubview(footerView)
         view.addSubview(tableView)
-        footerView.isUserInteractionEnabled = false
+//        footerView.isUserInteractionEnabled = false
         
         topBackground.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top)
@@ -151,12 +134,12 @@ class NoteTableController: UIViewController, UITableViewDelegate{
             make.width.equalTo(view.snp.width)
         }
         
-        footerView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(view.snp.bottom)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
-            make.top.equalTo(view.snp.top)
-        }
+//        footerView.snp.makeConstraints { (make) in
+//            make.bottom.equalTo(view.snp.bottom)
+//            make.left.equalTo(view.snp.left)
+//            make.right.equalTo(view.snp.right)
+//            make.top.equalTo(view.snp.top)
+//        }
     }
     
     /// Sets the color of the pulldown wave to dijon if top note is pinned
@@ -171,11 +154,9 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         case true:
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
             topBackground.backgroundColor = .dijon
-//            tableView.backgroundColor = UIColor.dijon
         case false:
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
             topBackground.backgroundColor = .primary
-//            tableView.backgroundColor = UIColor.primary
         }
     }
     
@@ -227,6 +208,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
     func animateToNextController(from view: UIView) {
 //        let frame = view.frame
         print("would transition from: ", view.frame)
+        VibrationController.vibrate()
     }
     
     // MARK: - Observer Methods
@@ -265,35 +247,29 @@ class NoteTableController: UIViewController, UITableViewDelegate{
 // MARK: - Delegate
 
 extension NoteTableController {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        transitioning = false
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let newFooterHeight = calculateFooterHeight(for: scrollView)
-        
-        if newFooterHeight > 100 && transitioning == false {
+        let overscroll = calculateOverScroll(for: scrollView)
+        if overscroll > 100 && transitioning == false {
             print("Would trigger transition")
             transitioning = true
             animateToNextController(from: footerView)
         }
-        
-        if newFooterHeight == 0 {
-            print("was 0 resetting transition")
-            transitioning = false
-        }
-        
-//        heightConstraint?.update(offset: newFooterHeight)
     }
     
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        heightConstraint?.update(offset: calculateFooterHeight(for: scrollView))
-//    }
-//
-    private func calculateFooterHeight(for scrollView: UIScrollView) -> CGFloat {
+    private func calculateOverScroll(for scrollView: UIScrollView) -> CGFloat {
         let screenHeight = UIScreen.main.bounds.height
         let contentSize = scrollView.contentSize.height
         let contentOffset = scrollView.contentOffset.y
-        let bottomViewHeight = (contentSize - screenHeight - contentOffset) * -1
 
-        return bottomViewHeight
+        if contentSize > screenHeight {
+            return (contentSize - screenHeight - contentOffset) * -1
+        } else {
+            return contentOffset
+        }
     }
 }
 
