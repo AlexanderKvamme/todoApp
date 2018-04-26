@@ -22,8 +22,10 @@ final class NoteCellView: UIView {
     
     let label: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.custom(style: .bold, ofSize: .big)
+        lbl.font = UIFont.custom(style: .bold, ofSize: .medium)
+        lbl.textAlignment = .center
         lbl.textColor = .primaryContrast
+        lbl.numberOfLines = 2
         return lbl
     }()
     
@@ -50,7 +52,10 @@ final class NoteCellView: UIView {
         label.sizeToFit()
         
         label.snp.makeConstraints { (make) in
-            make.center.equalTo(snp.center)
+            make.left.equalTo(snp.leftMargin)
+            make.right.equalTo(snp.rightMargin)
+            make.top.equalTo(snp.top)
+            make.bottom.equalTo(snp.bottom)
         }
     }
     
@@ -60,7 +65,6 @@ final class NoteCellView: UIView {
     }
     
     private func updateBackgroundColor(for note: Note, at index: Int) {
-        
         if note.isPinned {
             backgroundColor = .dijon
         } else {

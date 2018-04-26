@@ -30,6 +30,7 @@ class NoteMakerView: DGElasticPullToRefreshLoadingView {
         field.textAlignment = .center
         field.clearsOnBeginEditing = true
         field.textColor = .primaryContrast
+        field.adjustsFontSizeToFitWidth = true
         field.font = .custom(style: .bold, ofSize: .bigger)
         return field
     }()
@@ -54,7 +55,9 @@ class NoteMakerView: DGElasticPullToRefreshLoadingView {
         addSubview(textField)
         
         textField.snp.makeConstraints { (make) in
-            make.center.equalTo(snp.center)
+            make.left.equalTo(snp.left)
+            make.right.equalTo(snp.right)
+            make.centerY.equalTo(snp.centerY)
         }
     }
 }
