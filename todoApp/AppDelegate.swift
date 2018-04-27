@@ -35,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // wrap in navigationController
 //        let navcontroller = MyNavigationController(rootViewController: rootViewController)
 //        window?.rootViewController = navcontroller
-        
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
         

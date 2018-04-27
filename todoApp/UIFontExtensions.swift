@@ -31,7 +31,7 @@ enum CustomFont: String {
 
 enum FontSize: CGFloat {
     case small = 8
-    case medium = 16
+    case medium = 20
     case big = 24
     case bigger = 32
     case biggest = 40

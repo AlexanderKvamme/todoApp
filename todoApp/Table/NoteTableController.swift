@@ -125,7 +125,6 @@ class NoteTableController: UIViewController, UITableViewDelegate{
             make.top.equalTo(view.snp.top)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
-//            make.bottom.equalTo(view.snp.bottom)
             self.topbackgroundHeight = make.height.equalTo(200).offset(0).constraint
         }
 
@@ -284,11 +283,16 @@ extension NoteTableController {
         if contentSize > screenHeight {
             // table is scrollable
             let overscroll = (contentSize - screenHeight - contentOffset) * -1
-            topbackgroundHeight?.update(offset: overscroll * -1)
+            
+            if (overscroll * -1) >= 0 {
+                topbackgroundHeight?.update(offset: overscroll * -1)
+            }
             return overscroll
         } else {
             // table is not scrollable
-            topbackgroundHeight?.update(offset: contentOffset * -1)
+            if (contentOffset * -1) >= 0 {
+                topbackgroundHeight?.update(offset: contentOffset * -1)
+            }
             return contentOffset
         }
     }
