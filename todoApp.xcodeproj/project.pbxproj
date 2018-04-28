@@ -17,6 +17,7 @@
 		111D9F6E2083A3B2006B1B66 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D9F6D2083A3B2006B1B66 /* UIImageExtensions.swift */; };
 		111D9F712083A4E4006B1B66 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D9F702083A4E4006B1B66 /* UIColorExtensions.swift */; };
 		111D9F732083A7FE006B1B66 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D9F722083A7FE006B1B66 /* UIFontExtensions.swift */; };
+		112CCEB02094B15800071578 /* SectorTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112CCEAF2094B15700071578 /* SectorTableView.swift */; };
 		112D96152084B1510052BBC6 /* NoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96142084B1510052BBC6 /* NoteDelegate.swift */; };
 		112D96192086266C0052BBC6 /* Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96182086266C0052BBC6 /* Vibration.swift */; };
 		112D961B20864BCD0052BBC6 /* BigCaretTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */; };
@@ -87,6 +88,7 @@
 		111D9F6D2083A3B2006B1B66 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		111D9F702083A4E4006B1B66 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		111D9F722083A7FE006B1B66 /* UIFontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
+		112CCEAF2094B15700071578 /* SectorTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorTableView.swift; sourceTree = "<group>"; };
 		112D96142084B1510052BBC6 /* NoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDelegate.swift; sourceTree = "<group>"; };
 		112D96182086266C0052BBC6 /* Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vibration.swift; sourceTree = "<group>"; };
 		112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCaretTextField.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */,
+				112CCEAF2094B15700071578 /* SectorTableView.swift */,
 				11718E3C206ABFD200EC6C0D /* NoteCell.swift */,
 				11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */,
 				11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */,
@@ -693,6 +696,7 @@
 				11CEFFE9208DDC4D00849DA0 /* URLExtensions.swift in Sources */,
 				11D3AC44207D2D1D005CD575 /* CoreDataStorage.swift in Sources */,
 				11B899CB207CB62400F98877 /* Constants.swift in Sources */,
+				112CCEB02094B15800071578 /* SectorTableView.swift in Sources */,
 				11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */,
 				111D01A2207054FD009D3BA5 /* FlipPresentAnimationController.swift in Sources */,
 				110D1C97206E99DD00432800 /* NoteMakerController.swift in Sources */,

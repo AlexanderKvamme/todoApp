@@ -13,19 +13,19 @@ import AVFoundation
 
 // MARK: - Custom Notifications
 
-enum globals {
+enum Globals {
     static var screenHeight = UIScreen.main.bounds.height
-    static var screenWidth = UIScreen.main.bounds.height
+    static var screenWidth = UIScreen.main.bounds.width
 }
 
 
 /// Contains a tableview with a pull to refresh
-class NoteTableController: UIViewController, UITableViewDelegate{
+class NoteTableController: UIViewController, UITableViewDelegate {
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
     
-    private(set) var tableView = UITableView()
+    private(set) var tableView = sectorTableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
     private var topbackgroundHeight: Constraint? = nil
@@ -47,7 +47,7 @@ class NoteTableController: UIViewController, UITableViewDelegate{
         self.dataSource = NoteDataSource(with: storage)
         
         super.init(nibName: nil, bundle: nil)
-        
+
         dataSource.delegate = self
         tableView.delegate = self
         addObservers()

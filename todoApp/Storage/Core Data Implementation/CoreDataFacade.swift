@@ -28,6 +28,7 @@ struct Categories {
     static let business = DatabaseFacade.forceFetchCategory(named: "business")
     
     static let all = [_default, grocieries, pleasure, business]
+    static let count = all.count
 }
 
 final class DatabaseFacade {
