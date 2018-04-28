@@ -15,15 +15,26 @@ fileprivate enum Entity: String {
     case Category = "Category"
 }
 
-struct CategoryNames {
-    static let _default = "default"
+//struct CategoryNames {
+//    static let _default = "default"
+//    static let groceries = "groceries"
+//    static let fun = "fun"
+//}
+
+struct Categories {
+    static let _default = DatabaseFacade.forceFetchCategory(named: "default")
+    static let grocieries = DatabaseFacade.forceFetchCategory(named: "groceries")
+    static let pleasure = DatabaseFacade.forceFetchCategory(named: "pleasure")
+    static let business = DatabaseFacade.forceFetchCategory(named: "business")
+    
+    static let all = [_default, grocieries, pleasure, business]
 }
 
 final class DatabaseFacade {
     
-    static var defaultCategory: Category = {
-        return fetchCategory(named: CategoryNames._default)
-    }()
+    static var defaultCategory: Category = { return Categories._default }()
+
+    // MARK: - Initializers
     
     private init(){}
     
@@ -56,6 +67,21 @@ final class DatabaseFacade {
             log.warning(error)
         }
         
+        return count
+    }
+    
+    static var categoryCount: Int {
+        var count = 0
+        
+        do {
+            let fr = NSFetchRequest<Category>(entityName: Entity.Category.rawValue)
+            let result = try context.fetch(fr)
+            count = result.count
+        } catch let error {
+            log.warning(error)
+        }
+        
+        print("returning count: ", count)
         return count
     }
     
@@ -164,7 +190,7 @@ final class DatabaseFacade {
         return result
     }
     
-    static func fetchCategory(named name: String) -> Category {
+    static func forceFetchCategory(named name: String) -> Category {
         var result: [Category]? = nil
         
         do {
