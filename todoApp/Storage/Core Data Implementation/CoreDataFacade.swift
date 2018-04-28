@@ -206,12 +206,14 @@ final class DatabaseFacade {
         return result?.first ?? makeCategory(named: name)
     }
     
-    static func getNotes(pinned: Bool) -> [Note] {
+    static func getNotes(_ category: Category, pinned: Bool) -> [Note] {
         var result: [Note] = []
         
         do {
             let fetchRequest = NSFetchRequest<Note>(entityName: Entity.Note.rawValue)
-            fetchRequest.predicate = NSPredicate(format: "isPinned == \(pinned)")
+            let isPinnedPredicate = NSPredicate(format: "isPinned == \(pinned)")
+            let categoryPredicate = NSPredicate(format: "category = %@", category)
+            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [isPinnedPredicate, categoryPredicate])
             result = try context.fetch(fetchRequest)
         } catch let error as NSError {
             print("error fetching pinned/unpinned notes: \(error.localizedDescription)")

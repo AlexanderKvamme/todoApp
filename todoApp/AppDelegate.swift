@@ -30,12 +30,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let noteStorage = CoreDataStorage()
-        let rootViewController = NoteTableController(with: noteStorage)
+//        let rootViewController = NoteTableController(with: noteStorage)
 
+        testprintNotes()
+        
+        // Link NoteTableControllers in a loop
+        var vcs = [NoteTableController]()
+        for (i, cat) in Categories.all.enumerated() {
+            let vc = NoteTableController(with: noteStorage, andCategory: cat)
+            vcs.append(vc)
+            
+            if i > 0 { vcs[i-1].nextNoteTable = vc }
+        }
+        vcs.last?.nextNoteTable = vcs[0]
+        
         // wrap in navigationController
 //        let navcontroller = MyNavigationController(rootViewController: rootViewController)
 //        window?.rootViewController = navcontroller
-        window?.rootViewController = rootViewController
+        window?.rootViewController = vcs[0]
         window?.makeKeyAndVisible()
         
         customizeAppearence()
@@ -135,7 +147,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
+    func testprintNotes() {
+        for cat in Categories.all {
+            if let notes = DatabaseFacade.getNotes(withCategory: cat){
+                for note in notes {
+                    print("\(cat.name!) - \(note.content!)")
+                }
+            }
+        }
+    }
 }
 
 private func customizeAppearence() {

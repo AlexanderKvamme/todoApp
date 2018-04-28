@@ -37,15 +37,17 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     fileprivate var transitioning = false
     fileprivate var beganScrollingAt: CGPoint!
     
+    weak var nextNoteTable: NoteTableController?
+    
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
     }()
     
     // MARK: - Initializers
     
-    init(with storage: NoteStorage) {
+    init(with storage: NoteStorage, andCategory category: Category) {
         self.noteStorage = storage
-        self.dataSource = NoteDataSource(with: storage)
+        self.dataSource = NoteDataSource(with: storage, andCategory: category)
         
         super.init(nibName: nil, bundle: nil)
 

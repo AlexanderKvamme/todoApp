@@ -42,8 +42,8 @@ class CoreDataStorage: NoteStorage {
         return DatabaseFacade.getAllNotes() ?? []
     }
     
-    func getNotes(pinned: Bool) -> [Note] {
-        return DatabaseFacade.getNotes(pinned: pinned)
+    func getNotes(_ category: Category, pinned: Bool) -> [Note] {
+        return DatabaseFacade.getNotes(category, pinned: pinned)
     }
     
     // MARK: Deletion

@@ -14,7 +14,7 @@ protocol NoteStorage {
     var pinnedNotesCount: Int { get }
 
     func getAllNotes() -> [Note]
-    func getNotes(pinned: Bool) -> [Note]
+    func getNotes(_ category: Category, pinned: Bool) -> [Note]
     
     func delete(note: Note)
     func undoDeletion() -> Note?
