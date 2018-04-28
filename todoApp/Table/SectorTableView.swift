@@ -15,7 +15,7 @@ protocol CategorySelectionReceiver: class {
     func handleReceiveCategory(_ category: Category)
 }
 
-
+/// TableView which also tracks whoch horizontal sector users finger is panning in and delegates this information to a CategorySelectionReceiver
 class sectorTableView: UITableView, UIGestureRecognizerDelegate {
     
     // MARK: - Properties

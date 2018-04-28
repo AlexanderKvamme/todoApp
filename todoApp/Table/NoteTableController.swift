@@ -207,6 +207,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         // Make note only if it has text
         if let newNote = noteMaker.makeNoteFromInput() {
             // insert new note as a cell
+            newNote.category = currentlySelectedCategory
             dataSource.add(newNote)
             playAcceptedSound()
             let insertionRow = dataSource.index(of: newNote)
@@ -262,7 +263,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
-        print("received cat: ", category)
+        print("received cat: ", category.name!)
         currentlySelectedCategory = category
     }
 }
