@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
-
+        
         let noteStorage = CoreDataStorage()
         let rootViewController = NoteTableController(with: noteStorage)
 

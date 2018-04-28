@@ -227,6 +227,31 @@
 			path = Globals;
 			sourceTree = "<group>";
 		};
+		112CCEAC2094707D00071578 /* NoteMaker */ = {
+			isa = PBXGroup;
+			children = (
+				111D01AA20724439009D3BA5 /* NoteMakerView.swift */,
+				110D1C96206E99DD00432800 /* NoteMakerController.swift */,
+			);
+			path = NoteMaker;
+			sourceTree = "<group>";
+		};
+		112CCEAD2094708B00071578 /* Vibration */ = {
+			isa = PBXGroup;
+			children = (
+				112D96182086266C0052BBC6 /* Vibration.swift */,
+			);
+			path = Vibration;
+			sourceTree = "<group>";
+		};
+		112CCEAE209470A000071578 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		112D961C20867D8A0052BBC6 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,18 +334,17 @@
 		DD370A0E203C1E3F00AEFEA1 /* todoApp */ = {
 			isa = PBXGroup;
 			children = (
-				112D96182086266C0052BBC6 /* Vibration.swift */,
-				112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */,
-				112D961C20867D8A0052BBC6 /* Sound */,
 				DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */,
 				111D01A62070F097009D3BA5 /* MyNavigationController.swift */,
+				112CCEAE209470A000071578 /* Components */,
+				112CCEAD2094708B00071578 /* Vibration */,
+				112D961C20867D8A0052BBC6 /* Sound */,
 				111D9F6F2083A4D1006B1B66 /* Native Extensions */,
 				11718E39206ABF8400EC6C0D /* Table */,
 				1100685C206B97C3009D2EB3 /* Storage */,
 				111D01A0207053BA009D3BA5 /* Custom transitions */,
 				111D9F742083A993006B1B66 /* Globals */,
-				111D01AA20724439009D3BA5 /* NoteMakerView.swift */,
-				110D1C96206E99DD00432800 /* NoteMakerController.swift */,
+				112CCEAC2094707D00071578 /* NoteMaker */,
 				11CEFFCB2086941500849DA0 /* Resources */,
 				DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */,
 				DD370A1B203C1E3F00AEFEA1 /* LaunchScreen.storyboard */,

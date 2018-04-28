@@ -10,15 +10,22 @@ import Foundation
 import CoreData
 
 
-enum Entity: String {
+fileprivate enum Entity: String {
     case Note = "Note"
+    case Category = "Category"
 }
 
+struct CategoryNames {
+    static let _default = "default"
+}
 
 final class DatabaseFacade {
     
-    private init(){}
+    static var defaultCategory: Category = {
+        return fetchCategory(named: CategoryNames._default)
+    }()
     
+    private init(){}
     
     // MARK: - Properties
     
@@ -119,6 +126,12 @@ final class DatabaseFacade {
         return newNote
     }
     
+    static func makeCategory(named name: String) -> Category {
+        let newCategory = createManagedObjectForEntity(.Category) as! Category
+        newCategory.name = name
+        return newCategory
+    }
+    
     static func getAllNotes() -> [Note]? {
         var result: [Note]? = nil
         
@@ -133,8 +146,40 @@ final class DatabaseFacade {
         return result
     }
     
-    static func getNotes(pinned: Bool) -> [Note] {
+    static func getNotes(withCategory category: Category?) -> [Note]? {
+        var result: [Note]? = nil
         
+        do {
+            let fr = NSFetchRequest<Note>(entityName: Entity.Note.rawValue)
+            
+            if let category = category {
+                fr.predicate = NSPredicate(format: "category == %@", category)
+            } else {
+                fr.predicate = NSPredicate(format: "category == nil")
+            }
+            result = try context.fetch(fr)
+        } catch let error {
+            log.warning(error)
+        }
+        return result
+    }
+    
+    static func fetchCategory(named name: String) -> Category {
+        var result: [Category]? = nil
+        
+        do {
+            let fr = NSFetchRequest<Category>(entityName: Entity.Category.rawValue)
+            let predicate = NSPredicate(format: "name == %@", name)
+            fr.predicate = predicate
+            result = try context.fetch(fr)
+        } catch let error {
+            log.warning(error)
+        }
+        
+        return result?.first ?? makeCategory(named: name)
+    }
+    
+    static func getNotes(pinned: Bool) -> [Note] {
         var result: [Note] = []
         
         do {
@@ -146,18 +191,5 @@ final class DatabaseFacade {
         }
         return result
     }
-    
-//    static func getMuscle(named name: String) -> Note? {
-//        let name = name.uppercased()
-//        var note: Note? = nil
-//        do {
-//            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entity.Note.rawValue)
-//            let result = try context.fetch(fetchRequest)
-//            note = result.first as? Muscle
-//        } catch let error as NSError {
-//            print("error fetching \(name): \(error.localizedDescription)")
-//        }
-//        return note
-//    }
 }
 
