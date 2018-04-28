@@ -10,7 +10,24 @@ import Foundation
 import UIKit
 
 
+/// Lets a category be selected based on where the user has his finger horizontally
+protocol CategorySelectionReceiver: class {
+    func handleReceiveCategory(_ category: Category)
+}
+
+
 class sectorTableView: UITableView, UIGestureRecognizerDelegate {
+    
+    // MARK: - Properties
+    
+    weak var categoryReceiverDelegate: CategorySelectionReceiver? = nil
+    
+    private var recentlySelectedCategory: Category = Categories._default {
+        willSet {
+            guard newValue != recentlySelectedCategory else { return }
+            categoryReceiverDelegate?.handleReceiveCategory(newValue)
+        }
+    }
     
     // MARK: - Initializers
     
@@ -40,7 +57,7 @@ class sectorTableView: UITableView, UIGestureRecognizerDelegate {
             let x = gesture.location(in: self).x
             let sectorLength = Globals.screenWidth/CGFloat(sectorCount)
             let categoryIndex = Int(floor(x/sectorLength))
-            print("category:", Categories.all[categoryIndex].name!)
+            recentlySelectedCategory = Categories.all[categoryIndex]
         default:
             break
         }

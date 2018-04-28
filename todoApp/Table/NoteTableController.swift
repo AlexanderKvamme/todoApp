@@ -24,6 +24,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
+    private var currentlySelectedCategory: Category?
     
     private(set) var tableView = sectorTableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
@@ -77,6 +78,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         updateColors()
         addSubviewAndConstraints()
         updateColors()
+        tableView.categoryReceiverDelegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -255,6 +257,13 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     func handlePullToRefreshCompletion() {
         //
+    }
+}
+
+extension NoteTableController: CategorySelectionReceiver {
+    func handleReceiveCategory(_ category: Category) {
+        print("received cat: ", category)
+        currentlySelectedCategory = category
     }
 }
 
