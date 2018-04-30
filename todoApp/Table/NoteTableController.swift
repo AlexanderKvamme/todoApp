@@ -23,7 +23,7 @@ enum Globals {
 class NoteTableController: UIViewController, UITableViewDelegate {
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
-    private let dataSource: NoteDataSource
+    private var dataSource: NoteDataSource
     private let categoryOfController: Category
     private var currentlySelectedCategory: Category? {
         didSet { setPullToRefreshColor(for: currentlySelectedCategory)}
@@ -71,7 +71,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
 //        setupNavbar()
-        setupTableView()
         addPullToRefresh()
         setColors(hasPins: dataSource.hasPinnedNotes)
         
@@ -79,12 +78,16 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // reset dataSource to fetch new notes
+        self.dataSource = NoteDataSource(with: noteStorage, andCategory: categoryOfController)
+        
         setupTableView()
         updateColors()
         addSubviewAndConstraints()
         updateColors()
         tableView.categoryReceiverDelegate = self
         addObservers()
+        tableView.reloadData()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -160,7 +163,9 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         
         noteMaker.update(for: category)
         if let hexColor = category.hexColor {
-            topBackground.backgroundColor = UIColor.init(hexString: hexColor)
+            UIView.animate(withDuration: 1) {
+                self.topBackground.backgroundColor = UIColor.init(hexString: hexColor)
+            }
             tableView.dg_setPullToRefreshFillColor(UIColor.init(hexString: hexColor))
         }
     }
@@ -292,7 +297,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
         // FIXME: make this one not be triggered if user they are scrolling below pulltorefresher
-        print("received cat: ", category.name!)
         currentlySelectedCategory = category
     }
 }
