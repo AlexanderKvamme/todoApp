@@ -34,6 +34,17 @@ final class NoteMakerController: UIViewController {
     
     // MARK: - Methods
     
+    func update(for category: Category) {
+        
+        if let hexColor = category.hexColor {
+        noteMakerView.backgroundColor = UIColor(hexString: hexColor)
+        }
+        
+        if let name = category.name {
+            noteMakerView.textField.text = name
+        }
+    }
+    
     func makeNoteFromInput() -> Note? {
         return storage.makeNote(withText: noteMakerView.textField.text)
     }

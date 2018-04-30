@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 fileprivate enum Entity: String {
@@ -21,11 +22,13 @@ fileprivate enum Entity: String {
 //    static let fun = "fun"
 //}
 
+
+
 struct Categories {
-    static let _default = DatabaseFacade.forceFetchCategory(named: "default")
-    static let grocieries = DatabaseFacade.forceFetchCategory(named: "groceries")
-    static let pleasure = DatabaseFacade.forceFetchCategory(named: "pleasure")
-    static let business = DatabaseFacade.forceFetchCategory(named: "business")
+    static let _default = DatabaseFacade.forceFetchCategory(named: "default", color: UIColor.categories._default)
+    static let pleasure = DatabaseFacade.forceFetchCategory(named: "pleasure", color: UIColor.categories.pleasure)
+    static let business = DatabaseFacade.forceFetchCategory(named: "business", color: UIColor.categories.business)
+    static let grocieries = DatabaseFacade.forceFetchCategory(named: "groceries", color: UIColor.categories.groceries)
     
     static let all = [_default, grocieries, pleasure, business]
     static let count = all.count
@@ -153,9 +156,10 @@ final class DatabaseFacade {
         return newNote
     }
     
-    static func makeCategory(named name: String) -> Category {
+    static func makeCategory(named name: String, color hexColor: String) -> Category {
         let newCategory = createManagedObjectForEntity(.Category) as! Category
         newCategory.name = name
+        newCategory.hexColor = hexColor
         return newCategory
     }
     
@@ -191,7 +195,7 @@ final class DatabaseFacade {
         return result
     }
     
-    static func forceFetchCategory(named name: String) -> Category {
+    static func forceFetchCategory(named name: String, color hexColor: UIColor) -> Category {
         var result: [Category]? = nil
         
         do {
@@ -203,7 +207,10 @@ final class DatabaseFacade {
             log.warning(error)
         }
         
-        return result?.first ?? makeCategory(named: name)
+        if let fetchedCategory = result?.first {
+            fetchedCategory.hexColor = hexColor.toHexString()
+        }
+        return result?.first ?? makeCategory(named: name, color: hexColor.toHexString())
     }
     
     static func getNotes(_ category: Category, pinned: Bool) -> [Note] {

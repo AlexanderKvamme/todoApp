@@ -24,8 +24,10 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
-    private var currentlySelectedCategory: Category?
     private let categoryOfController: Category
+    private var currentlySelectedCategory: Category? {
+        didSet { setPullToRefreshColor(for: currentlySelectedCategory)}
+    }
     
     private(set) var tableView = sectorTableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
@@ -150,6 +152,16 @@ class NoteTableController: UIViewController, UITableViewDelegate {
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.top.equalTo(view.snp.top)
+        }
+    }
+    
+    private func setPullToRefreshColor(for category: Category?) {
+        guard let category = category else { return }
+        
+        noteMaker.update(for: category)
+        if let hexColor = category.hexColor {
+            topBackground.backgroundColor = UIColor.init(hexString: hexColor)
+            tableView.dg_setPullToRefreshFillColor(UIColor.init(hexString: hexColor))
         }
     }
     
