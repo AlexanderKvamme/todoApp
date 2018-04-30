@@ -55,7 +55,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 
         dataSource.delegate = self
         tableView.delegate = self
-        addObservers()
     }
     
     deinit {
@@ -83,10 +82,15 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         addSubviewAndConstraints()
         updateColors()
         tableView.categoryReceiverDelegate = self
+        addObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         updateColors()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        removeObservers()
     }
     
     // MARK: - Methods
@@ -243,12 +247,16 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.addObserver(self, forKeyPath: "contentSize", options: [.new, .old, .prior], context: nil)
         
         // Observe when pulled enough to trigger
-        NotificationCenter.default.addObserver(self, selector: #selector(handleHardPull), name: .DGPulledEnoughToTrigger, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleHardPullAndRelease), name: .DGPulledEnoughToTriggerAndReleased,object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHardPull),
+                                               name: NSNotification.Name.DGPulledEnoughToTrigger, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHardPullAndRelease),
+                                               name: NSNotification.Name.DGPulledEnoughToTriggerAndReleased,object: nil)
     }
     
     private func removeObservers() {
         tableView.removeObserver(self, forKeyPath: "contentSize")
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.DGPulledEnoughToTrigger, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.DGPulledEnoughToTriggerAndReleased, object: nil)
     }
     
     // MARK: Handlers
