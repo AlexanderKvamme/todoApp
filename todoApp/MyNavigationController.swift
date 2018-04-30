@@ -46,10 +46,6 @@ class MyNavigationController: UINavigationController {
     override func show(_ vc: UIViewController, sender: Any?) {
         print("*bama show in nav*")
     }
-    
-    // MARK: Nav animations
-    
-    
 }
 
 extension MyNavigationController: UIViewControllerTransitioningDelegate {

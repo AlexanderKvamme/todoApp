@@ -25,6 +25,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     private let noteStorage: NoteStorage
     private let dataSource: NoteDataSource
     private var currentlySelectedCategory: Category?
+    private let categoryOfController: Category
     
     private(set) var tableView = sectorTableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
@@ -37,7 +38,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     fileprivate var transitioning = false
     fileprivate var beganScrollingAt: CGPoint!
     
-    weak var nextNoteTable: NoteTableController?
+    var nextNoteTable: NoteTableController?
     
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
@@ -48,6 +49,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     init(with storage: NoteStorage, andCategory category: Category) {
         self.noteStorage = storage
         self.dataSource = NoteDataSource(with: storage, andCategory: category)
+        self.categoryOfController = category
         
         super.init(nibName: nil, bundle: nil)
 
@@ -224,10 +226,14 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     // MARK: - Transition
     
-    func animateToNextController(from view: UIView) {
-//        let frame = view.frame
-        print("would transition from: ", view.frame)
+    func animateToNextController() {
         VibrationController.vibrate()
+        
+        if let nextVC = nextNoteTable {
+            guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+            delegate.present(viewController: nextVC)
+        }
     }
     
     // MARK: - Observer Methods
@@ -265,6 +271,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
+        // FIXME: make this one not be triggered if user they are scrolling below pulltorefresher
         print("received cat: ", category.name!)
         currentlySelectedCategory = category
     }
@@ -280,10 +287,9 @@ extension NoteTableController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let overscroll = calculateOverScroll(for: scrollView)
         if overscroll > 100 && transitioning == false {
-            print("Would trigger transition")
             transitioning = true
             VibrationController.vibrate()
-//            animateToNextController(from: footerView)
+            animateToNextController()
         }
     }
     
@@ -296,9 +302,7 @@ extension NoteTableController {
             // table is scrollable
             let overscroll = (contentSize - screenHeight - contentOffset) * -1
             
-            if (overscroll * -1) >= 0 {
-                topbackgroundHeight?.update(offset: overscroll * -1)
-            }
+            if (overscroll * -1) >= 0 { topbackgroundHeight?.update(offset: overscroll * -1)}
             return overscroll
         } else {
             // table is not scrollable
@@ -379,3 +383,11 @@ extension NoteTableController: SoundEffectPlayer {
     }
 }
 
+extension AppDelegate {
+    public func present(viewController: UIViewController) {
+        guard let window = window else { return }
+        UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromLeft, animations: {
+            window.rootViewController = viewController
+        }, completion: nil)
+    }
+}

@@ -55,6 +55,7 @@ class sectorTableView: UITableView, UIGestureRecognizerDelegate {
         switch gesture.state {
         case .changed:
             let x = gesture.location(in: self).x
+            guard x > 0 else {return}
             let sectorLength = Globals.screenWidth/CGFloat(sectorCount)
             let categoryIndex = Int(floor(x/sectorLength))
             recentlySelectedCategory = Categories.all[categoryIndex]

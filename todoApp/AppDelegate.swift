@@ -23,35 +23,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        testprintNotes()
+        setupAVSessions()
         setupSwiftyBeaver()
+        customizeAppearence()
         updateDGElasticPullDownConstants()
         
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let noteStorage = CoreDataStorage()
-//        let rootViewController = NoteTableController(with: noteStorage)
-
-        testprintNotes()
-        
-        // Link NoteTableControllers in a loop
         var vcs = [NoteTableController]()
+        let noteStorage = CoreDataStorage()
+        
+        // Make and link controllers to a loop
         for (i, cat) in Categories.all.enumerated() {
             let vc = NoteTableController(with: noteStorage, andCategory: cat)
             vcs.append(vc)
-            
             if i > 0 { vcs[i-1].nextNoteTable = vc }
         }
         vcs.last?.nextNoteTable = vcs[0]
         
         // wrap in navigationController
-//        let navcontroller = MyNavigationController(rootViewController: rootViewController)
-//        window?.rootViewController = navcontroller
         window?.rootViewController = vcs[0]
         window?.makeKeyAndVisible()
-        
-        customizeAppearence()
-        setupAVSessions()
         
         return true
     }
