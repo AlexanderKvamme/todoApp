@@ -27,21 +27,10 @@ class MyNavigationController: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func viewDidLoad() {
-//        
-//        var vcs = [NoteTableController]()
-//        let noteStorage = CoreDataStorage()
-//        
-//        for (i, cat) in Categories.all.enumerated() {
-//            let vc = NoteTableController(with: noteStorage, andCategory: cat)
-//            vcs.append(vc)
-//            //            if i > 0 {
-//            //                print("setting next")
-//            //                vcs[i-1].nextNoteTable = vc }
-//        }
-//        
-//        setViewControllers(vcs, animated: false)
-//    }
+
+    
+    
+    
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController,source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         // FIXME: Use black center frams
