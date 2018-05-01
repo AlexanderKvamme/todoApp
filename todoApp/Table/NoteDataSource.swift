@@ -34,13 +34,18 @@ class NoteDataSource: NSObject {
     
     // MARK: - Initializer
     
-    init(with storage: NoteStorage, andCategory category: Category) {
+    init(with storage: NoteStorage) {
+        
         self.noteStorage = storage
-        self.notes = noteStorage.getNotes(category, pinned: true) + noteStorage.getNotes(category, pinned: false)
+        self.notes = noteStorage.getNotes(Categories._default, pinned: true) + noteStorage.getNotes(Categories._default, pinned: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("did deinit dataSource")
     }
     
     // MARK: - Methods
@@ -76,19 +81,19 @@ class NoteDataSource: NSObject {
     func pinNote(at index: Int) {
         delegate?.playPinSound()
         let noteToPin = notes[index]
-        notes.remove(at: index)
-        noteToPin.setPinned(true)
-        notes.insert(noteToPin, at: 0)
         
         let fromIndex = IndexPath(row: index, section: 0)
         let toIndex = IndexPath(row: 0, section: 0)
         
-        if let table = delegate?.tableView {
-            table.beginUpdates()
-            table.deleteRows(at: [fromIndex], with: .automatic)
-            table.insertRows(at: [toIndex], with: .automatic)
-            table.endUpdates()
-        }
+        guard let table = delegate?.tableView else {return}
+        
+        table.beginUpdates()
+        notes.remove(at: index)
+        noteToPin.setPinned(true)
+        notes.insert(noteToPin, at: 0)
+        table.deleteRows(at: [fromIndex], with: .automatic)
+        table.insertRows(at: [toIndex], with: .automatic)
+        table.endUpdates()
     }
     
     func unpinNote(at index: Int) {
@@ -189,6 +194,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         case .right:
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
                 self.togglePinned(at: ip.row)
+                action.fulfill(with: ExpansionFulfillmentStyle.reset)
             }
             pinAction.image = .starIcon
             pinAction.backgroundColor = .dijon

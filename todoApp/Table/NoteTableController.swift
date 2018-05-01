@@ -48,18 +48,23 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     // MARK: - Initializers
     
-    init(with storage: NoteStorage, andCategory category: Category) {
+    init(with storage: NoteStorage) {
         self.noteStorage = storage
-        self.dataSource = NoteDataSource(with: storage, andCategory: category)
-        self.categoryOfController = category
+        self.dataSource = NoteDataSource(with: storage)
+        self.categoryOfController = Categories._default
+//        self.categoryOfController = category
         
         super.init(nibName: nil, bundle: nil)
 
         dataSource.delegate = self
+        print("datasource delegate:", dataSource.delegate)
         tableView.delegate = self
+        
+        setupTableView()
     }
     
     deinit {
+        print("deinitting")
         removeObservers()
     }
     
@@ -78,9 +83,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // reset dataSource to fetch new notes
-        self.dataSource = NoteDataSource(with: noteStorage, andCategory: categoryOfController)
-        
         setupTableView()
         updateColors()
         addSubviewAndConstraints()
@@ -248,27 +250,27 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     // MARK: - Transition
     
     func animateToNextController() {
-        
-        if let nextVC = nextNoteTable {
-            var options = UIWindow.TransitionOptions(direction: .toTop, style: .easeOut)
-            options.duration = 0.25
-            //UIApplication.shared.keyWindow?.setRootViewController(nextVC, options: TransitionOptions(direction: .toRight))
-            
-            UIApplication.shared.keyWindow?.setRootViewController(nextVC, options: options)
-        }
+//        if let nextVC = nextNoteTable {
+//            var options = UIWindow.TransitionOptions(direction: .toTop, style: .easeOut)
+//            options.duration = 0.25
+//            //UIApplication.shared.keyWindow?.setRootViewController(nextVC, options: TransitionOptions(direction: .toRight))
+//
+//            UIApplication.shared.keyWindow?.setRootViewController(nextVC, options: options)
+//        }
     }
     
     // MARK: - Observer Methods
     
     private func addObservers(){
-        // Observe size changed to update footer colors
-        tableView.addObserver(self, forKeyPath: "contentSize", options: [.new, .old, .prior], context: nil)
-        
         // Observe when pulled enough to trigger
         NotificationCenter.default.addObserver(self, selector: #selector(handleHardPull),
                                                name: NSNotification.Name.DGPulledEnoughToTrigger, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleHardPullAndRelease),
                                                name: NSNotification.Name.DGPulledEnoughToTriggerAndReleased,object: nil)
+        
+        // Observe size changed to update footer colors
+        tableView.addObserver(self, forKeyPath: "contentSize", options: [.new, .old, .prior], context: nil)
+        
     }
     
     private func removeObservers() {
@@ -408,191 +410,3 @@ extension NoteTableController: SoundEffectPlayer {
     }
 }
 
-extension AppDelegate {
-    public func present(viewController: UIViewController) {
-        guard let window = window else { return }
-        
-        UIView.transition(with: window,
-                          duration: 0.5,
-                          options: .transitionFlipFromBottom,
-                          animations: {
-                            window.rootViewController = viewController
-        }, completion: nil)
-    }
-}
-
-
-
-
-
-
-
-
-//  UIWindowTransitions.swift
-//  Daniele Margutti
-//
-//  Created by Daniele Margutti.
-//  Copyright © 2017 Daniele Margutti. All rights reserved.
-//
-
-import Foundation
-import UIKit
-
-public extension UIWindow {
-    
-    /// Transition Options
-    public struct TransitionOptions {
-        
-        /// Curve of animation
-        ///
-        /// - linear: linear
-        /// - easeIn: ease in
-        /// - easeOut: ease out
-        /// - easeInOut: ease in - ease out
-        public enum Curve {
-            case linear
-            case easeIn
-            case easeOut
-            case easeInOut
-            
-            /// Return the media timing function associated with curve
-            internal var function: CAMediaTimingFunction {
-                let key: String!
-                switch self {
-                case .linear:        key = kCAMediaTimingFunctionLinear
-                case .easeIn:        key = kCAMediaTimingFunctionEaseIn
-                case .easeOut:        key = kCAMediaTimingFunctionEaseOut
-                case .easeInOut:    key = kCAMediaTimingFunctionEaseInEaseOut
-                }
-                return CAMediaTimingFunction(name: key)
-            }
-        }
-        
-        /// Direction of the animation
-        ///
-        /// - fade: fade to new controller
-        /// - toTop: slide from bottom to top
-        /// - toBottom: slide from top to bottom
-        /// - toLeft: pop to left
-        /// - toRight: push to right
-        public enum Direction {
-            case fade
-            case toTop
-            case toBottom
-            case toLeft
-            case toRight
-            
-            /// Return the associated transition
-            ///
-            /// - Returns: transition
-            internal func transition() -> CATransition {
-                let transition = CATransition()
-                transition.type = kCATransitionPush
-                switch self {
-                case .fade:
-                    transition.type = kCATransitionFade
-                    transition.subtype = nil
-                case .toLeft:
-                    transition.subtype = kCATransitionFromLeft
-                case .toRight:
-                    transition.subtype = kCATransitionFromRight
-                case .toTop:
-                    transition.subtype = kCATransitionFromTop
-                case .toBottom:
-                    transition.subtype = kCATransitionFromBottom
-                }
-                return transition
-            }
-        }
-        
-        /// Background of the transition
-        ///
-        /// - solidColor: solid color
-        /// - customView: custom view
-        public enum Background {
-            case solidColor(_: UIColor)
-            case customView(_: UIView)
-        }
-        
-        /// Duration of the animation (default is 0.20s)
-        public var duration: TimeInterval = 0.20
-        
-        /// Direction of the transition (default is `toRight`)
-        public var direction: TransitionOptions.Direction = .toRight
-        
-        /// Style of the transition (default is `linear`)
-        public var style: TransitionOptions.Curve = .linear
-        
-        /// Background of the transition (default is `nil`)
-        public var background: TransitionOptions.Background? = nil
-        
-        /// Initialize a new options object with given direction and curve
-        ///
-        /// - Parameters:
-        ///   - direction: direction
-        ///   - style: style
-        public init(direction: TransitionOptions.Direction = .toRight, style: TransitionOptions.Curve = .linear) {
-            self.direction = direction
-            self.style = style
-        }
-        
-        public init() { }
-        
-        /// Return the animation to perform for given options object
-        internal var animation: CATransition {
-            let transition = self.direction.transition()
-            transition.duration = self.duration
-            transition.timingFunction = self.style.function
-            return transition
-        }
-    }
-    
-    
-    /// Change the root view controller of the window
-    ///
-    /// - Parameters:
-    ///   - controller: controller to set
-    ///   - options: options of the transition
-    public func setRootViewController(_ controller: UIViewController, options: TransitionOptions = TransitionOptions()) {
-        
-        var transitionWnd: UIWindow? = nil
-        if let background = options.background {
-            transitionWnd = UIWindow(frame: UIScreen.main.bounds)
-            switch background {
-            case .customView(let view):
-                transitionWnd?.rootViewController = UIViewController.newController(withView: view, frame: transitionWnd!.bounds)
-            case .solidColor(let color):
-                transitionWnd?.backgroundColor = color
-            }
-            transitionWnd?.makeKeyAndVisible()
-        }
-        
-        // Make animation
-        self.layer.add(options.animation, forKey: kCATransition)
-        self.rootViewController = controller
-        self.makeKeyAndVisible()
-        
-        if let wnd = transitionWnd {
-            DispatchQueue.main.asyncAfter(deadline: (.now() + 1 + options.duration), execute: {
-                wnd.removeFromSuperview()
-            })
-        }
-    }
-}
-
-internal extension UIViewController {
-    
-    /// Create a new empty controller instance with given view
-    ///
-    /// - Parameters:
-    ///   - view: view
-    ///   - frame: frame
-    /// - Returns: instance
-    static func newController(withView view: UIView, frame: CGRect) -> UIViewController {
-        view.frame = frame
-        let controller = UIViewController()
-        controller.view = view
-        return controller
-    }
-    
-}

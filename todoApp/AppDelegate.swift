@@ -32,19 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set rootViewController
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        var vcs = [NoteTableController]()
-        let noteStorage = CoreDataStorage()
-        
-        // Make and link controllers to a loop
-        for (i, cat) in Categories.all.enumerated() {
-            let vc = NoteTableController(with: noteStorage, andCategory: cat)
-            vcs.append(vc)
-            if i > 0 { vcs[i-1].nextNoteTable = vc }
-        }
-        vcs.last?.nextNoteTable = vcs[0]
+        let storage = CoreDataStorage()
+        let vc = NoteTableController(with: storage)
         
         // wrap in navigationController
-        window?.rootViewController = vcs[0]
+        window?.rootViewController = vc
         window?.makeKeyAndVisible()
         
         return true
