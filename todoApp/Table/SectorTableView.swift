@@ -19,6 +19,8 @@ protocol CategorySelectionReceiver: class {
 class sectorTableView: UITableView, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
+
+    private var initialY: CGFloat = 0 // FIXME: Replace with the hasPulledHard notification
     
     weak var categoryReceiverDelegate: CategorySelectionReceiver? = nil
     
@@ -46,18 +48,28 @@ class sectorTableView: UITableView, UIGestureRecognizerDelegate {
     private func addPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(yourPan(_:)))
         panGesture.delegate = self
+        panGesture.accessibilityLabel = "alabel"
         self.addGestureRecognizer(panGesture)
     }
     
     @objc private func yourPan(_ gesture: UIPanGestureRecognizer) {
         let sectorCount = Categories.count
+        let x = gesture.location(in: self).x
+        let y = gesture.location(in: self).y
         
         switch gesture.state {
+            
+        case .began:
+            initialY = y
+            
         case .changed:
-            let x = gesture.location(in: self).x
-            guard x > 0 else {return}
+            guard y > 0 else {return}
+            
             let sectorLength = Globals.screenWidth/CGFloat(sectorCount)
             let categoryIndex = Int(floor(x/sectorLength))
+            if (y - initialY) < 100 {
+                break
+            }
             recentlySelectedCategory = Categories.all[categoryIndex]
         default:
             break
@@ -67,6 +79,7 @@ class sectorTableView: UITableView, UIGestureRecognizerDelegate {
     // MARK: UIGestureRecognizerDelegate conformance
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // FIXME: disable swiping when panning
         return true
     }
 }

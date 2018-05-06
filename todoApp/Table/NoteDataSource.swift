@@ -35,7 +35,6 @@ class NoteDataSource: NSObject {
     // MARK: - Initializer
     
     init(with storage: NoteStorage) {
-        
         self.noteStorage = storage
         self.notes = noteStorage.getNotes(Categories._default, pinned: true) + noteStorage.getNotes(Categories._default, pinned: false)
     }
@@ -49,6 +48,12 @@ class NoteDataSource: NSObject {
     }
     
     // MARK: - Methods
+    
+    func switchCategory(to category: Category?) {
+        guard let category = category else {fatalError("must switch to a category")}
+        
+        self.notes = noteStorage.getNotes(category, pinned: true) + noteStorage.getNotes(category, pinned: false)
+    }
     
     func add(_ note: Note) {
         let firstIndexUnderPinned = getFirstIndexUnderPinnedRows()

@@ -26,7 +26,15 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     private var dataSource: NoteDataSource
     private let categoryOfController: Category
     private var currentlySelectedCategory: Category? {
-        didSet { setPullToRefreshColor(for: currentlySelectedCategory)}
+        didSet {
+            // refactor
+            setPullToRefreshColor(for: currentlySelectedCategory)
+            
+            tableView.beginUpdates()
+            dataSource.switchCategory(to: currentlySelectedCategory)
+            tableView.reloadSections(IndexSet(integersIn: 0...0), with: .automatic)
+            tableView.endUpdates()
+        }
     }
     
     private(set) var tableView = sectorTableView()
@@ -52,19 +60,16 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         self.noteStorage = storage
         self.dataSource = NoteDataSource(with: storage)
         self.categoryOfController = Categories._default
-//        self.categoryOfController = category
         
         super.init(nibName: nil, bundle: nil)
 
         dataSource.delegate = self
-        print("datasource delegate:", dataSource.delegate)
         tableView.delegate = self
         
         setupTableView()
     }
     
     deinit {
-        print("deinitting")
         removeObservers()
     }
     
@@ -105,8 +110,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentSize" {
             updateColors()
-//            let newFooterHeight = calculateFooterHeight(for: tableView)
-//            self.heightConstraint?.update(offset: newFooterHeight)
         }
     }
     
@@ -247,18 +250,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         }
     }
     
-    // MARK: - Transition
-    
-    func animateToNextController() {
-//        if let nextVC = nextNoteTable {
-//            var options = UIWindow.TransitionOptions(direction: .toTop, style: .easeOut)
-//            options.duration = 0.25
-//            //UIApplication.shared.keyWindow?.setRootViewController(nextVC, options: TransitionOptions(direction: .toRight))
-//
-//            UIApplication.shared.keyWindow?.setRootViewController(nextVC, options: options)
-//        }
-    }
-    
     // MARK: - Observer Methods
     
     private func addObservers(){
@@ -316,7 +307,6 @@ extension NoteTableController {
         if overscroll > 100 && transitioning == false {
             transitioning = true
             VibrationController.vibrate()
-            animateToNextController()
         }
     }
     
