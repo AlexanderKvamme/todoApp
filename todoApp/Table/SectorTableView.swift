@@ -48,7 +48,6 @@ class sectorTableView: UITableView, UIGestureRecognizerDelegate {
     private func addPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(yourPan(_:)))
         panGesture.delegate = self
-        panGesture.accessibilityLabel = "alabel"
         self.addGestureRecognizer(panGesture)
     }
     

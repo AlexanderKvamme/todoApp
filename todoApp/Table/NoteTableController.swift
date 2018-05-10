@@ -18,7 +18,6 @@ enum Globals {
     static var screenWidth = UIScreen.main.bounds.width
 }
 
-
 /// Contains a tableview with a pull to refresh
 class NoteTableController: UIViewController, UITableViewDelegate {
     private var audioPlayer = AVAudioPlayer()
@@ -27,12 +26,19 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     private let categoryOfController: Category
     private var currentlySelectedCategory: Category? {
         didSet {
-            // refactor
+            // FIMXE: refactor
             setPullToRefreshColor(for: currentlySelectedCategory)
             
+            if let hexColor = currentlySelectedCategory?.hexColor {
+                topBackground.backgroundColor = .red
+//                topBackground.backgroundColor = UIColor.init(hexString: hexColor)
+            }
+            
             tableView.beginUpdates()
+            
             dataSource.switchCategory(to: currentlySelectedCategory)
-            tableView.reloadSections(IndexSet(integersIn: 0...0), with: .automatic)
+            tableView.reloadSections(IndexSet(integersIn: 0...0), with: UITableViewRowAnimation.top)
+            
             tableView.endUpdates()
         }
     }
@@ -191,6 +197,10 @@ class NoteTableController: UIViewController, UITableViewDelegate {
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
             topBackground.backgroundColor = .primary
         }
+        if let hex = currentlySelectedCategory?.hexColor {
+            topBackground.backgroundColor = UIColor.init(hexString: hex)
+        }
+
         setBottomFooterColor()
     }
     

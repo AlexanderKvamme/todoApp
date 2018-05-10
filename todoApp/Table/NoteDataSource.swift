@@ -43,10 +43,6 @@ class NoteDataSource: NSObject {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("did deinit dataSource")
-    }
-    
     // MARK: - Methods
     
     func switchCategory(to category: Category?) {
