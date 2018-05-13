@@ -19,5 +19,6 @@ protocol NoteStorage {
     func delete(note: Note)
     func undoDeletion() -> Note?
     func makeNote(withText text: String?) -> Note?
+    func save()
 }
 

@@ -61,6 +61,7 @@ class NoteDataSource: NSObject {
         let noteToRemove = notes[index]
         notes.remove(at: index)
         noteStorage.delete(note: noteToRemove)
+        noteStorage.save()
         delegate?.updateColors()
     }
     

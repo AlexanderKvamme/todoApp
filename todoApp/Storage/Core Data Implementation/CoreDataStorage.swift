@@ -43,7 +43,13 @@ class CoreDataStorage: NoteStorage {
     }
     
     func getNotes(_ category: Category, pinned: Bool) -> [Note] {
-        return DatabaseFacade.getNotes(category, pinned: pinned)
+        return DatabaseFacade.getNotes(category, pinned: pinned).filter({$0 != CoreDataStorage.recoverableNote})
+    }
+    
+    // MARK: Save
+    
+    func save() {
+        DatabaseFacade.saveContext()
     }
     
     // MARK: Deletion
