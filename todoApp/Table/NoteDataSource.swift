@@ -11,17 +11,19 @@ import Foundation
 import UIKit
 
 
+
 class NoteDataSource: NSObject {
-    
+
     // MARK: - Properties
+    
     
     let noteStorage: NoteStorage
     var notes: [Note]
     
-    private let minimumCells = 10 // if you only have 2 cells, 8 of them will be empty and uneditable, to avoind having to reload cells which makes the table jump
+    private let minimumCells = 10 // if you only have 2 cells, 8 of them will be empty and uneditable, to avoid having to reload cells which makes the table jump
     
     weak var delegate: NoteTableController?
-    
+
     // Computed
     
     var hasPinnedNotes: Bool {
@@ -63,21 +65,16 @@ class NoteDataSource: NSObject {
     func deleteNote(at index: Int) {
         guard index < notes.count else { fatalError("Out of range") }
         
-        // NEW
-        
-        print("would delete note at index: ", index)
-        print("notecoount: ", notes.count)
-        
-        // If less than minCellCount, insert a new after deletion
-        
-        // OLD
-        
         let noteToRemove = notes[index]
         notes.remove(at: index)
         noteStorage.delete(note: noteToRemove)
         noteStorage.save()
         delegate?.updateColors()
-        
+        insertNewBlankCell()
+    }
+    
+    func insertNewBlankCell() {
+        delegate?.insertNewBlankCell()
     }
     
     func togglePinned(at index: Int) {
@@ -158,14 +155,12 @@ extension NoteDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let cnt = max(notes.count, minimumCells)
         print("bam returning number of rows:", cnt)
-//        return notes.count
         return cnt
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentIndex = indexPath.row
         let willBeEmptyCell = currentIndex < notes.count
-
 
         // Get Note or nil
         var tempNote: Note?
@@ -232,9 +227,13 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         switch orientation {
         case .left:
             let deleteAction = SwipeAction(style: .destructive, title: nil) { (action, ip) in
+                tableView.beginUpdates()
                 self.deleteNote(at: ip.row)
                 self.delegate?.playDoneSound()
+                action.fulfill(with: ExpansionFulfillmentStyle.delete)
+                tableView.endUpdates()
             }
+            
             deleteAction.image = UIImage.checkmarIcon
             deleteAction.backgroundColor = .green
             return [deleteAction]

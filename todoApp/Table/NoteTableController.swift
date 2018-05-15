@@ -192,14 +192,12 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         let noteCount = dataSource.notes.count
         let visibleRows = (tableView.visibleCells as! [NoteCell])
         let visibleCount = visibleRows.count
-        var topI = 0
         
         for (i, cell) in visibleRows.enumerated() {
             if i < dataSource.notes.count {
                 // tableview has visiblerows and datasource has notes. update existing cells
                 let note = dataSource.notes[i]
                 cell.updateWith(note: note)
-                topI = i
             }
         }
         
@@ -218,6 +216,20 @@ class NoteTableController: UIViewController, UITableViewDelegate {
             }
         }
         
+    }
+    
+    func insertNewBlankCell() {
+        print("would insert new blank cell")
+        let noteCount = dataSource.notes.count
+        let visibleRows = (tableView.visibleCells as! [NoteCell])
+        let visibleCount = visibleRows.count
+        
+        let lastIP = dataSource.tableView(tableView, numberOfRowsInSection: 0) - 1
+        
+        print("got tablecount:" , lastIP)
+        let ipToInsert = IndexPath(row: lastIP, section: 0)
+        
+        tableView.insertRows(at: [ipToInsert], with: .automatic)
     }
     
     func updateRows2() {
@@ -391,29 +403,17 @@ class NoteTableController: UIViewController, UITableViewDelegate {
                         }
                         c.updateWith(note: dataSource.notes[indexOfCell.row])
                     }
-                    
                 }
                 
                 self.tableView.dg_stopLoading()
                 
-                
-                print("printing notes")
-                
                 for n in dataSource.notes {
                     print("note: ", n.content)
                 }
-                
             }
             
-         
-            
-            
-            
             // OLD
-            
 //            tableView.insertRows(at: [insertionRow], with: .automatic)
-            
-            
         } else {
             VibrationController.vibrate()
             playErrorSound()
