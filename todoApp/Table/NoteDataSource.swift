@@ -77,6 +77,9 @@ class NoteDataSource: NSObject {
     }
     
     func togglePinned(at index: Int) {
+        
+        guard index < notes.count else { return }
+        
         if notes[index].isPinned {
             unpinNote(at: index)
         } else {

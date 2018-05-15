@@ -21,7 +21,6 @@
 		112D96152084B1510052BBC6 /* NoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96142084B1510052BBC6 /* NoteDelegate.swift */; };
 		112D96192086266C0052BBC6 /* Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96182086266C0052BBC6 /* Vibration.swift */; };
 		112D961B20864BCD0052BBC6 /* BigCaretTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */; };
-		112D961E20867D9D0052BBC6 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D961D20867D9C0052BBC6 /* SoundManager.swift */; };
 		11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */; };
 		11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */; };
 		11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E33206A88CC00EC6C0D /* NoteRepository.swift */; };
@@ -48,6 +47,11 @@
 		11D3AC46207D2D47005CD575 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC45207D2D47005CD575 /* CoreDataManager.swift */; };
 		11D3AC48207D42DD005CD575 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC47207D42DD005CD575 /* CoreDataFacade.swift */; };
 		11D3AC4A20825DF8005CD575 /* NoteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3AC4920825DF8005CD575 /* NoteExtensions.swift */; };
+		11D8669820AB4FD8000B951F /* Space_Note4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11D8669320AB4FD6000B951F /* Space_Note4.wav */; };
+		11D8669920AB4FD8000B951F /* Space_Note5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11D8669420AB4FD6000B951F /* Space_Note5.wav */; };
+		11D8669A20AB4FD8000B951F /* Space_Note2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11D8669520AB4FD7000B951F /* Space_Note2.wav */; };
+		11D8669B20AB4FD8000B951F /* Space_Note3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11D8669620AB4FD7000B951F /* Space_Note3.wav */; };
+		11D8669C20AB4FD8000B951F /* Space_Note1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11D8669720AB4FD7000B951F /* Space_Note1.wav */; };
 		11E9CECE2595E8DEDE8345CB /* Pods_todoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7200701BDB3C3B44020CCC6D /* Pods_todoAppUITests.framework */; };
 		BFB77E954C9B51BF0B488293 /* Pods_todoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4675ED494EE69B3777E490CF /* Pods_todoApp.framework */; };
 		C681F7D1651B9663E961C82B /* Pods_todoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0BCCE69A11022E8214F07 /* Pods_todoAppTests.framework */; };
@@ -92,7 +96,6 @@
 		112D96142084B1510052BBC6 /* NoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDelegate.swift; sourceTree = "<group>"; };
 		112D96182086266C0052BBC6 /* Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vibration.swift; sourceTree = "<group>"; };
 		112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCaretTextField.swift; sourceTree = "<group>"; };
-		112D961D20867D9C0052BBC6 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 		11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
 		11718E33206A88CC00EC6C0D /* NoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRepository.swift; sourceTree = "<group>"; };
@@ -119,6 +122,11 @@
 		11D3AC45207D2D47005CD575 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		11D3AC47207D42DD005CD575 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
 		11D3AC4920825DF8005CD575 /* NoteExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteExtensions.swift; sourceTree = "<group>"; };
+		11D8669320AB4FD6000B951F /* Space_Note4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note4.wav; sourceTree = "<group>"; };
+		11D8669420AB4FD6000B951F /* Space_Note5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note5.wav; sourceTree = "<group>"; };
+		11D8669520AB4FD7000B951F /* Space_Note2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note2.wav; sourceTree = "<group>"; };
+		11D8669620AB4FD7000B951F /* Space_Note3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note3.wav; sourceTree = "<group>"; };
+		11D8669720AB4FD7000B951F /* Space_Note1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note1.wav; sourceTree = "<group>"; };
 		276F321B032183564F7D5FD5 /* Pods-todoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		33497C3CABFFCEC248D9FC1B /* Pods-todoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39D2B7DEFA1FA62550C6F0F3 /* Pods-todoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppUITests/Pods-todoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -257,7 +265,6 @@
 		112D961C20867D8A0052BBC6 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				112D961D20867D9C0052BBC6 /* SoundManager.swift */,
 				11CEFFEA208DDCD000849DA0 /* SoundEffectPlayer.swift */,
 			);
 			name = Sound;
@@ -279,6 +286,7 @@
 		11CEFFCB2086941500849DA0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11D8669E20AB4FE6000B951F /* space_note */,
 				11CEFFCC2086942C00849DA0 /* Peak_Note1.wav */,
 				11CEFFCE2087CC1200849DA0 /* Peak_Note2.wav */,
 				11CEFFCF2087CC1200849DA0 /* Peak_Note3.wav */,
@@ -296,6 +304,18 @@
 				11CEFFE42087D38200849DA0 /* Peak_Notification12.wav */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		11D8669E20AB4FE6000B951F /* space_note */ = {
+			isa = PBXGroup;
+			children = (
+				11D8669720AB4FD7000B951F /* Space_Note1.wav */,
+				11D8669520AB4FD7000B951F /* Space_Note2.wav */,
+				11D8669620AB4FD7000B951F /* Space_Note3.wav */,
+				11D8669320AB4FD6000B951F /* Space_Note4.wav */,
+				11D8669420AB4FD6000B951F /* Space_Note5.wav */,
+			);
+			name = space_note;
 			sourceTree = "<group>";
 		};
 		37B421347512FC49395801B9 /* Pods */ = {
@@ -500,14 +520,19 @@
 				11CEFFD42087CC1200849DA0 /* Peak_Note5.wav in Resources */,
 				11CEFFED208F448F00849DA0 /* Peak_Done9.wav in Resources */,
 				DD370A1A203C1E3F00AEFEA1 /* Assets.xcassets in Resources */,
+				11D8669B20AB4FD8000B951F /* Space_Note3.wav in Resources */,
 				11CEFFD32087CC1200849DA0 /* Peak_Note3.wav in Resources */,
+				11D8669920AB4FD8000B951F /* Space_Note5.wav in Resources */,
 				11CEFFE12087CED000849DA0 /* Peak_Notification4.wav in Resources */,
 				11CEFFD22087CC1200849DA0 /* Peak_Note2.wav in Resources */,
 				11CEFFDF2087CEB900849DA0 /* Peak_Error2.wav in Resources */,
 				11CEFFDB2087CE7F00849DA0 /* Peak_Done5.wav in Resources */,
 				11CEFFD52087CC1200849DA0 /* Peak_Note4.wav in Resources */,
+				11D8669820AB4FD8000B951F /* Space_Note4.wav in Resources */,
 				11CEFFCD2086942C00849DA0 /* Peak_Note1.wav in Resources */,
 				11CEFFE32087D27B00849DA0 /* Peak_Error3.wav in Resources */,
+				11D8669C20AB4FD8000B951F /* Space_Note1.wav in Resources */,
+				11D8669A20AB4FD8000B951F /* Space_Note2.wav in Resources */,
 				11CEFFDD2087CE9200849DA0 /* Peak_Done8.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,7 +733,6 @@
 				112D96152084B1510052BBC6 /* NoteDelegate.swift in Sources */,
 				DD370A18203C1E3F00AEFEA1 /* todoApp.xcdatamodeld in Sources */,
 				11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */,
-				112D961E20867D9D0052BBC6 /* SoundManager.swift in Sources */,
 				DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */,
 				111D01A72070F097009D3BA5 /* MyNavigationController.swift in Sources */,
 				11CEFFEB208DDCD000849DA0 /* SoundEffectPlayer.swift in Sources */,

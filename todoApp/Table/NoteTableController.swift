@@ -328,7 +328,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     // MARK: Handlers
     
     @objc func handleHardPull() {
-        playPullSound()
+//        playPullSound()
     }
     
     @objc func handleHardPullAndRelease() {
@@ -347,6 +347,24 @@ extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
         // FIXME: make this one not be triggered if user they are scrolling below pulltorefresher
         currentlySelectedCategory = category
+        
+        if let index = Categories.all.index(of: category) {
+            
+            switch index {
+            case 0:
+                playCategoryOneSound()
+            case 1:
+                playCategoryTwoSound()
+            case 2:
+                playCategoryThreeSound()
+            case 3:
+                playCategoryFourSound()
+            case 4:
+                playCategoryFiveSound()
+            default:
+                return
+            }
+        }
     }
 }
 
@@ -417,6 +435,30 @@ extension NoteTableController: SoundEffectPlayer {
             print(error)
         }
     }
+    
+    // 5 rising notes
+    
+    func playCategoryOneSound() {
+        play(songAt: URL.sounds.categoryChange._1)
+    }
+    
+    func playCategoryTwoSound() {
+        play(songAt: URL.sounds.categoryChange._2)
+    }
+    
+    func playCategoryThreeSound() {
+        play(songAt: URL.sounds.categoryChange._3)
+    }
+    
+    func playCategoryFourSound() {
+        play(songAt: URL.sounds.categoryChange._4)
+    }
+    
+    func playCategoryFiveSound() {
+        play(songAt: URL.sounds.categoryChange._5)
+    }
+    
+    // Other
     
     func playDoneSound() {
         play(songAt: URL.sounds.note._1)
