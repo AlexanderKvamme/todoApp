@@ -60,7 +60,6 @@ final class NoteCellView: UIView {
     }
     
     func updateWith(note: Note?) {
-        
         guard let note = note else {
             label.text = ""
             backgroundColor = .primary
@@ -68,14 +67,26 @@ final class NoteCellView: UIView {
         }
         
         label.text = note.getText()
-        updateBackgroundColor(for: note)
+        updateBackgroundColor(for: note, animated: true)
     }
     
-    private func updateBackgroundColor(for note: Note) {
-        if note.isPinned {
-            backgroundColor = .dijon
-        } else {
-            backgroundColor = .primary
+    private func updateBackgroundColor(for note: Note, animated: Bool) {
+
+        switch animated {
+        case false:
+            if note.isPinned {
+                backgroundColor = .dijon
+            } else {
+                backgroundColor = .primary
+            }
+        case true:
+            UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
+                if note.isPinned {
+                    self.backgroundColor = .dijon
+                } else {
+                    self.backgroundColor = .primary
+                }
+            }
         }
     }
 }

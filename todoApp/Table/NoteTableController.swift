@@ -201,20 +201,23 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     /// Sets the color of the pulldown wave to dijon if top note is pinned
     func updatePinColors() {
-        switch dataSource.hasPinnedNotes {
-        case true:
-            tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
-            topBackground.backgroundColor = .dijon
-        case false:
-            tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
-            topBackground.backgroundColor = .primary
+        UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
+            
+            switch self.dataSource.hasPinnedNotes {
+            case true:
+                self.tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
+                self.topBackground.backgroundColor = .dijon
+            case false:
+                self.tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
+                self.topBackground.backgroundColor = .primary
+            }
+            
+            if let hex = self.currentlySelectedCategory?.hexColor {
+                self.topBackground.backgroundColor = UIColor.init(hexString: hex)
+            }
+            
+            self.setBottomFooterColor()
         }
-        
-        if let hex = currentlySelectedCategory?.hexColor {
-            topBackground.backgroundColor = UIColor.init(hexString: hex)
-        }
-        
-        setBottomFooterColor()
     }
     
     private func setBottomFooterColor() {

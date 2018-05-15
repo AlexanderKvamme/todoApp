@@ -10,12 +10,9 @@ import SwipeCellKit
 import Foundation
 import UIKit
 
-
-
 class NoteDataSource: NSObject {
 
     // MARK: - Properties
-    
     
     let noteStorage: NoteStorage
     var notes: [Note]
@@ -50,7 +47,7 @@ class NoteDataSource: NSObject {
     // MARK: - Methods
     
     func switchCategory(to category: Category?) {
-        guard let category = category else {fatalError("must switch to a category")}
+        guard let category = category else { fatalError("must switch to a category") }
         
         self.notes = noteStorage.getNotes(category, pinned: true) + noteStorage.getNotes(category, pinned: false)
         delegate?.updatePinColors()
