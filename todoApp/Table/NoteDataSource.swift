@@ -18,6 +18,8 @@ class NoteDataSource: NSObject {
     let noteStorage: NoteStorage
     var notes: [Note]
     
+    private let minimumCells = 10 // if you only have 2 cells, 8 of them will be empty and uneditable, to avoind having to reload cells which makes the table jump
+    
     weak var delegate: NoteTableController?
     
     // Computed
@@ -49,6 +51,7 @@ class NoteDataSource: NSObject {
         guard let category = category else {fatalError("must switch to a category")}
         
         self.notes = noteStorage.getNotes(category, pinned: true) + noteStorage.getNotes(category, pinned: false)
+        print("Notes now:" , notes.compactMap({$0.content!}))
     }
     
     func add(_ note: Note) {
@@ -58,11 +61,23 @@ class NoteDataSource: NSObject {
     }
     
     func deleteNote(at index: Int) {
+        guard index < notes.count else { fatalError("Out of range") }
+        
+        // NEW
+        
+        print("would delete note at index: ", index)
+        print("notecoount: ", notes.count)
+        
+        // If less than minCellCount, insert a new after deletion
+        
+        // OLD
+        
         let noteToRemove = notes[index]
         notes.remove(at: index)
         noteStorage.delete(note: noteToRemove)
         noteStorage.save()
         delegate?.updateColors()
+        
     }
     
     func togglePinned(at index: Int) {
@@ -81,13 +96,13 @@ class NoteDataSource: NSObject {
     }
     
     func pinNote(at index: Int) {
-        delegate?.playPinSound()
-        let noteToPin = notes[index]
+        guard let table = delegate?.tableView else {return}
         
+        let noteToPin = notes[index]
         let fromIndex = IndexPath(row: index, section: 0)
         let toIndex = IndexPath(row: 0, section: 0)
-        
-        guard let table = delegate?.tableView else {return}
+
+        delegate?.playPinSound()
         
         table.beginUpdates()
         notes.remove(at: index)
@@ -141,29 +156,59 @@ extension NoteDataSource: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes.count
+        let cnt = max(notes.count, minimumCells)
+        print("bam returning number of rows:", cnt)
+//        return notes.count
+        return cnt
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentIndex = indexPath.row
+        let willBeEmptyCell = currentIndex < notes.count
+
+
+        // Get Note or nil
+        var tempNote: Note?
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
-            let newCell = NoteCell(frame: .zero)
-            newCell.delegate = self
-            let tempNode = notes[currentIndex]
-            newCell.updateWith(note: tempNode, at: currentIndex)
-            return newCell
+        if currentIndex < notes.count {
+            tempNote = notes[currentIndex]
+        } else {
+            tempNote = nil
         }
         
-        cell.delegate = self
-        cell.updateWith(note: notes[currentIndex], at: currentIndex)
-        return cell
+        
+        switch willBeEmptyCell {
+        case false:
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
+                let newCell = NoteCell(frame: .zero)
+                newCell.delegate = self
+                newCell.updateWith(note: tempNote)
+                return newCell
+            }
+            
+            cell.delegate = self
+            cell.updateWith(note: tempNote)
+            return cell
+        case true:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
+                let newCell = NoteCell(frame: .zero)
+                newCell.delegate = self
+                newCell.updateWith(note: tempNote)
+                return newCell
+            }
+            
+            cell.delegate = self
+            cell.updateWith(note: tempNote)
+            return cell
+        }
     }
 }
 
 /// Enables swiping on cells to delete 
 extension NoteDataSource: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        
         return true
     }
     

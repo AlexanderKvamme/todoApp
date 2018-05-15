@@ -31,15 +31,16 @@ class NoteTableController: UIViewController, UITableViewDelegate {
             
             if let hexColor = currentlySelectedCategory?.hexColor {
                 topBackground.backgroundColor = .red
-//                topBackground.backgroundColor = UIColor.init(hexString: hexColor)
+                //                topBackground.backgroundColor = UIColor.init(hexString: hexColor)
             }
             
-            tableView.beginUpdates()
+            //            tableView.beginUpdates()
             
             dataSource.switchCategory(to: currentlySelectedCategory)
-            tableView.reloadSections(IndexSet(integersIn: 0...0), with: UITableViewRowAnimation.top)
+            updateRows()
+            //            tableView.reloadSections(IndexSet(integersIn: 0...0), with: UITableViewRowAnimation.top)
             
-            tableView.endUpdates()
+            //            tableView.endUpdates()
         }
     }
     
@@ -68,7 +69,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         self.categoryOfController = Categories._default
         
         super.init(nibName: nil, bundle: nil)
-
+        
         dataSource.delegate = self
         tableView.delegate = self
         
@@ -86,7 +87,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
-//        setupNavbar()
+        //        setupNavbar()
         addPullToRefresh()
         setColors(hasPins: dataSource.hasPinnedNotes)
         
@@ -97,12 +98,11 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         setupTableView()
         updateColors()
         addSubviewAndConstraints()
-        updateColors()
         tableView.categoryReceiverDelegate = self
         addObservers()
         tableView.reloadData()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         updateColors()
     }
@@ -153,7 +153,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
             make.right.equalTo(view.snp.right)
             self.topbackgroundHeight = make.height.equalTo(200).offset(0).constraint
         }
-
+        
         tableView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom)
             make.left.equalTo(view.snp.left)
@@ -185,7 +185,110 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     func updateColors() {
         let hasPins = dataSource.hasPinnedNotes
         setColors(hasPins: hasPins)
-//        checkContentSize()
+        //        checkContentSize()
+    }
+    
+    func updateRows() {
+        let noteCount = dataSource.notes.count
+        let visibleRows = (tableView.visibleCells as! [NoteCell])
+        let visibleCount = visibleRows.count
+        var topI = 0
+        
+        for (i, cell) in visibleRows.enumerated() {
+            if i < dataSource.notes.count {
+                // tableview has visiblerows and datasource has notes. update existing cells
+                let note = dataSource.notes[i]
+                cell.updateWith(note: note)
+                topI = i
+            }
+        }
+        
+        if visibleCount > noteCount {
+            // Remove / hide some rows
+            print("remove or hide some rows")
+            for (i, cell) in visibleRows.enumerated() {
+                
+                var tempNote: Note? = nil
+                
+                if i < dataSource.notes.count {
+                    tempNote = dataSource.notes[i]
+                }
+                
+                cell.updateWith(note: tempNote)
+            }
+        }
+        
+    }
+    
+    func updateRows2() {
+        
+        // Reload rows funker ikke. Det blir choppy. Samme med reloadData
+        
+        //        tableView.reloadSections(IndexSet.init(integer: 0), with: .none)
+        //        tableView.reloadData()
+        
+        // Plan 2
+        // - if too many rows, hide them
+        // - if too few rows, insert
+        let noteCount = dataSource.notes.count
+        let visibleRows = (tableView.visibleCells as! [NoteCell])
+        let visibleCount = visibleRows.count
+        
+        //        tableView.beginUpdates()
+        
+        // MARK: DONE
+        if visibleCount < noteCount {
+            // Insert rows
+            print("insert rows")
+            
+            var topI = 0
+            
+            for (i, cell) in visibleRows.enumerated() {
+                if i < dataSource.notes.count {
+                    // tableview has visiblerows and datasource has notes. update existing cells
+                    let note = dataSource.notes[i]
+                    cell.updateWith(note: note)
+                    topI = i
+                }
+            }
+            
+            topI += 1
+            while topI < noteCount {
+                print("topi: \(topI) noteCount: \(noteCount)")
+                let ip = IndexPath(row: topI, section: 0)
+                print("print: tryna insert row at ip: ", ip)
+                tableView.insertRows(at: [ip], with: .none)
+                topI += 1
+            }
+        }
+        
+        // MARK: IF NEW TABLE HAS EQUAL NUMBER OF CELLS
+        
+        if visibleCount == noteCount {
+            // just update
+            print("just update")
+            for (i, cell) in visibleRows.enumerated() {
+                // tableview has visiblerows and datasource has notes. update existing cells
+                let note = dataSource.notes[i]
+                cell.updateWith(note: note)
+            }
+        }
+        
+        // FIXME: IF NEW TABLE HAS EQUAL NUMBER OF CELLS
+        if visibleCount > noteCount {
+            // Remove / hide some rows
+            print("remove or hide some rows")
+            for (i, cell) in visibleRows.enumerated() {
+                
+                var tempNote: Note? = nil
+                
+                if i < dataSource.notes.count {
+                    tempNote = dataSource.notes[i]
+                }
+                
+                cell.updateWith(note: tempNote)
+            }
+        }
     }
     
     private func setColors(hasPins: Bool) {
@@ -200,7 +303,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         if let hex = currentlySelectedCategory?.hexColor {
             topBackground.backgroundColor = UIColor.init(hexString: hex)
         }
-
+        
         setBottomFooterColor()
     }
     
@@ -234,7 +337,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.allowsSelection = false
         tableView.backgroundColor = .clear
     }
-
+    
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     private func addPullToRefresh() {
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
@@ -251,8 +354,66 @@ class NoteTableController: UIViewController, UITableViewDelegate {
             dataSource.add(newNote)
             playAcceptedSound()
             let insertionRow = dataSource.index(of: newNote)
-            tableView.insertRows(at: [insertionRow], with: .automatic)
-            self.tableView.dg_stopLoading()
+    
+            // NEW: Instead ov inserting into the tableview, switch on wether or not there are empty cells. if there are empty cells, just update them
+            
+            let noteCount = dataSource.notes.count
+            let cellCount = tableView.visibleCells.count
+            print("notecount: ", noteCount)
+            print("cellCount: ", cellCount)
+            
+            // update cell
+            
+            if let cell = tableView.cellForRow(at: insertionRow) as? NoteCell {
+                print("got cell")
+                cell.updateWith(note: newNote)
+                
+                // new note is inserten as the first cell under any pinned cells, but its just updated, so any other notes are moved one down. update all of the cells underneath
+                
+                let visibleCells = tableView.visibleCells as! [NoteCell]
+                
+                guard let indexOfNewNote = visibleCells.index(of: cell) else {return}
+                print("index of new cell is: ", indexOfNewNote)
+                
+                // update the cells undert he new cell
+
+                print("printing visible cells")
+                
+                for c in visibleCells {
+                    print("would update \(c.noteCellView.label.text)")
+                    
+                    // get cell number and then update it with the note from the matching notearray
+                    
+                    if let indexOfCell = tableView.indexPath(for: c) {
+                        guard indexOfCell.row < dataSource.notes.count else {
+                            self.tableView.dg_stopLoading()
+                            return
+                        }
+                        c.updateWith(note: dataSource.notes[indexOfCell.row])
+                    }
+                    
+                }
+                
+                self.tableView.dg_stopLoading()
+                
+                
+                print("printing notes")
+                
+                for n in dataSource.notes {
+                    print("note: ", n.content)
+                }
+                
+            }
+            
+         
+            
+            
+            
+            // OLD
+            
+//            tableView.insertRows(at: [insertionRow], with: .automatic)
+            
+            
         } else {
             VibrationController.vibrate()
             playErrorSound()
@@ -324,7 +485,7 @@ extension NoteTableController {
         let screenHeight = UIScreen.main.bounds.height
         let contentSize = scrollView.contentSize.height
         let contentOffset = scrollView.contentOffset.y
-
+        
         if contentSize > screenHeight {
             // table is scrollable
             let overscroll = (contentSize - screenHeight - contentOffset) * -1
