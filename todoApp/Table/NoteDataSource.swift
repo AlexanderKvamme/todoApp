@@ -53,14 +53,15 @@ class NoteDataSource: NSObject {
         guard let category = category else {fatalError("must switch to a category")}
         
         self.notes = noteStorage.getNotes(category, pinned: true) + noteStorage.getNotes(category, pinned: false)
-        print("Notes now:" , notes.compactMap({$0.content!}))
-        print(" - ", notes.count)
+        delegate?.updatePinColors()
+        
+        print("\(notes.count) notes:" , notes.compactMap({$0.content!}))
     }
     
     func add(_ note: Note) {
         let firstIndexUnderPinned = getFirstIndexUnderPinnedRows()
         notes.insert(note, at: firstIndexUnderPinned)
-        delegate?.updateColors()
+        delegate?.updatePinColors()
     }
     
     func deleteNote(at index: Int) {
@@ -70,7 +71,7 @@ class NoteDataSource: NSObject {
         notes.remove(at: index)
         noteStorage.delete(note: noteToRemove)
         noteStorage.save()
-        delegate?.updateColors()
+        delegate?.updatePinColors()
         insertNewBlankCell()
     }
     
@@ -85,7 +86,7 @@ class NoteDataSource: NSObject {
             pinNote(at: index)
         }
         DatabaseFacade.saveContext()
-        delegate?.updateColors()
+        delegate?.updatePinColors()
     }
     
     func getLastNote() -> Note? {
@@ -159,7 +160,7 @@ extension NoteDataSource {
 extension NoteDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?, for orientation: SwipeActionsOrientation) {
-        delegate?.updateColors()
+        delegate?.updatePinColors()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

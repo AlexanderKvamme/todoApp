@@ -78,7 +78,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         //        setupNavbar()
         addPullToRefresh()
-        setColors(hasPins: dataSource.hasPinnedNotes)
+        updatePinColors()
         
         noteMaker.delegate = self
         
@@ -87,7 +87,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         setupTableView()
-        updateColors()
+        updatePinColors()
         addSubviewAndConstraints()
         tableView.categoryReceiverDelegate = self
         addObservers()
@@ -95,7 +95,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        updateColors()
+        updatePinColors()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,7 +106,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentSize" {
-            updateColors()
+            updatePinColors()
         }
     }
     
@@ -171,12 +171,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         }
     }
     
-    /// Sets the color of the pulldown wave to dijon if top note is pinned
-    func updateColors() {
-        let hasPins = dataSource.hasPinnedNotes
-        setColors(hasPins: hasPins)
-    }
-    
     func updateRows() {
         let noteCount = dataSource.notes.count
         let visibleRows = (tableView.visibleCells as! [NoteCell])
@@ -205,8 +199,9 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.insertRows(at: [ipToInsert], with: .automatic)
     }
     
-    private func setColors(hasPins: Bool) {
-        switch hasPins {
+    /// Sets the color of the pulldown wave to dijon if top note is pinned
+    func updatePinColors() {
+        switch dataSource.hasPinnedNotes {
         case true:
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
             topBackground.backgroundColor = .dijon
