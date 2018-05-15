@@ -28,19 +28,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         didSet {
             // FIMXE: refactor
             setPullToRefreshColor(for: currentlySelectedCategory)
-            
-            if let hexColor = currentlySelectedCategory?.hexColor {
-                topBackground.backgroundColor = .red
-                //                topBackground.backgroundColor = UIColor.init(hexString: hexColor)
-            }
-            
-            //            tableView.beginUpdates()
-            
             dataSource.switchCategory(to: currentlySelectedCategory)
             updateRows()
-            //            tableView.reloadSections(IndexSet(integersIn: 0...0), with: UITableViewRowAnimation.top)
-            
-            //            tableView.endUpdates()
         }
     }
     
@@ -90,6 +79,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         //        setupNavbar()
         addPullToRefresh()
         setColors(hasPins: dataSource.hasPinnedNotes)
+        
+        noteMaker.delegate = self
         
         tableView.reloadData()
     }
@@ -171,13 +162,12 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     private func setPullToRefreshColor(for category: Category?) {
         guard let category = category else { return }
+        guard let hexColor = category.hexColor else { return }
+        noteMaker.updateLabel(for: category)
         
-        noteMaker.update(for: category)
-        if let hexColor = category.hexColor {
-            UIView.animate(withDuration: 1) {
-                self.topBackground.backgroundColor = UIColor.init(hexString: hexColor)
-            }
-            tableView.dg_setPullToRefreshFillColor(UIColor.init(hexString: hexColor))
+        UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
+            self.topBackground.backgroundColor = UIColor.init(hexString: hexColor)
+            self.tableView.dg_setPullToRefreshFillColor(UIColor.init(hexString: hexColor))
         }
     }
     
@@ -185,7 +175,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     func updateColors() {
         let hasPins = dataSource.hasPinnedNotes
         setColors(hasPins: hasPins)
-        //        checkContentSize()
     }
     
     func updateRows() {
@@ -203,7 +192,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         
         if visibleCount > noteCount {
             // Remove / hide some rows
-            print("remove or hide some rows")
             for (i, cell) in visibleRows.enumerated() {
                 
                 var tempNote: Note? = nil
@@ -215,7 +203,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
                 cell.updateWith(note: tempNote)
             }
         }
-        
     }
     
     func insertNewBlankCell() {

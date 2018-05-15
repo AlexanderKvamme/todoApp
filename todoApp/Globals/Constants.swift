@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 enum Constants {
+    enum animation {
+        static let categorySwitchLength = 0.3
+    }
+    
     enum screen {
         static let height: CGFloat = {
             return UIScreen.main.bounds.height

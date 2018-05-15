@@ -18,6 +18,7 @@ final class NoteMakerController: UIViewController {
     var noteMakerView = NoteMakerView(frame: .zero)
     
     private let storage: NoteStorage
+    weak var delegate: NoteTableController?
     
     // MARK: - Initializer
     
@@ -26,6 +27,7 @@ final class NoteMakerController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         view = noteMakerView
+        noteMakerView.backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,12 +36,7 @@ final class NoteMakerController: UIViewController {
     
     // MARK: - Methods
     
-    func update(for category: Category) {
-        
-        if let hexColor = category.hexColor {
-        noteMakerView.backgroundColor = UIColor(hexString: hexColor)
-        }
-        
+    func updateLabel(for category: Category) {
         if let name = category.name {
             noteMakerView.textField.text = name
         }
