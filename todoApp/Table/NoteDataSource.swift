@@ -170,16 +170,7 @@ extension NoteDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentIndex = indexPath.row
         let willBeEmptyCell = currentIndex < notes.count
-
-        // Get Note or nil
-        var tempNote: Note?
-        
-        if currentIndex < notes.count {
-            tempNote = notes[currentIndex]
-        } else {
-            tempNote = nil
-        }
-        
+        let tempNote = currentIndex < notes.count ? notes[currentIndex] : nil
         
         switch willBeEmptyCell {
         case false:
