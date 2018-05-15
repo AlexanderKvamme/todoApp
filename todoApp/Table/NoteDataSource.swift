@@ -204,7 +204,6 @@ extension NoteDataSource: UITableViewDataSource {
 /// Enables swiping on cells to delete 
 extension NoteDataSource: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        
         return true
     }
     
@@ -224,6 +223,8 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        // empty cells should not be editable
+        if notes.count < indexPath.row  { return nil }
         
         switch orientation {
         case .left:
