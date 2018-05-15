@@ -20,7 +20,7 @@ class NoteDataSource: NSObject {
     let noteStorage: NoteStorage
     var notes: [Note]
     
-    private let minimumCells = 10 // if you only have 2 cells, 8 of them will be empty and uneditable, to avoid having to reload cells which makes the table jump
+    let minimumCells = 10 // if you only have 2 cells, 8 of them will be empty and uneditable, to avoid having to reload cells which makes the table jump
     
     weak var delegate: NoteTableController?
 
@@ -54,6 +54,7 @@ class NoteDataSource: NSObject {
         
         self.notes = noteStorage.getNotes(category, pinned: true) + noteStorage.getNotes(category, pinned: false)
         print("Notes now:" , notes.compactMap({$0.content!}))
+        print(" - ", notes.count)
     }
     
     func add(_ note: Note) {
@@ -144,6 +145,15 @@ class NoteDataSource: NSObject {
     }
 }
 
+// MARK: - Helpers
+
+extension NoteDataSource {
+    
+    var isFull: Bool {
+       return notes.count >= minimumCells
+    }
+}
+
 // MARK: - UITableViewDataSource conformance
 
 extension NoteDataSource: UITableViewDataSource {
@@ -155,6 +165,7 @@ extension NoteDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let cnt = max(notes.count, minimumCells)
         print("bam returning number of rows:", cnt)
+        print("notecount: ", notes.count)
         return cnt
     }
     

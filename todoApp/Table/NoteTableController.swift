@@ -283,6 +283,13 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     func dismissNoteMaker() {
         // Make note only if it has text
+        
+        guard dataSource.isFull == false else {
+            self.tableView.dg_stopLoading()
+            log.warning("aboring creating note - FIXME show warning")
+            return
+        }
+        
         if let newNote = noteMaker.makeNoteFromInput() {
             // insert new note as a cell
             newNote.category = currentlySelectedCategory
