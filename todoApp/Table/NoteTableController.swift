@@ -219,88 +219,10 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     func insertNewBlankCell() {
-        print("would insert new blank cell")
-        let noteCount = dataSource.notes.count
-        let visibleRows = (tableView.visibleCells as! [NoteCell])
-        let visibleCount = visibleRows.count
-        
         let lastIP = dataSource.tableView(tableView, numberOfRowsInSection: 0) - 1
-        
-        print("got tablecount:" , lastIP)
         let ipToInsert = IndexPath(row: lastIP, section: 0)
         
         tableView.insertRows(at: [ipToInsert], with: .automatic)
-    }
-    
-    func updateRows2() {
-        
-        // Reload rows funker ikke. Det blir choppy. Samme med reloadData
-        
-        //        tableView.reloadSections(IndexSet.init(integer: 0), with: .none)
-        //        tableView.reloadData()
-        
-        // Plan 2
-        // - if too many rows, hide them
-        // - if too few rows, insert
-        let noteCount = dataSource.notes.count
-        let visibleRows = (tableView.visibleCells as! [NoteCell])
-        let visibleCount = visibleRows.count
-        
-        //        tableView.beginUpdates()
-        
-        // MARK: DONE
-        if visibleCount < noteCount {
-            // Insert rows
-            print("insert rows")
-            
-            var topI = 0
-            
-            for (i, cell) in visibleRows.enumerated() {
-                if i < dataSource.notes.count {
-                    // tableview has visiblerows and datasource has notes. update existing cells
-                    let note = dataSource.notes[i]
-                    cell.updateWith(note: note)
-                    topI = i
-                }
-            }
-            
-            topI += 1
-            while topI < noteCount {
-                print("topi: \(topI) noteCount: \(noteCount)")
-                let ip = IndexPath(row: topI, section: 0)
-                print("print: tryna insert row at ip: ", ip)
-                tableView.insertRows(at: [ip], with: .none)
-                topI += 1
-            }
-        }
-        
-        // MARK: IF NEW TABLE HAS EQUAL NUMBER OF CELLS
-        
-        if visibleCount == noteCount {
-            // just update
-            print("just update")
-            for (i, cell) in visibleRows.enumerated() {
-                // tableview has visiblerows and datasource has notes. update existing cells
-                let note = dataSource.notes[i]
-                cell.updateWith(note: note)
-            }
-        }
-        
-        // FIXME: IF NEW TABLE HAS EQUAL NUMBER OF CELLS
-        if visibleCount > noteCount {
-            // Remove / hide some rows
-            print("remove or hide some rows")
-            for (i, cell) in visibleRows.enumerated() {
-                
-                var tempNote: Note? = nil
-                
-                if i < dataSource.notes.count {
-                    tempNote = dataSource.notes[i]
-                }
-                
-                cell.updateWith(note: tempNote)
-            }
-        }
     }
     
     private func setColors(hasPins: Bool) {
@@ -312,6 +234,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
             tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
             topBackground.backgroundColor = .primary
         }
+        
         if let hex = currentlySelectedCategory?.hexColor {
             topBackground.backgroundColor = UIColor.init(hexString: hex)
         }
