@@ -193,14 +193,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         if visibleCount > noteCount {
             // Remove / hide some rows
             for (i, cell) in visibleRows.enumerated() {
-                
-                var tempNote: Note? = nil
-                
-                if i < dataSource.notes.count {
-                    tempNote = dataSource.notes[i]
-                }
-                
-                cell.updateWith(note: tempNote)
+                cell.updateWith(note: (i < dataSource.notes.count) ? dataSource.notes[i] : nil)
             }
         }
     }
@@ -268,74 +261,50 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.dg_setPullToRefreshFillColor(UIColor.secondary)
     }
     
+    /// Make note if it has text and has not exceeded maximum cellcount
     func dismissNoteMaker() {
-        // Make note only if it has text
-        
-        guard dataSource.isFull == false else {
-            self.tableView.dg_stopLoading()
-            log.warning("aboring creating note - FIXME show warning")
+        if dataSource.isFull {
+            indicateError()
             return
         }
         
-        if let newNote = noteMaker.makeNoteFromInput() {
-            // insert new note as a cell
-            newNote.category = currentlySelectedCategory
-            dataSource.add(newNote)
-            playAcceptedSound()
-            let insertionRow = dataSource.index(of: newNote)
-    
-            // NEW: Instead ov inserting into the tableview, switch on wether or not there are empty cells. if there are empty cells, just update them
+        guard let newNote = noteMaker.makeNoteFromInput() else {
+            indicateError()
+            return
+        }
+        
+        // insert new note as a cell
+        newNote.category = currentlySelectedCategory
+        dataSource.add(newNote)
+        playAcceptedSound()
+        
+        let insertionRow = dataSource.index(of: newNote)
+        
+        // NEW: Instead ov inserting into the tableview, switch on wether or not there are empty cells. if there are empty cells, just update them
+        
+        if let cell = tableView.cellForRow(at: insertionRow) as? NoteCell {
+            cell.updateWith(note: newNote)
             
-            let noteCount = dataSource.notes.count
-            let cellCount = tableView.visibleCells.count
-            print("notecount: ", noteCount)
-            print("cellCount: ", cellCount)
+            // new note is inserted as the first cell under any pinned cells. update all of the cells underneath
+            let visibleCells = tableView.visibleCells as! [NoteCell]
             
-            // update cell
-            
-            if let cell = tableView.cellForRow(at: insertionRow) as? NoteCell {
-                print("got cell")
-                cell.updateWith(note: newNote)
-                
-                // new note is inserten as the first cell under any pinned cells, but its just updated, so any other notes are moved one down. update all of the cells underneath
-                
-                let visibleCells = tableView.visibleCells as! [NoteCell]
-                
-                guard let indexOfNewNote = visibleCells.index(of: cell) else {return}
-                print("index of new cell is: ", indexOfNewNote)
-                
-                // update the cells undert he new cell
-
-                print("printing visible cells")
-                
-                for c in visibleCells {
-                    print("would update \(c.noteCellView.label.text)")
-                    
-                    // get cell number and then update it with the note from the matching notearray
-                    
-                    if let indexOfCell = tableView.indexPath(for: c) {
-                        guard indexOfCell.row < dataSource.notes.count else {
-                            self.tableView.dg_stopLoading()
-                            return
-                        }
-                        c.updateWith(note: dataSource.notes[indexOfCell.row])
+            for c in visibleCells {
+                if let indexOfCell = tableView.indexPath(for: c) {
+                    guard indexOfCell.row < dataSource.notes.count else {
+                        indicateError()
+                        return
                     }
-                }
-                
-                self.tableView.dg_stopLoading()
-                
-                for n in dataSource.notes {
-                    print("note: ", n.content)
+                    c.updateWith(note: dataSource.notes[indexOfCell.row])
                 }
             }
-            
-            // OLD
-//            tableView.insertRows(at: [insertionRow], with: .automatic)
-        } else {
-            VibrationController.vibrate()
-            playErrorSound()
             self.tableView.dg_stopLoading()
         }
+    }
+    
+    func indicateError() {
+        self.tableView.dg_stopLoading()
+        VibrationController.vibrate()
+        self.playErrorSound()
     }
     
     // MARK: - Observer Methods

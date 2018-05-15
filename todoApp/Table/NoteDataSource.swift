@@ -164,8 +164,6 @@ extension NoteDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let cnt = max(notes.count, minimumCells)
-        print("bam returning number of rows:", cnt)
-        print("notecount: ", notes.count)
         return cnt
     }
     
