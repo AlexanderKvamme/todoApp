@@ -75,14 +75,20 @@ final class NoteCellView: UIView {
         switch animated {
         case false:
             if note.isPinned {
-                backgroundColor = .dijon
+                if let hex = note.category?.hexColor {
+                    let newCol = UIColor.init(hexString: hex).darker(by: 10)
+                    backgroundColor = newCol
+                }
             } else {
                 backgroundColor = .primary
             }
         case true:
             UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
                 if note.isPinned {
-                    self.backgroundColor = .dijon
+                    if let hex = note.category?.hexColor {
+                        let newCol = UIColor.init(hexString: hex).darker(by: 10)
+                        self.backgroundColor = newCol
+                    }
                 } else {
                     self.backgroundColor = .primary
                 }

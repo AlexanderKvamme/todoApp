@@ -27,11 +27,6 @@ class MyNavigationController: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
     
-
-    
-    
-    
-    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController,source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         // FIXME: Use black center frams
         print("bama getting custom AnimationController ")

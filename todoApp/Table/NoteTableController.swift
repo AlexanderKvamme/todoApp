@@ -33,6 +33,9 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         }
     }
     
+    let leftTest = UIView()
+    let rightTest = UIView()
+    
     private(set) var tableView = sectorTableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
@@ -56,6 +59,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         self.noteStorage = storage
         self.dataSource = NoteDataSource(with: storage)
         self.categoryOfController = Categories._default
+        self.currentlySelectedCategory = Categories._default
         
         super.init(nibName: nil, bundle: nil)
         
@@ -95,6 +99,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         updatePinColors()
     }
     
@@ -199,21 +204,30 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.insertRows(at: [ipToInsert], with: .automatic)
     }
     
+    
+    func getDarkerColor(for category: Category) -> UIColor {
+        guard let catCol = category.hexColor else {
+            fatalError("Should have color. Add Default")
+        }
+        return UIColor(hexString: catCol).darker(by: 10)
+    }
+    
     /// Sets the color of the pulldown wave to dijon if top note is pinned
     func updatePinColors() {
+        guard let currentCategory = currentlySelectedCategory else { return }
+        
         UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
+            // FIXME: Use the category color to generate pin color
+            
+            let darkColor = self.getDarkerColor(for: currentCategory)
             
             switch self.dataSource.hasPinnedNotes {
             case true:
-                self.tableView.dg_setPullToRefreshBackgroundColor(UIColor.dijon)
-                self.topBackground.backgroundColor = .dijon
+                self.tableView.dg_setPullToRefreshBackgroundColor(darkColor)
+                self.topBackground.backgroundColor = darkColor
             case false:
                 self.tableView.dg_setPullToRefreshBackgroundColor(UIColor.primary)
                 self.topBackground.backgroundColor = .primary
-            }
-            
-            if let hex = self.currentlySelectedCategory?.hexColor {
-                self.topBackground.backgroundColor = UIColor.init(hexString: hex)
             }
             
             self.setBottomFooterColor()
@@ -253,10 +267,15 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     private func addPullToRefresh() {
+        
+        guard let hexColor = currentlySelectedCategory?.hexColor else { fatalError("must have initiali color") }
+        
+        let newCol = UIColor(hexString: hexColor)
+        
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self?.handlePullToRefreshCompletion()
             }, loadingView: noteMaker.view as? DGElasticPullToRefreshLoadingView)
-        tableView.dg_setPullToRefreshFillColor(UIColor.secondary)
+        tableView.dg_setPullToRefreshFillColor(newCol)
     }
     
     /// Make note if it has text and has not exceeded maximum cellcount
