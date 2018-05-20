@@ -286,6 +286,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         }
         
         guard let newNote = noteMaker.makeNoteFromInput() else {
+            print("error 1")
             indicateError()
             return
         }
@@ -297,21 +298,15 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         
         let insertionRow = dataSource.index(of: newNote)
         
-        // NEW: Instead ov inserting into the tableview, switch on wether or not there are empty cells. if there are empty cells, just update them
-        
+        // Instead of inserting into the tableview, switch on wether or not there are empty cells. if there are empty cells, just update them
         if let cell = tableView.cellForRow(at: insertionRow) as? NoteCell {
             cell.updateWith(note: newNote)
-            
             // new note is inserted as the first cell under any pinned cells. update all of the cells underneath
             let visibleCells = tableView.visibleCells as! [NoteCell]
             
-            for c in visibleCells {
-                if let indexOfCell = tableView.indexPath(for: c) {
-                    guard indexOfCell.row < dataSource.notes.count else {
-                        indicateError()
-                        return
-                    }
-                    c.updateWith(note: dataSource.notes[indexOfCell.row])
+            for cell in visibleCells {
+                if let indexOfCell = tableView.indexPath(for: cell), indexOfCell.row < dataSource.notes.count {
+                    cell.updateWith(note: dataSource.notes[indexOfCell.row])
                 }
             }
             self.tableView.dg_stopLoading()
