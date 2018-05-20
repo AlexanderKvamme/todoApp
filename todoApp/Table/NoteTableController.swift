@@ -8,6 +8,7 @@
 
 import UIKit
 import DGElasticPullToRefresh
+import SwipeCellKit
 import SnapKit
 import AVFoundation
 
@@ -47,7 +48,13 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     fileprivate var transitioning = false
     fileprivate var beganScrollingAt: CGPoint!
     
-    var nextNoteTable: NoteTableController?
+    var shouldSwitchCategoryOnPull = true
+    
+    var tableViewShouldBeEditable = true {
+        didSet {
+            print("--didset tableViewShouldBeEditable: ", tableViewShouldBeEditable)
+        }
+    }
     
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
@@ -126,14 +133,17 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     private func attemptRecoverDeletedNote() {
-        if let previouslyDeletedNote = noteStorage.undoDeletion() {
-            dataSource.add(previouslyDeletedNote)
-            playRecoveredSound()
-            let insertionRow = dataSource.index(of: previouslyDeletedNote)
-            tableView.insertRows(at: [insertionRow], with: .automatic)
-        } else {
-            playCouldNotRecoverSound()
-        }
+        return
+        
+        // FIXME: - Go over to updateing cells manually instead of inserting/deleting
+//        if let previouslyDeletedNote = noteStorage.undoDeletion() {
+//            dataSource.add(previouslyDeletedNote)
+//            playRecoveredSound()
+//            let insertionRow = dataSource.index(of: previouslyDeletedNote)
+//            tableView.insertRows(at: [insertionRow], with: .automatic)
+//        } else {
+//            playCouldNotRecoverSound()
+//        }
     }
     
     fileprivate func addSubviewAndConstraints() {
@@ -218,7 +228,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         
         UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
             // FIXME: Use the category color to generate pin color
-            
             let darkColor = self.getDarkerColor(for: currentCategory)
             
             switch self.dataSource.hasPinnedNotes {
@@ -266,8 +275,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
-    private func addPullToRefresh() {
-        
+    func addPullToRefresh() {
         guard let hexColor = currentlySelectedCategory?.hexColor else { fatalError("must have initiali color") }
         
         let newCol = UIColor(hexString: hexColor)
@@ -286,7 +294,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         }
         
         guard let newNote = noteMaker.makeNoteFromInput() else {
-            print("error 1")
             indicateError()
             return
         }
@@ -323,6 +330,10 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     private func addObservers(){
         // Observe when pulled enough to trigger
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePullStarted),
+                                               name: NSNotification.Name.DGPullStarted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePullEnded),
+                                               name: NSNotification.Name.DGPullEnded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleHardPull),
                                                name: NSNotification.Name.DGPulledEnoughToTrigger, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleHardPullAndRelease),
@@ -330,19 +341,32 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         
         // Observe size changed to update footer colors
         tableView.addObserver(self, forKeyPath: "contentSize", options: [.new, .old, .prior], context: nil)
-        
     }
     
     private func removeObservers() {
         tableView.removeObserver(self, forKeyPath: "contentSize")
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.DGPullStarted, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.DGPullEnded, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.DGPulledEnoughToTrigger, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.DGPulledEnoughToTriggerAndReleased, object: nil)
     }
     
+    private func setTableEditable(_ b: Bool) {
+        tableViewShouldBeEditable = b
+    }
+    
     // MARK: Handlers
     
+    @objc func handlePullStarted() {
+        print("pull started")
+    }
+    
+    @objc func handlePullEnded() {
+        print("pull ended")
+    }
+    
     @objc func handleHardPull() {
-//        playPullSound()
+        playPullSound()
     }
     
     @objc func handleHardPullAndRelease() {
@@ -359,25 +383,25 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
-        // FIXME: make this one not be triggered if user they are scrolling below pulltorefresher
+        guard shouldSwitchCategoryOnPull else { return }
+        
         currentlySelectedCategory = category
         
-        if let index = Categories.all.index(of: category) {
-            
-            switch index {
-            case 0:
-                playCategoryOneSound()
-            case 1:
-                playCategoryTwoSound()
-            case 2:
-                playCategoryThreeSound()
-            case 3:
-                playCategoryFourSound()
-            case 4:
-                playCategoryFiveSound()
-            default:
-                return
-            }
+        guard let index = Categories.all.index(of: category) else { return }
+        
+        switch index {
+        case 0:
+            playCategoryOneSound()
+        case 1:
+            playCategoryTwoSound()
+        case 2:
+            playCategoryThreeSound()
+        case 3:
+            playCategoryFourSound()
+        case 4:
+            playCategoryFiveSound()
+        default:
+            return
         }
     }
 }
@@ -472,7 +496,7 @@ extension NoteTableController: SoundEffectPlayer {
         play(songAt: URL.sounds.categoryChange._5)
     }
     
-    // Other
+    // Other sounds
     
     func playDoneSound() {
         play(songAt: URL.sounds.note._1)

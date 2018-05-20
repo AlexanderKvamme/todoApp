@@ -3,6 +3,8 @@
 import UIKit
 
 extension Notification.Name {
+    public static let DGPullStarted = Notification.Name("DGPullStarted")
+    public static let DGPullEnded = Notification.Name("DGPullEnded")
     public static let DGPulledEnoughToTrigger = Notification.Name("DGPulledEnoughToTrigger")
     public static let DGPulledEnoughToTriggerAndReleased = Notification.Name("DGPulledEnoughToTriggerAndReleased")
 }
@@ -27,6 +29,16 @@ enum DGElasticPullToRefreshState: Int {
 // MARK: DGElasticPullToRefreshView
 
 open class DGElasticPullToRefreshView: UIView {
+    
+    fileprivate var isPulling: Bool = false {
+        didSet {
+            if isPulling {
+                NotificationCenter.default.post(Notification(name: Notification.Name.DGPullStarted, object: nil))
+            } else {
+                NotificationCenter.default.post(Notification(name: Notification.Name.DGPullEnded, object: nil))
+            }
+        }
+    }
     
     // MARK: -
     // MARK: Vars
@@ -56,6 +68,7 @@ open class DGElasticPullToRefreshView: UIView {
                 resetScrollViewContentInset(shouldAddObserverWhenFinished: true, animated: true, completion: { [weak self] () -> () in self?.state = .stopped })
                 // FIXME: Animate size to Fill the view
             } else if newValue == .stopped {
+                NotificationCenter.default.post(Notification(name: Notification.Name.DGPullEnded, object: nil))
                 loadingView?.stopLoading()
             }
         }
@@ -246,11 +259,20 @@ open class DGElasticPullToRefreshView: UIView {
     fileprivate func scrollViewDidChangeContentOffset(dragging: Bool) {
         let offsetY = actualContentOffsetY()
         
-        if state == .dragging
-            && offsetY >= DGElasticPullToRefreshConstants.MinOffsetToPull
-            && pullSurpassedTriggerTreshold == false {
-            // Is correct, but is triggered many times
-            pullSurpassedTriggerTreshold = true
+        if state == .dragging {
+            if offsetY >= DGElasticPullToRefreshConstants.MinOffsetToPull
+                && pullSurpassedTriggerTreshold == false {
+                // Is correct, but is triggered many times
+                pullSurpassedTriggerTreshold = true
+            }
+        }
+        
+        if state == .dragging && isPulling == false {
+            isPulling = true
+        }
+        
+        if state == .stopped && isPulling == true {
+            isPulling = false
         }
         
         if state == .stopped && dragging {

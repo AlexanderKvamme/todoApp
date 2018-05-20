@@ -27,7 +27,7 @@ class NoteDataSource: NSObject {
         guard hasNotes else { return false }
         guard let firstNote = notes.first  else { return false }
         return firstNote.isPinned
-    }
+    } 
     
     var hasNotes: Bool {
         return self.notes.count > 0
@@ -144,6 +144,16 @@ class NoteDataSource: NSObject {
         }
         return currentIndex
     }
+    
+    func stopTrackingPull() {
+        delegate?.tableView.dg_removePullToRefresh()
+        delegate?.shouldSwitchCategoryOnPull = false
+    }
+    
+    func startTtrackingPull() {
+        delegate?.addPullToRefresh()
+        delegate?.shouldSwitchCategoryOnPull = true
+    }
 }
 
 // MARK: - Helpers
@@ -161,6 +171,7 @@ extension NoteDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?, for orientation: SwipeActionsOrientation) {
         delegate?.updatePinColors()
+        startTtrackingPull()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -204,10 +215,15 @@ extension NoteDataSource: UITableViewDataSource {
 /// Enables swiping on cells to delete 
 extension NoteDataSource: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        var res = true
+        if let b = delegate?.tableViewShouldBeEditable {
+            res = b
+        }
+        return res
     }
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
+        
         switch orientation {
         case .left:
             var options = SwipeTableOptions()
@@ -223,6 +239,14 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        
+        stopTrackingPull()
+        
+        if delegate?.tableViewShouldBeEditable == false {
+            return nil
+        } else {
+        }
+
         // empty cells should not be editable
         if notes.count < indexPath.row  { return nil }
         
