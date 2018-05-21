@@ -276,9 +276,11 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     func addPullToRefresh() {
-        guard let hexColor = currentlySelectedCategory?.hexColor else { fatalError("must have initiali color") }
+        guard let hexColor = currentlySelectedCategory?.hexColor else { fatalError("must have initial color") }
         
         let newCol = UIColor(hexString: hexColor)
+        
+        print("adding pull to refresh. was it nil?")
         
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self?.handlePullToRefreshCompletion()
@@ -452,6 +454,18 @@ extension NoteTableController: UITextFieldDelegate {
         noteMaker.animateEndOfEditing()
         
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        shouldSwitchCategoryOnPull = false
+        tableViewShouldBeEditable = false
+        print("did begin editing")
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("did end editing")
+        shouldSwitchCategoryOnPull = true
+        tableViewShouldBeEditable = true
     }
 }
 
