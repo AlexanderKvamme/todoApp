@@ -248,7 +248,9 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         }
 
         // empty cells should not be editable
-        if notes.count < indexPath.row  { return nil }
+        if notes.count <= indexPath.row  {
+            return nil
+        }
         
         switch orientation {
         case .left:

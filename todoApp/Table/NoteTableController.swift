@@ -383,6 +383,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
+        print("received cat: ", category.name)
         guard shouldSwitchCategoryOnPull else { return }
         
         currentlySelectedCategory = category
@@ -467,10 +468,20 @@ extension NoteTableController: SoundEffectPlayer {
     func play(songAt url: URL) {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
+            adjustVolume(for: url)
             audioPlayer.prepareToPlay()
             audioPlayer.play()
         } catch {
             print(error)
+        }
+    }
+    
+    private func adjustVolume(for url: URL) {
+        let lowSounds = [URL.sounds.categoryChange._1, URL.sounds.categoryChange._2, URL.sounds.categoryChange._3, URL.sounds.categoryChange._4, URL.sounds.categoryChange._5]
+        if lowSounds.contains(url) {
+            audioPlayer.volume = 0.05
+    } else {
+            audioPlayer.volume = 1
         }
     }
     
@@ -499,14 +510,17 @@ extension NoteTableController: SoundEffectPlayer {
     // Other sounds
     
     func playDoneSound() {
+        print("volume: ", audioPlayer.volume)
         play(songAt: URL.sounds.note._1)
     }
     
     func playPinSound() {
+        print("volume: ", audioPlayer.volume)
         play(songAt: URL.sounds.notification._8)
     }
     
     func playUnpinSound() {
+        print("volume: ", audioPlayer.volume)
         play(songAt: URL.sounds.notification._12)
     }
     
