@@ -89,8 +89,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         //        setupNavbar()
         addPullToRefresh()
-        updatePinColors()
-        
         noteMaker.delegate = self
         
         tableView.reloadData()
@@ -103,11 +101,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.categoryReceiverDelegate = self
         addObservers()
         tableView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        updatePinColors()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -214,6 +207,19 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.insertRows(at: [ipToInsert], with: .automatic)
     }
     
+    func getCategoryColor(for category: Category) -> UIColor {
+        guard let catCol = category.hexColor else {
+            fatalError("Should have color. Add Default")
+        }
+        return UIColor(hexString: catCol)
+    }
+    
+    func getCurrentCategoryColor() -> UIColor {
+        guard let catCol = currentlySelectedCategory?.hexColor else {
+            fatalError("Should have color. Add Default")
+        }
+        return UIColor(hexString: catCol)
+    }
     
     func getDarkerColor(for category: Category) -> UIColor {
         guard let catCol = category.hexColor else {
@@ -368,6 +374,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     @objc func handleHardPull() {
+        print("playing hard pull sound")
         playPullSound()
     }
     
@@ -385,6 +392,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
+
+        print("received cat")
         guard shouldSwitchCategoryOnPull else { return }
         
         currentlySelectedCategory = category
@@ -481,10 +490,20 @@ extension NoteTableController: SoundEffectPlayer {
     func play(songAt url: URL) {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
+            adjustVolume(for: url)
             audioPlayer.prepareToPlay()
             audioPlayer.play()
         } catch {
             print(error)
+        }
+    }
+    
+    private func adjustVolume(for url: URL) {
+        let lowSounds = [URL.sounds.categoryChange._1, URL.sounds.categoryChange._2, URL.sounds.categoryChange._3, URL.sounds.categoryChange._4, URL.sounds.categoryChange._5]
+        if lowSounds.contains(url) {
+            audioPlayer.volume = 0.05
+    } else {
+            audioPlayer.volume = 1
         }
     }
     

@@ -248,7 +248,9 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         }
 
         // empty cells should not be editable
-        if notes.count < indexPath.row  { return nil }
+        if notes.count <= indexPath.row  {
+            return nil
+        }
         
         switch orientation {
         case .left:
@@ -269,7 +271,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
                 action.fulfill(with: ExpansionFulfillmentStyle.reset)
             }
             pinAction.image = .starIcon
-            pinAction.backgroundColor = .dijon
+            pinAction.backgroundColor = delegate?.getCurrentCategoryColor()
             return [pinAction]
         }
     }
