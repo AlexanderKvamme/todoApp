@@ -366,6 +366,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     @objc func handleHardPull() {
+        print("playing hard pull sound")
         playPullSound()
     }
     
@@ -383,7 +384,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
-        print("received cat: ", category.name)
+
+        print("received cat")
         guard shouldSwitchCategoryOnPull else { return }
         
         currentlySelectedCategory = category
@@ -510,17 +512,14 @@ extension NoteTableController: SoundEffectPlayer {
     // Other sounds
     
     func playDoneSound() {
-        print("volume: ", audioPlayer.volume)
         play(songAt: URL.sounds.note._1)
     }
     
     func playPinSound() {
-        print("volume: ", audioPlayer.volume)
         play(songAt: URL.sounds.notification._8)
     }
     
     func playUnpinSound() {
-        print("volume: ", audioPlayer.volume)
         play(songAt: URL.sounds.notification._12)
     }
     
