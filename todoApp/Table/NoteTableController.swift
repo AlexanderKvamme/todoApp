@@ -89,8 +89,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         //        setupNavbar()
         addPullToRefresh()
-        updatePinColors()
-        
         noteMaker.delegate = self
         
         tableView.reloadData()
@@ -103,11 +101,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.categoryReceiverDelegate = self
         addObservers()
         tableView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        updatePinColors()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -214,6 +207,19 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.insertRows(at: [ipToInsert], with: .automatic)
     }
     
+    func getCategoryColor(for category: Category) -> UIColor {
+        guard let catCol = category.hexColor else {
+            fatalError("Should have color. Add Default")
+        }
+        return UIColor(hexString: catCol)
+    }
+    
+    func getCurrentCategoryColor() -> UIColor {
+        guard let catCol = currentlySelectedCategory?.hexColor else {
+            fatalError("Should have color. Add Default")
+        }
+        return UIColor(hexString: catCol)
+    }
     
     func getDarkerColor(for category: Category) -> UIColor {
         guard let catCol = category.hexColor else {

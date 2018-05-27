@@ -271,7 +271,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
                 action.fulfill(with: ExpansionFulfillmentStyle.reset)
             }
             pinAction.image = .starIcon
-            pinAction.backgroundColor = .dijon
+            pinAction.backgroundColor = delegate?.getCurrentCategoryColor()
             return [pinAction]
         }
     }
