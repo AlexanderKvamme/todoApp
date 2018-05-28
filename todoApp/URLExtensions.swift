@@ -12,6 +12,14 @@ import Foundation
 extension URL {
     enum sounds {
         
+        enum mallet {
+            static let _1 = URL(fileURLWithPath: Bundle.main.path(forResource: "Mallet_Note1", ofType: "wav")!)
+            static let _2 = URL(fileURLWithPath: Bundle.main.path(forResource: "Mallet_Note2", ofType: "wav")!)
+            static let _3 = URL(fileURLWithPath: Bundle.main.path(forResource: "Mallet_Note3", ofType: "wav")!)
+            static let _4 = URL(fileURLWithPath: Bundle.main.path(forResource: "Mallet_Note4", ofType: "wav")!)
+            static let _5 = URL(fileURLWithPath: Bundle.main.path(forResource: "Mallet_Note5", ofType: "wav")!)
+        }
+        
         enum categoryChange {
             static let _1 = URL(fileURLWithPath: Bundle.main.path(forResource: "Space_Note1", ofType: "wav")!)
             static let _2 = URL(fileURLWithPath: Bundle.main.path(forResource: "Space_Note2", ofType: "wav")!)

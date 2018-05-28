@@ -21,6 +21,7 @@ enum Globals {
 
 /// Contains a tableview with a pull to refresh
 class NoteTableController: UIViewController, UITableViewDelegate {
+    
     private var audioPlayer = AVAudioPlayer()
     private let noteStorage: NoteStorage
     private var dataSource: NoteDataSource
@@ -233,7 +234,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         guard let currentCategory = currentlySelectedCategory else { return }
         
         UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
-            // FIXME: Use the category color to generate pin color
             let darkColor = self.getDarkerColor(for: currentCategory)
             
             switch self.dataSource.hasPinnedNotes {
@@ -285,8 +285,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         guard let hexColor = currentlySelectedCategory?.hexColor else { fatalError("must have initial color") }
         
         let newCol = UIColor(hexString: hexColor)
-        
-        print("adding pull to refresh. was it nil?")
         
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self?.handlePullToRefreshCompletion()
@@ -366,15 +364,15 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     // MARK: Handlers
     
     @objc func handlePullStarted() {
-        print("pull started")
+//        print("pull started")
     }
     
     @objc func handlePullEnded() {
-        print("pull ended")
+//        print("pull ended")
     }
     
     @objc func handleHardPull() {
-        print("playing hard pull sound")
+//        print("playing hard pull sound")
         playPullSound()
     }
     
@@ -484,8 +482,8 @@ extension NoteTableController: SoundEffectPlayer {
     
     // FIXME: User multiple sounds when completing multiple tasks sequentially
     
-    static var lastCompletion: Date? = nil
-    static var completionStreak = 0
+    static var lastCompletion: Date = Date()
+    static var completionStreak = 1
     
     func play(songAt url: URL) {
         do {
@@ -499,15 +497,19 @@ extension NoteTableController: SoundEffectPlayer {
     }
     
     private func adjustVolume(for url: URL) {
-        let lowSounds = [URL.sounds.categoryChange._1, URL.sounds.categoryChange._2, URL.sounds.categoryChange._3, URL.sounds.categoryChange._4, URL.sounds.categoryChange._5]
-        if lowSounds.contains(url) {
-            audioPlayer.volume = 0.05
-    } else {
-            audioPlayer.volume = 1
+        let categoryChangeSounds = [URL.sounds.categoryChange._1, URL.sounds.categoryChange._2, URL.sounds.categoryChange._3, URL.sounds.categoryChange._4, URL.sounds.categoryChange._5]
+        let sequentialCompletionSounds = [URL.sounds.mallet._1, URL.sounds.mallet._2, URL.sounds.mallet._3, URL.sounds.mallet._4, URL.sounds.mallet._5]
+        
+        if categoryChangeSounds.contains(url) {
+            audioPlayer.volume = 0.07
+        } else if sequentialCompletionSounds.contains(url) {
+            audioPlayer.volume = 0.1
+        } else {
+            audioPlayer.volume = 0.7
         }
     }
     
-    // 5 rising notes
+    // MARK: Category sounds
     
     func playCategoryOneSound() {
         play(songAt: URL.sounds.categoryChange._1)
@@ -528,11 +530,39 @@ extension NoteTableController: SoundEffectPlayer {
     func playCategoryFiveSound() {
         play(songAt: URL.sounds.categoryChange._5)
     }
+
+    // MARK: Other sounds
     
-    // Other sounds
-    
+    /// Play sound depending on its in close succession to the last completion, and play corrent sou
     func playDoneSound() {
-        play(songAt: URL.sounds.note._1)
+        
+        let now = Date()
+        let lastCompletion = NoteTableController.lastCompletion
+        let timePassed = now.timeIntervalSince1970 - lastCompletion.timeIntervalSince1970
+        
+        if timePassed < 3 {
+            switch NoteTableController.completionStreak {
+            case 1:
+                NoteTableController.completionStreak = 2
+                play(songAt: URL.sounds.mallet._2)
+            case 2:
+                NoteTableController.completionStreak = 3
+                play(songAt: URL.sounds.mallet._3)
+            case 3:
+                NoteTableController.completionStreak = 4
+                play(songAt: URL.sounds.mallet._4)
+            case 4:
+                NoteTableController.completionStreak = 5
+                play(songAt: URL.sounds.mallet._5)
+            default:
+                NoteTableController.completionStreak = 5
+                play(songAt: URL.sounds.mallet._5)
+            }
+        } else {
+            NoteTableController.completionStreak = 1
+            play(songAt: URL.sounds.mallet._1)
+        }
+        NoteTableController.lastCompletion = Date()
     }
     
     func playPinSound() {
@@ -560,7 +590,8 @@ extension NoteTableController: SoundEffectPlayer {
     }
     
     func playRecoveredSound() {
-        play(songAt: URL.sounds.done._9)
+        // FIXME: FInd sound
+//        play(songAt: URL.sounds.done._9)
     }
     
     func playCouldNotRecoverSound() {

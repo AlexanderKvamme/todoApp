@@ -21,6 +21,11 @@
 		112D96152084B1510052BBC6 /* NoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96142084B1510052BBC6 /* NoteDelegate.swift */; };
 		112D96192086266C0052BBC6 /* Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96182086266C0052BBC6 /* Vibration.swift */; };
 		112D961B20864BCD0052BBC6 /* BigCaretTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */; };
+		113512A320BAFA8C007BB0C6 /* Mallet_Note1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1135129E20BAFA8A007BB0C6 /* Mallet_Note1.wav */; };
+		113512A420BAFA8C007BB0C6 /* Mallet_Note2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1135129F20BAFA8B007BB0C6 /* Mallet_Note2.wav */; };
+		113512A520BAFA8C007BB0C6 /* Mallet_Note3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 113512A020BAFA8B007BB0C6 /* Mallet_Note3.wav */; };
+		113512A620BAFA8C007BB0C6 /* Mallet_Note4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 113512A120BAFA8B007BB0C6 /* Mallet_Note4.wav */; };
+		113512A720BAFA8C007BB0C6 /* Mallet_Note5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 113512A220BAFA8B007BB0C6 /* Mallet_Note5.wav */; };
 		11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */; };
 		11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */; };
 		11718E34206A88CC00EC6C0D /* NoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11718E33206A88CC00EC6C0D /* NoteRepository.swift */; };
@@ -96,6 +101,11 @@
 		112D96142084B1510052BBC6 /* NoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDelegate.swift; sourceTree = "<group>"; };
 		112D96182086266C0052BBC6 /* Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vibration.swift; sourceTree = "<group>"; };
 		112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCaretTextField.swift; sourceTree = "<group>"; };
+		1135129E20BAFA8A007BB0C6 /* Mallet_Note1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note1.wav; sourceTree = "<group>"; };
+		1135129F20BAFA8B007BB0C6 /* Mallet_Note2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note2.wav; sourceTree = "<group>"; };
+		113512A020BAFA8B007BB0C6 /* Mallet_Note3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note3.wav; sourceTree = "<group>"; };
+		113512A120BAFA8B007BB0C6 /* Mallet_Note4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note4.wav; sourceTree = "<group>"; };
+		113512A220BAFA8B007BB0C6 /* Mallet_Note5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note5.wav; sourceTree = "<group>"; };
 		11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 		11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
 		11718E33206A88CC00EC6C0D /* NoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRepository.swift; sourceTree = "<group>"; };
@@ -270,23 +280,11 @@
 			name = Sound;
 			sourceTree = "<group>";
 		};
-		11718E39206ABF8400EC6C0D /* Table */ = {
+		1135129D20BAF990007BB0C6 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
-				DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */,
-				112CCEAF2094B15700071578 /* SectorTableView.swift */,
-				11718E3C206ABFD200EC6C0D /* NoteCell.swift */,
-				11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */,
-				11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */,
-				112D96142084B1510052BBC6 /* NoteDelegate.swift */,
-			);
-			path = Table;
-			sourceTree = "<group>";
-		};
-		11CEFFCB2086941500849DA0 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				11D8669E20AB4FE6000B951F /* space_note */,
+				113512A820BAFA90007BB0C6 /* Consecutive completion */,
+				11D8669E20AB4FE6000B951F /* Category change */,
 				11CEFFCC2086942C00849DA0 /* Peak_Note1.wav */,
 				11CEFFCE2087CC1200849DA0 /* Peak_Note2.wav */,
 				11CEFFCF2087CC1200849DA0 /* Peak_Note3.wav */,
@@ -303,10 +301,43 @@
 				11CEFFE62087D38E00849DA0 /* Peak_Notification8.wav */,
 				11CEFFE42087D38200849DA0 /* Peak_Notification12.wav */,
 			);
+			name = sounds;
+			sourceTree = "<group>";
+		};
+		113512A820BAFA90007BB0C6 /* Consecutive completion */ = {
+			isa = PBXGroup;
+			children = (
+				1135129E20BAFA8A007BB0C6 /* Mallet_Note1.wav */,
+				1135129F20BAFA8B007BB0C6 /* Mallet_Note2.wav */,
+				113512A020BAFA8B007BB0C6 /* Mallet_Note3.wav */,
+				113512A120BAFA8B007BB0C6 /* Mallet_Note4.wav */,
+				113512A220BAFA8B007BB0C6 /* Mallet_Note5.wav */,
+			);
+			name = "Consecutive completion";
+			sourceTree = "<group>";
+		};
+		11718E39206ABF8400EC6C0D /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				DD370A11203C1E3F00AEFEA1 /* NoteTableController.swift */,
+				112CCEAF2094B15700071578 /* SectorTableView.swift */,
+				11718E3C206ABFD200EC6C0D /* NoteCell.swift */,
+				11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */,
+				11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */,
+				112D96142084B1510052BBC6 /* NoteDelegate.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		11CEFFCB2086941500849DA0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1135129D20BAF990007BB0C6 /* sounds */,
+			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		11D8669E20AB4FE6000B951F /* space_note */ = {
+		11D8669E20AB4FE6000B951F /* Category change */ = {
 			isa = PBXGroup;
 			children = (
 				11D8669720AB4FD7000B951F /* Space_Note1.wav */,
@@ -315,7 +346,7 @@
 				11D8669320AB4FD6000B951F /* Space_Note4.wav */,
 				11D8669420AB4FD6000B951F /* Space_Note5.wav */,
 			);
-			name = space_note;
+			name = "Category change";
 			sourceTree = "<group>";
 		};
 		37B421347512FC49395801B9 /* Pods */ = {
@@ -518,10 +549,12 @@
 				DD370A1D203C1E3F00AEFEA1 /* LaunchScreen.storyboard in Resources */,
 				11CEFFD72087CC9900849DA0 /* Peak_Done1.wav in Resources */,
 				11CEFFD42087CC1200849DA0 /* Peak_Note5.wav in Resources */,
+				113512A620BAFA8C007BB0C6 /* Mallet_Note4.wav in Resources */,
 				11CEFFED208F448F00849DA0 /* Peak_Done9.wav in Resources */,
 				DD370A1A203C1E3F00AEFEA1 /* Assets.xcassets in Resources */,
 				11D8669B20AB4FD8000B951F /* Space_Note3.wav in Resources */,
 				11CEFFD32087CC1200849DA0 /* Peak_Note3.wav in Resources */,
+				113512A520BAFA8C007BB0C6 /* Mallet_Note3.wav in Resources */,
 				11D8669920AB4FD8000B951F /* Space_Note5.wav in Resources */,
 				11CEFFE12087CED000849DA0 /* Peak_Notification4.wav in Resources */,
 				11CEFFD22087CC1200849DA0 /* Peak_Note2.wav in Resources */,
@@ -530,10 +563,13 @@
 				11CEFFD52087CC1200849DA0 /* Peak_Note4.wav in Resources */,
 				11D8669820AB4FD8000B951F /* Space_Note4.wav in Resources */,
 				11CEFFCD2086942C00849DA0 /* Peak_Note1.wav in Resources */,
+				113512A420BAFA8C007BB0C6 /* Mallet_Note2.wav in Resources */,
 				11CEFFE32087D27B00849DA0 /* Peak_Error3.wav in Resources */,
 				11D8669C20AB4FD8000B951F /* Space_Note1.wav in Resources */,
 				11D8669A20AB4FD8000B951F /* Space_Note2.wav in Resources */,
+				113512A720BAFA8C007BB0C6 /* Mallet_Note5.wav in Resources */,
 				11CEFFDD2087CE9200849DA0 /* Peak_Done8.wav in Resources */,
+				113512A320BAFA8C007BB0C6 /* Mallet_Note1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
