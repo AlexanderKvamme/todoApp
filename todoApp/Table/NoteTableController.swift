@@ -12,6 +12,8 @@ import SwipeCellKit
 import SnapKit
 import AVFoundation
 
+// FIXME: Lots of switch statements. Consider the state pattern
+
 // MARK: - Custom Notifications
 
 enum Globals {
@@ -391,27 +393,13 @@ class NoteTableController: UIViewController, UITableViewDelegate {
 extension NoteTableController: CategorySelectionReceiver {
     func handleReceiveCategory(_ category: Category) {
 
-        print("received cat")
         guard shouldSwitchCategoryOnPull else { return }
         
         currentlySelectedCategory = category
         
         guard let index = Categories.all.index(of: category) else { return }
         
-        switch index {
-        case 0:
-            playCategoryOneSound()
-        case 1:
-            playCategoryTwoSound()
-        case 2:
-            playCategoryThreeSound()
-        case 3:
-            playCategoryFourSound()
-        case 4:
-            playCategoryFiveSound()
-        default:
-            return
-        }
+        playCategorySound(index)
     }
 }
 
@@ -480,8 +468,6 @@ extension NoteTableController: UITextFieldDelegate {
 
 extension NoteTableController: SoundEffectPlayer {
     
-    // FIXME: User multiple sounds when completing multiple tasks sequentially
-    
     static var lastCompletion: Date = Date()
     static var completionStreak = 1
     
@@ -511,24 +497,21 @@ extension NoteTableController: SoundEffectPlayer {
     
     // MARK: Category sounds
     
-    func playCategoryOneSound() {
-        play(songAt: URL.sounds.categoryChange._1)
-    }
-    
-    func playCategoryTwoSound() {
-        play(songAt: URL.sounds.categoryChange._2)
-    }
-    
-    func playCategoryThreeSound() {
-        play(songAt: URL.sounds.categoryChange._3)
-    }
-    
-    func playCategoryFourSound() {
-        play(songAt: URL.sounds.categoryChange._4)
-    }
-    
-    func playCategoryFiveSound() {
-        play(songAt: URL.sounds.categoryChange._5)
+    func playCategorySound(_ catIndex: Int) {
+        switch catIndex {
+        case 0:
+            play(songAt: URL.sounds.categoryChange._1)
+        case 1:
+            play(songAt: URL.sounds.categoryChange._2)
+        case 2:
+            play(songAt: URL.sounds.categoryChange._3)
+        case 3:
+            play(songAt: URL.sounds.categoryChange._4)
+        case 4:
+            play(songAt: URL.sounds.categoryChange._5)
+        default:
+            fatalError()
+        }
     }
 
     // MARK: Other sounds
@@ -586,11 +569,13 @@ extension NoteTableController: SoundEffectPlayer {
     }
     
     func playPullSound() {
-        play(songAt: URL.sounds.note._2)
+        if audioPlayer.isPlaying == false {
+            self.play(songAt: URL.sounds.note._2)
+        }
     }
     
     func playRecoveredSound() {
-        // FIXME: FInd sound
+        // FIXME: Find sound after new implementation
 //        play(songAt: URL.sounds.done._9)
     }
     
