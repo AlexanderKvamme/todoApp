@@ -24,7 +24,7 @@ enum Globals {
 /// Contains a tableview with a pull to refresh
 class NoteTableController: UIViewController, UITableViewDelegate {
     
-    private var audioPlayer = AVAudioPlayer()
+    private var audioPlayer: AVAudioPlayer?
     private let noteStorage: NoteStorage
     private var dataSource: NoteDataSource
     private let categoryOfController: Category
@@ -475,14 +475,16 @@ extension NoteTableController: SoundEffectPlayer {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             adjustVolume(for: url)
-            audioPlayer.prepareToPlay()
-            audioPlayer.play()
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
         } catch {
             print(error)
         }
     }
     
     private func adjustVolume(for url: URL) {
+        guard let audioPlayer = audioPlayer else { return }
+        
         let categoryChangeSounds = [URL.sounds.categoryChange._1, URL.sounds.categoryChange._2, URL.sounds.categoryChange._3, URL.sounds.categoryChange._4, URL.sounds.categoryChange._5]
         let sequentialCompletionSounds = [URL.sounds.mallet._1, URL.sounds.mallet._2, URL.sounds.mallet._3, URL.sounds.mallet._4, URL.sounds.mallet._5]
         
@@ -569,9 +571,16 @@ extension NoteTableController: SoundEffectPlayer {
     }
     
     func playPullSound() {
-        if audioPlayer.isPlaying == false {
-            self.play(songAt: URL.sounds.note._2)
-        }
+        
+//        print("audioplayer:", audioPlayer)
+//        if audioPlayer.isPlaying == false {
+//            self.play(songAt: URL.sounds.note._2)
+//        }
+        
+        // My fix but shows warning
+        if audioPlayer?.isPlaying == false {
+            self.play(songAt : URL.sounds.note._2)
+            }
     }
     
     func playRecoveredSound() {
