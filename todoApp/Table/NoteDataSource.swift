@@ -263,7 +263,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             }
             
             deleteAction.image = UIImage.checkmarIcon
-            deleteAction.backgroundColor = .green
+            deleteAction.backgroundColor = UIColor.primary.darker(by: 10)
             return [deleteAction]
         case .right:
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in

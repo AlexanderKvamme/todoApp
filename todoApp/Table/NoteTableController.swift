@@ -12,7 +12,7 @@ import SwipeCellKit
 import SnapKit
 import AVFoundation
 
-// FIXME: Lots of switch statements. Consider the state pattern
+// FIXME: Lots of switch statements. Consider the state patternu
 
 // MARK: - Custom Notifications
 
