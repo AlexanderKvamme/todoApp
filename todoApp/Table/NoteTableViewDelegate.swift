@@ -1,5 +1,5 @@
 //
-//  NoteDelegate.swift
+//  NoteTableViewDelegate.swift
 //  todoApp
 //
 //  Created by Alexander K on 16/04/2018.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class NoteDelegate: NSObject, UITableViewDelegate {
+class NoteTableViewDelegate: NSObject, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return NoteCellView.defaultHeight
     }

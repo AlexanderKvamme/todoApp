@@ -52,12 +52,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     fileprivate var beganScrollingAt: CGPoint!
     
     var shouldSwitchCategoryOnPull = true
-    
-    var tableViewShouldBeEditable = true {
-        didSet {
-            print("--didset tableViewShouldBeEditable: ", tableViewShouldBeEditable)
-        }
-    }
+    var tableViewShouldBeEditable = true // table is disabled when making notes
     
     lazy var navHeight = {
         return self.navigationController?.navigationBar.frame.height ?? 0
@@ -359,10 +354,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.DGPulledEnoughToTriggerAndReleased, object: nil)
     }
     
-    private func setTableEditable(_ b: Bool) {
-        tableViewShouldBeEditable = b
-    }
-    
     // MARK: Handlers
     
     @objc func handlePullStarted() {
@@ -452,13 +443,13 @@ extension NoteTableController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        log.info("did begin editing")
         shouldSwitchCategoryOnPull = false
         tableViewShouldBeEditable = false
-        print("did begin editing")
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print("did end editing")
+        log.info("did end editing")
         shouldSwitchCategoryOnPull = true
         tableViewShouldBeEditable = true
     }

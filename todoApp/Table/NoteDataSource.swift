@@ -215,11 +215,12 @@ extension NoteDataSource: UITableViewDataSource {
 /// Enables swiping on cells to delete 
 extension NoteDataSource: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        var res = true
-        if let b = delegate?.tableViewShouldBeEditable {
-            res = b
+        guard delegate?.tableViewShouldBeEditable == true && notes.count < indexPath.row else {
+            log.info("canEditRowAt \(indexPath.row) - false")
+            return false
         }
-        return res
+        
+        return true
     }
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
@@ -239,18 +240,12 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard delegate?.tableViewShouldBeEditable == true && indexPath.row < notes.count else {
+            log.info("editActionsForRowAt \(indexPath.row) not returning SwipeAction")
+            return nil
+        }
         
         stopTrackingPull()
-        
-        if delegate?.tableViewShouldBeEditable == false {
-            return nil
-        } else {
-        }
-
-        // empty cells should not be editable
-        if notes.count <= indexPath.row  {
-            return nil
-        }
         
         switch orientation {
         case .left:
@@ -270,6 +265,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
                 self.togglePinned(at: ip.row)
                 action.fulfill(with: ExpansionFulfillmentStyle.reset)
             }
+            
             pinAction.image = .starIcon
             pinAction.backgroundColor = delegate?.getCurrentCategoryColor()
             return [pinAction]
