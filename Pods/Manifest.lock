@@ -2,7 +2,7 @@ PODS:
   - DGElasticPullToRefresh (1.1)
   - SnapKit (4.0.0)
   - SwiftyBeaver (1.6.0)
-  - SwipeCellKit (2.1.0)
+  - SwipeCellKit (2.4.3)
 
 DEPENDENCIES:
   - DGElasticPullToRefresh (from `https://github.com/AlexanderKvamme/DGElasticPullToRefresh.git`)
@@ -29,7 +29,7 @@ SPEC CHECKSUMS:
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftyBeaver: e45759613e50b522b0e6f53b1f0f14389b45ca34
-  SwipeCellKit: 80bdb188166484d8a0d813d9fd7748ad33181815
+  SwipeCellKit: cee9906e6d3a36e22ad1a852fba7f8fa0839d113
 
 PODFILE CHECKSUM: 7948896005bff9ffb82bf0d043d5f119802dbf91
 
