@@ -435,10 +435,15 @@ extension NoteTableController {
 extension NoteTableController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        log.info("did end editing: \(textField.text ?? "NOTEXT")" )
+        
         textField.resignFirstResponder()
+        
         dismissNoteMaker()
         noteMaker.animateEndOfEditing()
         
+        shouldSwitchCategoryOnPull = true
+        tableViewShouldBeEditable = true
         return true
     }
     
@@ -450,8 +455,7 @@ extension NoteTableController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         log.info("did end editing")
-        shouldSwitchCategoryOnPull = true
-        tableViewShouldBeEditable = true
+        textField.resignFirstResponder()
     }
 }
 
