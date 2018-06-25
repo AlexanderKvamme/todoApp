@@ -254,7 +254,6 @@
 			children = (
 				111D01AA20724439009D3BA5 /* NoteMakerView.swift */,
 				110D1C96206E99DD00432800 /* NoteMakerController.swift */,
-				1159B6E220E15BF500A7728A /* CategoryEditorController.swift */,
 			);
 			path = NoteMaker;
 			sourceTree = "<group>";
@@ -317,6 +316,14 @@
 				113512A220BAFA8B007BB0C6 /* Mallet_Note5.wav */,
 			);
 			name = "Consecutive completion";
+			sourceTree = "<group>";
+		};
+		1159B6E420E1753400A7728A /* CategoryEditor */ = {
+			isa = PBXGroup;
+			children = (
+				1159B6E220E15BF500A7728A /* CategoryEditorController.swift */,
+			);
+			path = CategoryEditor;
 			sourceTree = "<group>";
 		};
 		11718E39206ABF8400EC6C0D /* Table */ = {
@@ -401,6 +408,7 @@
 				1100685C206B97C3009D2EB3 /* Storage */,
 				111D01A0207053BA009D3BA5 /* Custom transitions */,
 				111D9F742083A993006B1B66 /* Globals */,
+				1159B6E420E1753400A7728A /* CategoryEditor */,
 				112CCEAC2094707D00071578 /* NoteMaker */,
 				11CEFFCB2086941500849DA0 /* Resources */,
 				DD370A19203C1E3F00AEFEA1 /* Assets.xcassets */,
