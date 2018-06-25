@@ -98,6 +98,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.categoryReceiverDelegate = self
         addObservers()
         tableView.reloadData()
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -105,6 +107,14 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     // MARK: - Methods
+    
+    fileprivate func presentCategoryEditor() {
+        log.warning("Would present category editor")
+        let editorController = CategoryEditorController(for: currentlySelectedCategory!)
+        present(editorController, animated: true) {
+            print("done presenting")
+        }
+    }
     
     @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentSize" {
@@ -449,7 +459,11 @@ extension NoteTableController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         let res = isPulling ? false : true
         log.info("textFieldShouldBeginEditing \(res)")
-        return res
+        if isPulling {
+            presentCategoryEditor()
+            return false
+        }
+        return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

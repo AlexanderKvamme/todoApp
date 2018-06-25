@@ -22,8 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        testprintNotes()
+        //testprintNotes()
         setupAVSessions()
         setupSwiftyBeaver()
         customizeAppearence()
@@ -36,7 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc = NoteTableController(with: storage)
         
         // wrap in navigationController
-        window?.rootViewController = vc
+        let navigationController = UINavigationController(rootViewController: vc)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
         return true
