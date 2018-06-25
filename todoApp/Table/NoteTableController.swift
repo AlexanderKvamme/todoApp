@@ -111,9 +111,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     fileprivate func presentCategoryEditor() {
         log.warning("Would present category editor")
         let editorController = CategoryEditorController(for: currentlySelectedCategory!)
-        present(editorController, animated: true) {
-            print("done presenting")
-        }
+        
+        navigationController?.pushViewController(editorController, animated: true)
     }
     
     @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

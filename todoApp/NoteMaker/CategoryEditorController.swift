@@ -16,6 +16,7 @@ final class CategoryEditorController: UIViewController {
     
     // MARK: - Properties
     
+    fileprivate let okButton = UIButton(frame: CGRect.zero)
     private let currentCategory: Category
     
     // MARK: - Initializers
@@ -32,22 +33,43 @@ final class CategoryEditorController: UIViewController {
     // MARK: - Life cycle
     
     override func viewDidLoad() {
-        print("view did load bro")
+        addGradientBackground()
         addSubviewsAndConstraints()
+        
+        setupButton()
     }
     
     // MARK: - Methods
     
-    private func addSubviewsAndConstraints() {
-        let v = UIView(frame: CGRect.zero)
+    private func setupButton() {
+        okButton.backgroundColor = UIColor.primary
+        okButton.setTitle("APPLY", for: .normal)
+        okButton.titleLabel?.font = UIFont.custom(style: .bold, ofSize: .big)
+        okButton.addTarget(self, action: #selector(applyAndDismiss), for: .touchUpInside)
+    }
+    
+    private func addGradientBackground() {
         let gradient = CAGradientLayer()
-        
         gradient.frame = view.bounds
         gradient.colors = [UIColor.red.cgColor, UIColor.green.cgColor]
-        
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    private func addSubviewsAndConstraints() {
+        view.addSubview(okButton)
         
-        view.addSubview(v)
+        okButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(view.snp.bottom)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+            make.height.equalTo(100)
+        }
+    }
+    
+    // MARK: Selectors
+    
+    @objc private func applyAndDismiss() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
