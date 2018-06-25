@@ -37,9 +37,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         }
     }
     
-    let leftTest = UIView()
-    let rightTest = UIView()
-    
     private(set) var tableView = sectorTableView()
     private lazy var noteMaker = NoteMakerController(withStorage: self.noteStorage)
     
@@ -50,6 +47,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     fileprivate var topBackground = UIView()
     fileprivate var transitioning = false
     fileprivate var beganScrollingAt: CGPoint!
+    fileprivate var isPulling = false
     
     var shouldSwitchCategoryOnPull = true
     var tableViewShouldBeEditable = true // table is disabled when making notes
@@ -88,6 +86,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         //        setupNavbar()
         addPullToRefresh()
         noteMaker.delegate = self
+        noteMaker.noteMakerView.textField.delegate = self
         
         tableView.reloadData()
     }
@@ -357,19 +356,19 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     // MARK: Handlers
     
     @objc func handlePullStarted() {
-//        print("pull started")
+        isPulling = true
     }
     
     @objc func handlePullEnded() {
-//        print("pull ended")
+        isPulling = false
     }
     
     @objc func handleHardPull() {
-//        print("playing hard pull sound")
         playPullSound()
     }
     
     @objc func handleHardPullAndRelease() {
+        isPulling = false
         let todoTextField = noteMaker.noteMakerView.textField
         todoTextField.delegate = self
         todoTextField.becomeFirstResponder()
@@ -445,6 +444,12 @@ extension NoteTableController: UITextFieldDelegate {
         shouldSwitchCategoryOnPull = true
         tableViewShouldBeEditable = true
         return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let res = isPulling ? false : true
+        log.info("textFieldShouldBeginEditing \(res)")
+        return res
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
