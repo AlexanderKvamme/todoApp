@@ -37,7 +37,7 @@ class NoteDataSource: NSObject {
     
     init(with storage: NoteStorage) {
         self.noteStorage = storage
-        self.notes = noteStorage.getNotes(Categories._default, pinned: true) + noteStorage.getNotes(Categories._default, pinned: false)
+        self.notes = noteStorage.getNotes(Categories.firstCategory, pinned: true) + noteStorage.getNotes(Categories.firstCategory, pinned: false)
     }
     
     required init?(coder aDecoder: NSCoder) {

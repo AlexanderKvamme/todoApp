@@ -61,8 +61,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     init(with storage: NoteStorage) {
         self.noteStorage = storage
         self.dataSource = NoteDataSource(with: storage)
-        self.categoryOfController = Categories._default
-        self.currentlySelectedCategory = Categories._default
+        self.categoryOfController = Categories.firstCategory
+        self.currentlySelectedCategory = Categories.firstCategory
         
         super.init(nibName: nil, bundle: nil)
         

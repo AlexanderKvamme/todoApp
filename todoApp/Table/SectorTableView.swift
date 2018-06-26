@@ -24,7 +24,7 @@ class sectorTableView: UITableView, UIGestureRecognizerDelegate {
     
     weak var categoryReceiverDelegate: CategorySelectionReceiver? = nil
     
-    private var recentlySelectedCategory: Category = Categories._default {
+    private var recentlySelectedCategory: Category = Categories.firstCategory {
         willSet {
             guard newValue != recentlySelectedCategory else { return }
             categoryReceiverDelegate?.handleReceiveCategory(newValue)

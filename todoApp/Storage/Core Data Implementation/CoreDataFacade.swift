@@ -16,27 +16,20 @@ fileprivate enum Entity: String {
     case Category = "Category"
 }
 
-//struct CategoryNames {
-//    static let _default = "default"
-//    static let groceries = "groceries"
-//    static let fun = "fun"
-//}
-
-
 
 struct Categories {
-    static let _default = DatabaseFacade.forceFetchCategory(named: "default", color: UIColor.categories._default)
-    static let pleasure = DatabaseFacade.forceFetchCategory(named: "pleasure", color: UIColor.categories.pleasure)
-    static let business = DatabaseFacade.forceFetchCategory(named: "business", color: UIColor.categories.business)
-    static let grocieries = DatabaseFacade.forceFetchCategory(named: "groceries", color: UIColor.categories.groceries)
+    static let firstCategory = DatabaseFacade.forceFetchCategory(id: 0, color: UIColor.categories._default)
+    static let secondCategory = DatabaseFacade.forceFetchCategory(id: 1, color: UIColor.categories.pleasure)
+    static let thirdCategory = DatabaseFacade.forceFetchCategory(id: 2, color: UIColor.categories.business)
+    static let fourthCategory = DatabaseFacade.forceFetchCategory(id: 3, color: UIColor.categories.groceries)
     
-    static let all = [_default, grocieries, pleasure, business]
+    static let all = [firstCategory, secondCategory, thirdCategory, fourthCategory]
     static let count = all.count
 }
 
 final class DatabaseFacade {
     
-    static var defaultCategory: Category = { return Categories._default }()
+    static var defaultCategory: Category = { return Categories.firstCategory }()
 
     // MARK: - Initializers
     
@@ -156,8 +149,9 @@ final class DatabaseFacade {
         return newNote
     }
     
-    static func makeCategory(named name: String, color hexColor: String) -> Category {
+    static func makeCategory(id: Int, named name: String, color hexColor: String) -> Category {
         let newCategory = createManagedObjectForEntity(.Category) as! Category
+        newCategory.id = Int16(id)
         newCategory.name = name
         newCategory.hexColor = hexColor
         return newCategory
@@ -195,12 +189,22 @@ final class DatabaseFacade {
         return result
     }
     
-    static func forceFetchCategory(named name: String, color hexColor: UIColor) -> Category {
+    static func defaultName(_ id: Int) -> String {
+    
+        switch id {
+        case 1:
+            return "To do today"
+        default:
+            return "Name me"
+        }
+    }
+    
+    static func forceFetchCategory(id: Int, color hexColor: UIColor) -> Category {
         var result: [Category]? = nil
         
         do {
             let fr = NSFetchRequest<Category>(entityName: Entity.Category.rawValue)
-            let predicate = NSPredicate(format: "name == %@", name)
+            let predicate = NSPredicate(format: "id == %@", NSNumber(integerLiteral: id))
             fr.predicate = predicate
             result = try context.fetch(fr)
         } catch let error {
@@ -210,7 +214,7 @@ final class DatabaseFacade {
         if let fetchedCategory = result?.first {
             fetchedCategory.hexColor = hexColor.toHexString()
         }
-        return result?.first ?? makeCategory(named: name, color: hexColor.toHexString())
+        return result?.first ?? makeCategory(id: id, named: defaultName(id), color: hexColor.toHexString())
     }
     
     static func getNotes(_ category: Category, pinned: Bool) -> [Note] {
