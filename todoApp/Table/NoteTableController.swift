@@ -111,7 +111,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     fileprivate func presentCategoryEditor() {
         log.warning("Would present category editor")
         let editorController = CategoryEditorController(for: currentlySelectedCategory!)
-        
+        editorController.delegate = self
         navigationController?.pushViewController(editorController, animated: true)
     }
     
