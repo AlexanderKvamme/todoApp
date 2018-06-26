@@ -14,6 +14,7 @@ import SnapKit
 enum SettingType {
     case name
     case color
+    case isNumbered
 }
 
 
@@ -24,6 +25,7 @@ final class CategoryEditorController: UIViewController {
     
     fileprivate let okButton = UIButton(frame: CGRect.zero)
     fileprivate let nameController: SettingsController
+    fileprivate let isNumberedController: SettingsController
     
     private let currentCategory: Category
     
@@ -33,7 +35,12 @@ final class CategoryEditorController: UIViewController {
     
     init(for category: Category) {
         self.currentCategory = category
-        self.nameController = SettingsController(withHeader: "NAME", category: category, settingType: SettingType.name)
+        self.nameController = SettingsController(withHeader: "NAME",
+                                                 category: category,
+                                                 settingType: .name)
+        self.isNumberedController = SettingsController(withHeader: "NUMBERED",
+                                                       category: category,
+                                                       settingType: .isNumbered)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -68,12 +75,22 @@ final class CategoryEditorController: UIViewController {
     
     private func addSubviewsAndConstraints() {
         view.addSubview(okButton)
+        
         view.addSubview(nameController.view)
+        view.addSubview(isNumberedController.view)
         
         addChildViewController(nameController)
+        addChildViewController(isNumberedController)
         
         nameController.view.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.topMargin)
+            make.left.equalTo(view.snp.leftMargin)
+            make.right.equalTo(view.snp.rightMargin)
+            make.height.equalTo(100)
+        }
+        
+        isNumberedController.view.snp.makeConstraints { (make) in
+            make.top.equalTo(nameController.view.snp.bottom)
             make.left.equalTo(view.snp.leftMargin)
             make.right.equalTo(view.snp.rightMargin)
             make.height.equalTo(100)
@@ -101,99 +118,6 @@ final class CategoryEditorController: UIViewController {
 
 
 
-
-
-
-
-protocol CategorySetting {}
-
-final class SettingsController: UIViewController {
-    
-    // MARK: - Properties
-    
-    private let currentSettingType: SettingType
-    private let currentCategory: Category
-    
-    private let headerLabel = UILabel()
-    private let mySwitch = UISwitch()
-    private let textField = UITextField()
-//    private let colorPicker = https://github.com/joncardasis/ChromaColorPicker
-    
-    // MARK: - Initializers
-    
-    init(withHeader headline: String, category: Category, settingType: SettingType) {
-        self.currentSettingType = settingType
-        self.currentCategory = category
-        headerLabel.text = headline
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Life Cycle
-    
-    override func viewDidLoad() {
-        setupHeader()
-        addSubviewsAndConstraints()
-    }
-    
-    // MARK: - Methods
-    
-    private func setupHeader() {
-        headerLabel.textColor = .white
-        headerLabel.font = UIFont.custom(style: .bold, ofSize: .biggest)
-    }
-    
-    private func setupTextField() {
-        textField.textColor = .white
-        textField.font = UIFont.custom(style: .bold, ofSize: .medium)
-        textField.backgroundColor = .red
-        textField.delegate = self
-    }
-
-    private func addSubviewsAndConstraints() {
-        view.addSubview(headerLabel)
-        
-        // Header
-        headerLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(view.snp.leftMargin)
-            make.top.equalTo(view.snp.topMargin)
-        }
-        
-        switch currentSettingType {
-        case .color:
-            fatalError()
-        case .name:
-            setupTextField()
-            view.addSubview(textField)
-            textField.snp.makeConstraints { (make) in
-                make.top.equalTo(headerLabel.snp.bottom).offset(10)
-                make.left.equalTo(view.snp.leftMargin)
-                make.right.equalTo(view.snp.rightMargin)
-                make.bottom.equalTo(view.snp.bottomMargin)
-            }
-        }
-    }
-}
-
-extension SettingsController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let newText = textField.text, newText != " " else { return false }
-        
-        switch currentSettingType {
-        case .name:
-            currentCategory.name = newText
-            DatabaseFacade.saveContext()
-            textField.resignFirstResponder()
-            return true
-        default:
-            return false
-        }
-    }
-}
 
 
 

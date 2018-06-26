@@ -19,6 +19,7 @@ extension Category {
     @NSManaged public var hexColor: String?
     @NSManaged public var name: String?
     @NSManaged public var id: Int16
+    @NSManaged public var isNumbered: Bool
     @NSManaged public var notes: NSSet?
 
 }
