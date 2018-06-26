@@ -216,7 +216,6 @@ extension NoteDataSource: UITableViewDataSource {
 extension NoteDataSource: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard delegate?.tableViewShouldBeEditable == true && notes.count < indexPath.row else {
-            log.info("canEditRowAt \(indexPath.row) - false")
             return false
         }
         

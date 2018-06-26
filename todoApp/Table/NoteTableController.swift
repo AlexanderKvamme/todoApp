@@ -28,7 +28,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     private let noteStorage: NoteStorage
     private var dataSource: NoteDataSource
     private let categoryOfController: Category
-    private var currentlySelectedCategory: Category? {
+    private var currentlySelectedCategory: Category {
         didSet {
             // FIMXE: refactor
             setPullToRefreshColor(for: currentlySelectedCategory)
@@ -109,9 +109,9 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     // MARK: - Methods
     
     fileprivate func presentCategoryEditor() {
-        log.warning("Would present category editor")
-        let editorController = CategoryEditorController(for: currentlySelectedCategory!)
+        let editorController = CategoryEditorController(for: currentlySelectedCategory)
         editorController.delegate = self
+        tableView.dg_stopLoading()
         navigationController?.pushViewController(editorController, animated: true)
     }
     
@@ -221,7 +221,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     }
     
     func getCurrentCategoryColor() -> UIColor {
-        guard let catCol = currentlySelectedCategory?.hexColor else {
+        guard let catCol = currentlySelectedCategory.hexColor else {
             fatalError("Should have color. Add Default")
         }
         return UIColor(hexString: catCol)
@@ -236,10 +236,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     /// Sets the color of the pulldown wave to dijon if top note is pinned
     func updatePinColors() {
-        guard let currentCategory = currentlySelectedCategory else { return }
-        
         UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
-            let darkColor = self.getDarkerColor(for: currentCategory)
+            let darkColor = self.getDarkerColor(for: self.currentlySelectedCategory)
             
             switch self.dataSource.hasPinnedNotes {
             case true:
@@ -287,7 +285,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
     func addPullToRefresh() {
-        guard let hexColor = currentlySelectedCategory?.hexColor else { fatalError("must have initial color") }
+        guard let hexColor = currentlySelectedCategory.hexColor else { fatalError("must have initial color") }
         
         let newCol = UIColor(hexString: hexColor)
         
@@ -366,6 +364,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     @objc func handlePullStarted() {
         isPulling = true
+        noteMaker.updateLabel(for: currentlySelectedCategory)
     }
     
     @objc func handlePullEnded() {
@@ -443,8 +442,6 @@ extension NoteTableController {
 extension NoteTableController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        log.info("did end editing: \(textField.text ?? "NOTEXT")" )
-        
         textField.resignFirstResponder()
         
         dismissNoteMaker()

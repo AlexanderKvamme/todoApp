@@ -195,7 +195,7 @@ final class DatabaseFacade {
         case 1:
             return "To do today"
         default:
-            return "Name me"
+            return "Category \(id)"
         }
     }
     

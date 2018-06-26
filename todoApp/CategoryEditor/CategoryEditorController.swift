@@ -181,13 +181,12 @@ final class SettingsController: UIViewController {
 
 extension SettingsController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        log.warning("textFieldShouldReturn")
         guard let newText = textField.text, newText != " " else { return false }
         
         switch currentSettingType {
         case .name:
-            log.warning("would update name")
             currentCategory.name = newText
+            DatabaseFacade.saveContext()
             textField.resignFirstResponder()
             return true
         default:
