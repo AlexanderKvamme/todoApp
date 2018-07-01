@@ -263,6 +263,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             let pinAction = SwipeAction(style: .default, title: nil) { (action, ip) in
                 self.togglePinned(at: ip.row)
                 action.fulfill(with: ExpansionFulfillmentStyle.reset)
+                self.startTtrackingPull()
             }
             
             pinAction.image = .starIcon
