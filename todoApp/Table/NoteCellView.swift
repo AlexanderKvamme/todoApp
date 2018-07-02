@@ -37,6 +37,14 @@ final class NoteCellView: UIView {
         return lbl
     }()
     
+    let cellMoveIcon: UIImageView = {
+        let img = UIImage.moveCellIcon
+        let iv = UIImageView(image: img)
+        iv.tintColor = UIColor.primary.darker()
+        
+        return iv
+    }()
+    
     // MAKR: - Initializers
     
     override init(frame: CGRect) {
@@ -45,7 +53,6 @@ final class NoteCellView: UIView {
         
         backgroundColor = .primary
         
-//        addSubviewsAndConstraints()
         addSubviewsWithoutNumber() // FIXME: Improve this default
     }
     
@@ -76,6 +83,7 @@ final class NoteCellView: UIView {
     private func addSubviewsWithoutNumber() {
         textLabel.removeFromSuperview()
         numberLabel.removeFromSuperview()
+        cellMoveIcon.removeFromSuperview()
         
         addSubview(textLabel)
         textLabel.sizeToFit()
@@ -89,11 +97,15 @@ final class NoteCellView: UIView {
     }
 
     private func addSubviewsWithNumber() {
+        let iconsize: CGFloat = 20
+        
         textLabel.removeFromSuperview()
         numberLabel.removeFromSuperview()
+        cellMoveIcon.removeFromSuperview()
         
         addSubview(textLabel)
         addSubview(numberLabel)
+        addSubview(cellMoveIcon)
         
         textLabel.sizeToFit()
         
@@ -104,9 +116,17 @@ final class NoteCellView: UIView {
             make.width.equalTo(40)
         }
         
+        cellMoveIcon.snp.makeConstraints { (make) in
+            make.right.equalTo(snp.rightMargin).offset(-16)
+            make.centerY.equalTo(snp.centerY)
+            
+            make.width.equalTo(iconsize)
+            make.height.equalTo(iconsize)
+        }
+        
         textLabel.snp.makeConstraints { (make) in
             make.left.equalTo(numberLabel.snp.right).offset(8)
-            make.right.equalTo(snp.rightMargin)
+            make.right.equalTo(cellMoveIcon.snp.left).offset(8)
             make.top.equalTo(snp.top)
             make.bottom.equalTo(snp.bottom)
         }

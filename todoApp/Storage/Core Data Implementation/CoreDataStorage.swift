@@ -32,6 +32,9 @@ class CoreDataStorage: NoteStorage {
         
         let newNote = DatabaseFacade.makeNote()
         newNote.setText(text)
+        
+        // Set new number
+        
         DatabaseFacade.saveContext()
         return newNote
     }

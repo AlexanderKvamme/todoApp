@@ -12,5 +12,13 @@ extension Category {
     func getAllNotes() -> [Note]? {
         return DatabaseFacade.getNotes(withCategory: self)
     }
+    
+    func numberedNotes() -> [Note] {
+        guard let notes = getAllNotes() else { return [] }
+        
+        return []
+//        return notes.filter($0.isNumbered)
+        
+    }
 }
 

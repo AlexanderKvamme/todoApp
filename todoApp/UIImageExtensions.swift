@@ -14,5 +14,6 @@ extension UIImage {
     static let xmarkIcon = UIImage(named: "xmark")!.withRenderingMode(.alwaysTemplate)
     static let checkmarIcon = UIImage(named: "checkmark")!.withRenderingMode(.alwaysTemplate)
     static let starIcon = UIImage(named: "star")!.withRenderingMode(.alwaysTemplate)
+    static let moveCellIcon = UIImage(named: "moveCellIcon")!.withRenderingMode(.alwaysTemplate)
 }
 
