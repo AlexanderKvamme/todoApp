@@ -11,10 +11,11 @@
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isPinned" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="notes" inverseEntity="Category" syncable="YES"/>
     </entity>
     <elements>
         <element name="Category" positionX="-63" positionY="9" width="128" height="120"/>
-        <element name="Note" positionX="-326" positionY="-126" width="128" height="103"/>
+        <element name="Note" positionX="-326" positionY="-126" width="128" height="120"/>
     </elements>
 </model>

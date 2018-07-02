@@ -11,6 +11,16 @@ import Foundation
 
 extension Note {
     
+    // MARK: Booleans
+    
+    func isNumbered() -> Bool {
+        guard let category = self.category else {
+            assertionFailure()
+            return false
+        }
+        return category.isNumbered
+    }
+    
     // MARK: Text methods
     
     func getText() -> String {

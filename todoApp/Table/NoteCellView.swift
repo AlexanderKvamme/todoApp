@@ -20,24 +20,33 @@ final class NoteCellView: UIView {
     
     // Computed properties
     
-    let label: UILabel = {
+    let textLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.custom(style: .bold, ofSize: .medium)
-        lbl.textAlignment = .center
         lbl.textColor = .primaryContrast
         lbl.numberOfLines = 2
+        return lbl
+    }()
+    
+    let numberLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.font = UIFont.custom(style: .bold, ofSize: .big)
+        lbl.textAlignment = .center
+        lbl.textColor = .primaryContrast
+        lbl.numberOfLines = 1
         return lbl
     }()
     
     // MAKR: - Initializers
     
     override init(frame: CGRect) {
-        self.label.text = "TEMP"
+        self.textLabel.text = "TEMP"
         super.init(frame: frame)
         
         backgroundColor = .primary
         
-        addSubviewsAndConstraints()
+//        addSubviewsAndConstraints()
+        addSubviewsWithoutNumber() // FIXME: Improve this default
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,27 +55,73 @@ final class NoteCellView: UIView {
     
     // MAKR: Methods
     
-    private func addSubviewsAndConstraints() {
-        addSubview(label)
+    private func updateSubviewsAndConstraints(for note: Note?) {
+        guard let note = note else {
+            addSubviewsWithoutNumber()
+            print("note was nil - removing numberlabel")
+            return
+        }
         
-        label.sizeToFit()
+        if note.isNumbered() {
+            addSubviewsWithNumber()
+            numberLabel.text = String(note.number)
+            textLabel.textAlignment = .left
+        } else {
+            textLabel.textAlignment = .center
+            addSubviewsWithoutNumber()
+        }
+    }
+    
+    /// Sets up cell no not have a numberindicator to the left
+    private func addSubviewsWithoutNumber() {
+        textLabel.removeFromSuperview()
+        numberLabel.removeFromSuperview()
         
-        label.snp.makeConstraints { (make) in
+        addSubview(textLabel)
+        textLabel.sizeToFit()
+        
+        textLabel.snp.makeConstraints { (make) in
             make.left.equalTo(snp.leftMargin)
             make.right.equalTo(snp.rightMargin)
             make.top.equalTo(snp.top)
             make.bottom.equalTo(snp.bottom)
         }
     }
-    
+
+    private func addSubviewsWithNumber() {
+        textLabel.removeFromSuperview()
+        numberLabel.removeFromSuperview()
+        
+        addSubview(textLabel)
+        addSubview(numberLabel)
+        
+        textLabel.sizeToFit()
+        
+        numberLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(snp.leftMargin)
+            make.top.equalTo(snp.topMargin)
+            make.bottom.equalTo(snp.bottom)
+            make.width.equalTo(40)
+        }
+        
+        textLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(numberLabel.snp.right).offset(8)
+            make.right.equalTo(snp.rightMargin)
+            make.top.equalTo(snp.top)
+            make.bottom.equalTo(snp.bottom)
+        }
+    }
+
     func updateWith(note: Note?) {
         guard let note = note else {
-            label.text = ""
+            textLabel.text = ""
             backgroundColor = .primary
+            updateSubviewsAndConstraints(for: nil)
             return
         }
         
-        label.text = note.getText()
+        textLabel.text = note.getText()
+        updateSubviewsAndConstraints(for: note)
         updateBackgroundColor(for: note, animated: true)
     }
     

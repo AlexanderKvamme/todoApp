@@ -75,7 +75,6 @@ final class CategoryEditorController: UIViewController {
     
     private func addSubviewsAndConstraints() {
         view.addSubview(okButton)
-        
         view.addSubview(nameController.view)
         view.addSubview(isNumberedController.view)
         

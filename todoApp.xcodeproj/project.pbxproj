@@ -26,6 +26,7 @@
 		113512A520BAFA8C007BB0C6 /* Mallet_Note3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 113512A020BAFA8B007BB0C6 /* Mallet_Note3.wav */; };
 		113512A620BAFA8C007BB0C6 /* Mallet_Note4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 113512A120BAFA8B007BB0C6 /* Mallet_Note4.wav */; };
 		113512A720BAFA8C007BB0C6 /* Mallet_Note5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 113512A220BAFA8B007BB0C6 /* Mallet_Note5.wav */; };
+		114061CB20EA3A39004F7619 /* CategoryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114061CA20EA3A38004F7619 /* CategoryExtensions.swift */; };
 		11532A7B206AC58C000C2AA3 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */; };
 		11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */; };
 		1159B6E320E15BF500A7728A /* CategoryEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1159B6E220E15BF500A7728A /* CategoryEditorController.swift */; };
@@ -108,6 +109,7 @@
 		113512A020BAFA8B007BB0C6 /* Mallet_Note3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note3.wav; sourceTree = "<group>"; };
 		113512A120BAFA8B007BB0C6 /* Mallet_Note4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note4.wav; sourceTree = "<group>"; };
 		113512A220BAFA8B007BB0C6 /* Mallet_Note5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note5.wav; sourceTree = "<group>"; };
+		114061CA20EA3A38004F7619 /* CategoryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryExtensions.swift; sourceTree = "<group>"; };
 		11532A7A206AC58C000C2AA3 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 		11532A7C206AD8AF000C2AA3 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
 		1159B6E220E15BF500A7728A /* CategoryEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditorController.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				11D3AC4920825DF8005CD575 /* NoteExtensions.swift */,
+				114061CA20EA3A38004F7619 /* CategoryExtensions.swift */,
 				DD370A0E203C1E3F00AEFEA1 /* todoApp */,
 				DD370A26203C1E3F00AEFEA1 /* todoAppTests */,
 				DD370A31203C1E3F00AEFEA1 /* todoAppUITests */,
@@ -707,6 +710,7 @@
 				11532A7D206AD8AF000C2AA3 /* NoteCellView.swift in Sources */,
 				DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */,
 				111D01A72070F097009D3BA5 /* MyNavigationController.swift in Sources */,
+				114061CB20EA3A39004F7619 /* CategoryExtensions.swift in Sources */,
 				11CEFFEB208DDCD000849DA0 /* SoundEffectPlayer.swift in Sources */,
 				111D01A42070DA4F009D3BA5 /* AnimationHelper.swift in Sources */,
 				1100685E206B97D8009D2EB3 /* NoteStorage.swift in Sources */,

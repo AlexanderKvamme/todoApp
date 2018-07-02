@@ -10,6 +10,7 @@ import SwipeCellKit
 import Foundation
 import UIKit
 
+
 class NoteDataSource: NSObject {
 
     // MARK: - Properties
@@ -179,37 +180,68 @@ extension NoteDataSource: UITableViewDataSource {
         return cnt
     }
     
+    // MOVE ME
+    
+//    private func getEmptyCell(for indexPath: IndexPath, tableView: UITableView) -> NoteCell {
+//        let currentIndex = indexPath.row
+//        let willBeEmptyCell = currentIndex < notes.count
+//        let tempNote = currentIndex < notes.count ? notes[currentIndex] : nil
+//
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
+//            let newCell = NoteCell(frame: .zero)
+//            newCell.delegate = self
+//            newCell.updateWith(note: tempNote)
+//            return newCell
+//        }
+//
+//        cell.delegate = self
+//        cell.updateWith(note: tempNote)
+//        return cell
+//    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentIndex = indexPath.row
-        let willBeEmptyCell = currentIndex < notes.count
         let tempNote = currentIndex < notes.count ? notes[currentIndex] : nil
-        
-        switch willBeEmptyCell {
-        case false:
-            
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
-                let newCell = NoteCell(frame: .zero)
-                newCell.delegate = self
-                newCell.updateWith(note: tempNote)
-                return newCell
-            }
-            
-            cell.delegate = self
-            cell.updateWith(note: tempNote)
-            return cell
-        case true:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
-                let newCell = NoteCell(frame: .zero)
-                newCell.delegate = self
-                newCell.updateWith(note: tempNote)
-                return newCell
-            }
-            
-            cell.delegate = self
-            cell.updateWith(note: tempNote)
-            return cell
-        }
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell ?? NoteCell(frame: .zero)
+        cell.delegate = self
+        cell.updateWith(note: tempNote)
+        return cell
     }
+
+        
+        // OLD
+        
+//        let currentIndex = indexPath.row
+//        let willBeEmptyCell = currentIndex < notes.count
+//        let tempNote = currentIndex < notes.count ? notes[currentIndex] : nil
+//
+//        switch willBeEmptyCell {
+//        case false:
+//
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
+//                let newCell = NoteCell(frame: .zero)
+//                newCell.delegate = self
+//                newCell.updateWith(note: tempNote)
+//                return newCell
+//            }
+//            
+//            cell.delegate = self
+//            cell.updateWith(note: tempNote)
+//            return cell
+//        case true:
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.identifier) as? NoteCell else {
+//                let newCell = NoteCell(frame: .zero)
+//                newCell.delegate = self
+//                newCell.updateWith(note: tempNote)
+//                return newCell
+//            }
+//
+//            cell.delegate = self
+//            cell.updateWith(note: tempNote)
+//            return cell
+//        }
+//    }
 }
 
 /// Enables swiping on cells to delete 

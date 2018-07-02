@@ -106,6 +106,14 @@ final class SettingsController: UIViewController {
 extension SettingsController {
     @objc fileprivate func switchToggled(_ theSwitch: UISwitch) {
         currentCategory.isNumbered = theSwitch.isOn
+        
+        guard let notes = currentCategory.getAllNotes() else { return }
+        
+        for (i,note) in notes.enumerated() {
+            note.number = note.isNumbered() ? Int16(i) : note.number
+        }
+        
+        DatabaseFacade.saveContext()
     }
 }
 
