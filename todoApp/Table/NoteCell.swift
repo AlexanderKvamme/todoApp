@@ -51,5 +51,9 @@ final class NoteCell: SwipeTableViewCell {
     func updateWith(note: Note?) {
         noteCellView.updateWith(note: note)
     }
+    
+    func animateToNewNumber() {
+        noteCellView.animateToNewNumber()
+    }
 }
 

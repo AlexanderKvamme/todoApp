@@ -18,6 +18,8 @@ final class NoteCellView: UIView {
     static let defaultHeight: CGFloat = Constants.cells.defaultHeight
     static let defaultWidth: CGFloat = Constants.screen.width
     
+    private var currentNote: Note?
+    
     // Computed properties
     
     let textLabel: UILabel = {
@@ -63,6 +65,7 @@ final class NoteCellView: UIView {
     // MAKR: Methods
     
     private func updateSubviewsAndConstraints(for note: Note?) {
+        currentNote = note
         guard let note = note else {
             addSubviewsWithoutNumber()
             print("note was nil - removing numberlabel")
@@ -133,6 +136,7 @@ final class NoteCellView: UIView {
     }
 
     func updateWith(note: Note?) {
+        self.currentNote = note
         guard let note = note else {
             textLabel.text = ""
             backgroundColor = .primary
@@ -143,6 +147,14 @@ final class NoteCellView: UIView {
         textLabel.text = note.getText()
         updateSubviewsAndConstraints(for: note)
         updateBackgroundColor(for: note, animated: true)
+    }
+    
+    func animateToNewNumber() {
+        guard let note = currentNote else {
+            return
+        }
+        
+        numberLabel.text = String(note.number)
     }
     
     private func updateBackgroundColor(for note: Note, animated: Bool) {

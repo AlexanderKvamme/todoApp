@@ -297,10 +297,17 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
         case .left:
             let deleteAction = SwipeAction(style: .destructive, title: nil) { (action, ip) in
                 tableView.beginUpdates()
+                self.willComplete(at: indexPath)
                 self.deleteNote(at: ip.row)
+                // FIXME: - update note numbers around it
                 self.delegate?.playDoneSound()
                 action.fulfill(with: ExpansionFulfillmentStyle.delete)
                 tableView.endUpdates()
+                
+                let cells = tableView.visibleCells as! [NoteCell]
+                for cell in cells {
+                    cell.animateToNewNumber()
+                }
             }
             
             deleteAction.image = UIImage.checkmarIcon
@@ -317,6 +324,12 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             pinAction.backgroundColor = delegate?.getCurrentCategoryColor()
             return [pinAction]
         }
+    }
+    
+    
+    private func willComplete(at indexPath: IndexPath) {
+        print("would decrement all notes over \(indexPath.row)")
+        notes.filter({$0.number > notes[indexPath.row].number}).forEach({$0.number -= 1})
     }
 }
 
