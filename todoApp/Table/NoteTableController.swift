@@ -67,6 +67,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         super.init(nibName: nil, bundle: nil)
         
         dataSource.delegate = self
+        dataSource.tableView = tableView
         tableView.delegate = self
         
         setupTableView()
@@ -310,8 +311,9 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         // insert new note as a cell
         newNote.category = currentlySelectedCategory
         // FIXME: Set itsn umber to be the first one under pinned ones
-        newNote.number = Int16(currentlySelectedCategory.numberedNotes().count) // Will be added under pin
-    
+        newNote.number = 0 // Int16(currentlySelectedCategory.numberedNotes().count) // Will be added under pin
+        newNote.category!.incrementNumbers()
+        
         dataSource.add(newNote)
         playAcceptedSound()
         

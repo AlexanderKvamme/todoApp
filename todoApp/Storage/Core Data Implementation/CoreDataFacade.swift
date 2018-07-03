@@ -182,10 +182,15 @@ final class DatabaseFacade {
             } else {
                 fr.predicate = NSPredicate(format: "category == nil")
             }
+            
+            let sd = NSSortDescriptor(key: "number", ascending: true)
+            fr.sortDescriptors = [sd]
             result = try context.fetch(fr)
         } catch let error {
             log.warning(error)
         }
+        
+        print("BAM SORTED NOTES: ", result)
         return result
     }
     
@@ -225,6 +230,10 @@ final class DatabaseFacade {
             let isPinnedPredicate = NSPredicate(format: "isPinned == \(pinned)")
             let categoryPredicate = NSPredicate(format: "category = %@", category)
             fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [isPinnedPredicate, categoryPredicate])
+            
+            let sortDescriptor = NSSortDescriptor(key: "number", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+            
             result = try context.fetch(fetchRequest)
         } catch let error as NSError {
             print("error fetching pinned/unpinned notes: \(error.localizedDescription)")

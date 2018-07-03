@@ -21,6 +21,7 @@ class NoteDataSource: NSObject {
     let minimumCells = 10 // if you only have 2 cells, 8 of them will be empty and uneditable, to avoid having to reload cells which makes the table jump
     
     weak var delegate: NoteTableController?
+    weak var tableView: UITableView?
 
     // Computed
     
@@ -46,6 +47,14 @@ class NoteDataSource: NSObject {
     }
     
     // MARK: - Methods
+    
+    private func updateVisibleCells(of tableView: UITableView) {
+        guard let visibleCells = tableView.indexPathsForVisibleRows else { return }
+        
+        tableView.beginUpdates()
+        tableView.reloadRows(at: visibleCells, with: .none)
+        tableView.endUpdates()
+    }
     
     func switchCategory(to category: Category?) {
         guard let category = category else { fatalError("must switch to a category") }
@@ -87,6 +96,7 @@ class NoteDataSource: NSObject {
         }
         DatabaseFacade.saveContext()
         delegate?.updatePinColors()
+        updateVisibleCells(of: tableView!)
     }
     
     func getLastNote() -> Note? {
@@ -117,10 +127,10 @@ class NoteDataSource: NSObject {
         let noteToUnpin = notes[index]
         notes.remove(at: index)
         noteToUnpin.setPinned(false)
-        notes.append(noteToUnpin)
+        notes.insert(noteToUnpin, at: 0)
         
         let fromIndex = IndexPath(row: index, section: 0)
-        let toIndex = IndexPath(row: notes.count-1, section: 0)
+        let toIndex = IndexPath(row: getFirstIndexUnderPinnedRows(), section: 0) //  <----------
         
         if let table = delegate?.tableView {
             table.beginUpdates()

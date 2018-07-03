@@ -16,9 +16,23 @@ extension Category {
     func numberedNotes() -> [Note] {
         guard let notes = getAllNotes() else { return [] }
         
-        return []
-//        return notes.filter($0.isNumbered)
+        let numberedNotes = notes.filter({$0.isNumbered()})
         
+        print("numbered notes in \(self.name) is \(numberedNotes.compactMap({$0.getText()}))")
+        return numberedNotes
+    }
+    
+    func incrementNumbers() {
+        if let notes = getAllNotes() {
+            notes.forEach({ $0.number.increment() })
+        }
     }
 }
 
+// MARK: - Int16 extensions
+
+extension Int16 {
+    mutating func increment() {
+        self = self + 1
+    }
+}

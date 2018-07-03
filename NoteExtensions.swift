@@ -14,11 +14,7 @@ extension Note {
     // MARK: Booleans
     
     func isNumbered() -> Bool {
-        guard let category = self.category else {
-            assertionFailure()
-            return false
-        }
-        return category.isNumbered
+        return self.number != -1
     }
     
     // MARK: Text methods
@@ -35,6 +31,25 @@ extension Note {
     
     func setPinned(_ bool: Bool) {
         isPinned = bool
+        if isPinned {
+            decrementNoteNumbersOver(self.number)
+            self.number = -1
+        } else {
+            number = 0
+            incrementNoteNumbers()
+        }
+    }
+    
+    private func incrementNoteNumbers() {
+        if let notes = category!.getAllNotes() {
+            for note in notes {
+                note.number += 1
+            }
+        }
+    }
+
+    private func decrementNoteNumbersOver(_ n: Int16) {
+        DatabaseFacade.getNotes(category!, pinned: false).filter({$0.number>n}).forEach({$0.number -= 1})
     }
 
     // MARK: AwakeFromInsert
