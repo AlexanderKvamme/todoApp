@@ -311,8 +311,12 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         // insert new note as a cell
         newNote.category = currentlySelectedCategory
         // FIXME: Set itsn umber to be the first one under pinned ones
-        newNote.number = 0 // Int16(currentlySelectedCategory.numberedNotes().count) // Will be added under pin
-        newNote.category!.incrementNumbers()
+        if currentlySelectedCategory.isNumbered {
+            newNote.number = 0
+            newNote.category!.incrementUnpinnedNumbers()
+        } else {
+            newNote.number = -1
+        }
         
         dataSource.add(newNote)
         playAcceptedSound()

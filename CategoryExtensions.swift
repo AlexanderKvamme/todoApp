@@ -17,15 +17,19 @@ extension Category {
         guard let notes = getAllNotes() else { return [] }
         
         let numberedNotes = notes.filter({$0.isNumbered()})
-        
-        print("numbered notes in \(self.name) is \(numberedNotes.compactMap({$0.getText()}))")
         return numberedNotes
     }
     
-    func incrementNumbers() {
-        if let notes = getAllNotes() {
-            notes.forEach({ $0.number.increment() })
-        }
+    func getPinnedNotes() -> [Note] {
+        return DatabaseFacade.getNotes(self, pinned: true)
+    }
+    
+    func getUnpinnedNotes() -> [Note] {
+        return DatabaseFacade.getNotes(self, pinned: false)
+    }
+    
+    func incrementUnpinnedNumbers() {
+        getUnpinnedNotes().forEach({ $0.number.increment() })
     }
 }
 

@@ -107,12 +107,19 @@ extension SettingsController {
     @objc fileprivate func switchToggled(_ theSwitch: UISwitch) {
         currentCategory.isNumbered = theSwitch.isOn
         
-        guard let notes = currentCategory.getAllNotes() else { return }
+        let unPinnedNotes = currentCategory.getUnpinnedNotes()
         
-        for (i,note) in notes.enumerated() {
-            note.number = note.isNumbered() ? Int16(i) : note.number
+        if theSwitch.isOn {
+            print("bam gonna add numbers to these: ", unPinnedNotes)
+            for (i,note) in unPinnedNotes.enumerated() {
+                print("adding number \(i+1) to \(note)")
+                note.number = Int16(i+1)
+            }
+        } else {
+            for note in unPinnedNotes {
+                note.removeNumber()
+            }
         }
-        
         DatabaseFacade.saveContext()
     }
 }

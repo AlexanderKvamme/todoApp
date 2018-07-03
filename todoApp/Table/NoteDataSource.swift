@@ -127,10 +127,11 @@ class NoteDataSource: NSObject {
         let noteToUnpin = notes[index]
         notes.remove(at: index)
         noteToUnpin.setPinned(false)
-        notes.insert(noteToUnpin, at: 0)
         
         let fromIndex = IndexPath(row: index, section: 0)
-        let toIndex = IndexPath(row: getFirstIndexUnderPinnedRows(), section: 0) //  <----------
+        let toIndex = IndexPath(row: getFirstIndexUnderPinnedRows(), section: 0)
+        
+        notes.insert(noteToUnpin, at: getFirstIndexUnderPinnedRows())
         
         if let table = delegate?.tableView {
             table.beginUpdates()
@@ -149,7 +150,12 @@ class NoteDataSource: NSObject {
         
         var currentIndex = 0
         
+        print("bam calculating firstIndexunder")
+        
+        print("bam allnotes", notes)
+        
         while currentIndex < notes.count && notes[currentIndex].isPinned {
+            print("checking note: ", notes[currentIndex])
             currentIndex += 1
         }
         return currentIndex

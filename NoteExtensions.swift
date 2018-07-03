@@ -36,16 +36,12 @@ extension Note {
             self.number = -1
         } else {
             number = 0
-            incrementNoteNumbers()
+            category?.incrementUnpinnedNumbers()
         }
     }
     
-    private func incrementNoteNumbers() {
-        if let notes = category!.getAllNotes() {
-            for note in notes {
-                note.number += 1
-            }
-        }
+    func removeNumber() {
+        number = -1
     }
 
     private func decrementNoteNumbersOver(_ n: Int16) {
@@ -59,5 +55,4 @@ extension Note {
         self.category = DatabaseFacade.defaultCategory
     }
 }
-
 
