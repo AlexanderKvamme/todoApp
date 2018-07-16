@@ -69,7 +69,9 @@ final class CategoryEditorController: UIViewController {
     private func addGradientBackground() {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
-        gradient.colors = [UIColor.red.cgColor, UIColor.green.cgColor]
+        print("hexColor: ", currentCategory.hexColor!)
+        let categoryColor = UIColor(hexString: currentCategory.hexColor!)
+        gradient.colors = [categoryColor.cgColor, categoryColor.darker(by: 20).cgColor]
         view.layer.insertSublayer(gradient, at: 0)
     }
     

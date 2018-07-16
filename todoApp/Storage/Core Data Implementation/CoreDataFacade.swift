@@ -190,7 +190,6 @@ final class DatabaseFacade {
             log.warning(error)
         }
         
-        print("BAM SORTED NOTES: ", result)
         return result
     }
     
