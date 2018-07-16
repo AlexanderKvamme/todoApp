@@ -68,7 +68,6 @@ final class NoteCellView: UIView {
         currentNote = note
         guard let note = note else {
             addSubviewsWithoutNumber()
-            print("note was nil - removing numberlabel")
             return
         }
         

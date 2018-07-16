@@ -52,7 +52,7 @@ extension Note {
 
     public override func awakeFromInsert() {
         self.dateCreated = Date()
-        self.category = DatabaseFacade.defaultCategory
+        //self.category = DatabaseFacade.defaultCategory
     }
 }
 

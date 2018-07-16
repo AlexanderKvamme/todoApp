@@ -310,6 +310,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         
         // insert new note as a cell
         newNote.category = currentlySelectedCategory
+        log.warning("new note got category: \(currentlySelectedCategory)")
         // FIXME: Set itsn umber to be the first one under pinned ones
         if currentlySelectedCategory.isNumbered {
             newNote.number = 0
@@ -317,6 +318,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         } else {
             newNote.number = -1
         }
+        
+        DatabaseFacade.saveContext()
         
         dataSource.add(newNote)
         playAcceptedSound()

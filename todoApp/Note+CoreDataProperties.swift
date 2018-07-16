@@ -20,6 +20,10 @@ extension Note {
     @NSManaged public var dateCreated: NSDate?
     @NSManaged public var isPinned: Bool
     @NSManaged public var number: Int16?
-    @NSManaged public var category: Category?
+    @NSManaged public var category: Category? {
+        didSet {
+            print("did set category of note '\(content)' - \(self.category)")
+        }
+    }
 
 }
