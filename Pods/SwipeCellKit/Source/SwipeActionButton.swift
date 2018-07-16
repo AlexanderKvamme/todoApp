@@ -82,7 +82,7 @@ class SwipeActionButton: UIButton {
         
         return title.boundingRect(with: size,
                                   options: [.usesLineFragmentOrigin],
-                                  attributes: [NSAttributedStringKey.font: font],
+                                  attributes: [NSAttributedString.Key.font: font],
                                   context: nil).integral
     }
     

@@ -8,22 +8,27 @@ DEPENDENCIES:
   - DGElasticPullToRefresh (from `https://github.com/AlexanderKvamme/DGElasticPullToRefresh.git`)
   - SnapKit
   - SwiftyBeaver
-  - SwipeCellKit
+  - SwipeCellKit (from `https://github.com/SwipeCellKit/SwipeCellKit.git`, branch `swift_4.2`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - SnapKit
     - SwiftyBeaver
-    - SwipeCellKit
 
 EXTERNAL SOURCES:
   DGElasticPullToRefresh:
     :git: https://github.com/AlexanderKvamme/DGElasticPullToRefresh.git
+  SwipeCellKit:
+    :branch: swift_4.2
+    :git: https://github.com/SwipeCellKit/SwipeCellKit.git
 
 CHECKOUT OPTIONS:
   DGElasticPullToRefresh:
     :commit: c5be88ea61495425667aa12c9943431abd10e331
     :git: https://github.com/AlexanderKvamme/DGElasticPullToRefresh.git
+  SwipeCellKit:
+    :commit: fd5d0667556d6e41d35096a6adb900fc8172a023
+    :git: https://github.com/SwipeCellKit/SwipeCellKit.git
 
 SPEC CHECKSUMS:
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
@@ -31,6 +36,6 @@ SPEC CHECKSUMS:
   SwiftyBeaver: e45759613e50b522b0e6f53b1f0f14389b45ca34
   SwipeCellKit: cee9906e6d3a36e22ad1a852fba7f8fa0839d113
 
-PODFILE CHECKSUM: 7948896005bff9ffb82bf0d043d5f119802dbf91
+PODFILE CHECKSUM: 5273d1c6198b679689ebfc86967a9e5e982435e6
 
 COCOAPODS: 1.5.3
