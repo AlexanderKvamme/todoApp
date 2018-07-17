@@ -74,7 +74,7 @@ final class NoteCellView: UIView {
         if note.isNumbered() {
             addSubviewsWithNumber()
             numberLabel.text = String(note.number)
-            textLabel.textAlignment = .left
+            textLabel.textAlignment = .center
         } else {
             textLabel.textAlignment = .center
             addSubviewsWithoutNumber()
@@ -108,7 +108,7 @@ final class NoteCellView: UIView {
         addSubview(textLabel)
         addSubview(numberLabel)
         addSubview(cellMoveIcon)
-        
+
         textLabel.sizeToFit()
         
         numberLabel.snp.makeConstraints { (make) in
@@ -128,7 +128,7 @@ final class NoteCellView: UIView {
         
         textLabel.snp.makeConstraints { (make) in
             make.left.equalTo(numberLabel.snp.right).offset(8)
-            make.right.equalTo(cellMoveIcon.snp.left).offset(8)
+            make.right.equalTo(cellMoveIcon.snp.left).offset(-8)
             make.top.equalTo(snp.top)
             make.bottom.equalTo(snp.bottom)
         }
