@@ -107,8 +107,10 @@ extension SettingsController {
     @objc fileprivate func switchToggled(_ theSwitch: UISwitch) {
         currentCategory.isNumbered = theSwitch.isOn
         
-        let unPinnedNotes = currentCategory.getUnpinnedNotes()
-        
+        /*
+         let unPinnedNotes = currentCategory.getUnpinnedNotes()
+         
+         // New system doesnt need this, as all notes now have a number which represents position
         if theSwitch.isOn {
             print("bam gonna add numbers to these: ", unPinnedNotes)
             for (i,note) in unPinnedNotes.enumerated() {
@@ -120,6 +122,7 @@ extension SettingsController {
                 note.removeNumber()
             }
         }
+ */
         DatabaseFacade.saveContext()
     }
 }

@@ -62,12 +62,17 @@ class NoteDataSource: NSObject {
         self.notes = noteStorage.getNotes(category, pinned: true) + noteStorage.getNotes(category, pinned: false)
         delegate?.updatePinColors()
         
-        print("\(notes.count) notes:" , notes.compactMap({$0.content!}))
+        print("\(notes.count) notes:" , notes.compactMap({($0.content!, $0.number)}))
     }
     
     func add(_ note: Note) {
-        let firstIndexUnderPinned = getFirstIndexUnderPinnedRows()
-        notes.insert(note, at: firstIndexUnderPinned)
+        // Add as first
+        //let firstIndexUnderPinned = getFirstIndexUnderPinnedRows()
+        //notes.insert(note, at: firstIndexUnderPinned)
+        
+        // add to the bottom
+        let lastIndex = getLastIndex()
+        notes.insert(note, at: lastIndex)
         delegate?.updatePinColors()
     }
     
@@ -146,7 +151,6 @@ class NoteDataSource: NSObject {
     }
     
     func swap(_ fromRow: Int, and toRow: Int) {
-        print("would swap: \(fromRow) and \(toRow)")
         guard toRow < notes.count else { print("too far"); return }
         guard fromRow < notes.count else { print("too far"); return }
         
@@ -162,22 +166,22 @@ class NoteDataSource: NSObject {
         notes[toRow] = notes[fromRow]
         notes[fromRow] = tmpNote
         
+        DatabaseFacade.saveContext()
     }
     
     func getFirstIndexUnderPinnedRows() -> Int {
         guard notes.count > 0 else { return 0 }
         
         var currentIndex = 0
-        
-        print("bam calculating firstIndexunder")
-        
-        print("bam allnotes", notes)
-        
         while currentIndex < notes.count && notes[currentIndex].isPinned {
             print("checking note: ", notes[currentIndex])
             currentIndex += 1
         }
         return currentIndex
+    }
+    
+    func getLastIndex() -> Int {
+        return notes.count
     }
     
     func stopTrackingPull() {
@@ -343,6 +347,7 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             pinAction.backgroundColor = delegate?.getCurrentCategoryColor()
             return [pinAction]
         }
+        DatabaseFacade.saveContext()
     }
     
     

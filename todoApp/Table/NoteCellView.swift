@@ -71,7 +71,7 @@ final class NoteCellView: UIView {
             return
         }
         
-        if note.isNumbered() {
+        if note.category!.isNumbered {
             addSubviewsWithNumber()
             numberLabel.text = String(note.number)
             textLabel.textAlignment = .center

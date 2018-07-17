@@ -31,6 +31,16 @@ extension Category {
     func incrementUnpinnedNumbers() {
         getUnpinnedNotes().forEach({ $0.number.increment() })
     }
+    
+    func getHighestNumber() -> Int16 {
+        guard let numbers = getAllNotes()?.compactMap({$0.number}) else { return 0 }
+        
+        if let maxNumber = numbers.max() {
+            return maxNumber == -1 ? 0 : maxNumber
+        }
+        
+        return 0
+    }
 }
 
 // MARK: - Int16 extensions

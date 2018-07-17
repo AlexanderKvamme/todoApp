@@ -60,6 +60,7 @@ class CoreDataStorage: NoteStorage {
     func delete(note: Note) {
         CoreDataStorage.deleteRecoverableNote()
         CoreDataStorage.recoverableNote = note
+        DatabaseFacade.delete(note)
         DatabaseFacade.saveContext()
     }
     

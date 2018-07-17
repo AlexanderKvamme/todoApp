@@ -27,7 +27,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     private var audioPlayer: AVAudioPlayer?
     private let noteStorage: NoteStorage
     private var dataSource: NoteDataSource
-    private let categoryOfController: Category
     private var currentlySelectedCategory: Category {
         didSet {
             // FIMXE: refactor
@@ -61,7 +60,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     init(with storage: NoteStorage) {
         self.noteStorage = storage
         self.dataSource = NoteDataSource(with: storage)
-        self.categoryOfController = Categories.firstCategory
         self.currentlySelectedCategory = Categories.firstCategory
         
         super.init(nibName: nil, bundle: nil)
@@ -313,12 +311,10 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         newNote.category = currentlySelectedCategory
         log.warning("new note got category: \(currentlySelectedCategory)")
         // FIXME: Set itsn umber to be the first one under pinned ones
-        if currentlySelectedCategory.isNumbered {
-            newNote.number = 0
-            newNote.category!.incrementUnpinnedNumbers()
-        } else {
-            newNote.number = -1
-        }
+        //newNote.number = 0
+        newNote.number = currentlySelectedCategory.getHighestNumber() + 1
+        print("making this notes new number: ", newNote.number)
+        //newNote.category!.incrementUnpinnedNumbers()
         
         DatabaseFacade.saveContext()
         
