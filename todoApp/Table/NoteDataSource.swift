@@ -145,6 +145,25 @@ class NoteDataSource: NSObject {
         return IndexPath(row: notes.index(of: note)!, section: 0)
     }
     
+    func swap(_ fromRow: Int, and toRow: Int) {
+        print("would swap: \(fromRow) and \(toRow)")
+        guard toRow < notes.count else { print("too far"); return }
+        guard fromRow < notes.count else { print("too far"); return }
+        
+        // Swap numbers in core data
+        let tmpNumber = notes[toRow].number
+        notes[toRow].number = notes[fromRow].number
+        notes[fromRow].number = tmpNumber
+        
+        // TODO: update cell with new number
+        
+        // swap data source
+        let tmpNote = notes[toRow]
+        notes[toRow] = notes[fromRow]
+        notes[fromRow] = tmpNote
+        
+    }
+    
     func getFirstIndexUnderPinnedRows() -> Int {
         guard notes.count > 0 else { return 0 }
         
