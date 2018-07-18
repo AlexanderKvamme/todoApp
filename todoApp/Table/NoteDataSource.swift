@@ -166,6 +166,10 @@ class NoteDataSource: NSObject {
         notes[toRow] = notes[fromRow]
         notes[fromRow] = tmpNote
         
+        print("notes are now: ", notes.compactMap({($0.content, $0.number)}))
+        print("from: ", notes[fromRow].content)
+        print("to: ", notes[toRow].content)
+        
         DatabaseFacade.saveContext()
     }
     

@@ -122,7 +122,7 @@ extension SettingsController {
                 note.removeNumber()
             }
         }
- */
+         */
         DatabaseFacade.saveContext()
     }
 }

@@ -640,6 +640,16 @@ extension NoteTableController {
             dataSource.stopTrackingPull() // FIXME: Move to Table
             tableView.isScrollEnabled = false
             
+            guard indexPath!.row < dataSource.notes.count else {
+                log.warning("tryna move blank cell. Show animation making view red or something")
+                // Disable gesture to prevent moving cell
+                gestureRecognizer.isEnabled = false
+                gestureRecognizer.isEnabled = true
+                
+                tableView.isScrollEnabled = true
+                return
+            }
+            
             if indexPath != nil {
                 Path.initialIndexPath = indexPath
                 let cell = (tableView.cellForRow(at: indexPath!))!
@@ -675,6 +685,10 @@ extension NoteTableController {
                 center.y = locationInView.y
                 My.cellSnapshot!.center = center
                 if ((indexPath != nil) && (indexPath != Path.initialIndexPath)) {
+                    guard indexPath!.row < dataSource.notes.count else {
+                        return
+                    }
+                    
                     dataSource.swap(Path.initialIndexPath!.row, and: indexPath!.row)
                     tableView.moveRow(at: Path.initialIndexPath!, to: indexPath!)
                     Path.initialIndexPath = indexPath
