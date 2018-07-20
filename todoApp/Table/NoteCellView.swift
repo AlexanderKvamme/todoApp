@@ -68,9 +68,8 @@ final class NoteCellView: UIView {
     
     private func addTriangleView() {
         log.warning("would add triangle")
-        return
-        let triv = TriangleView(frame: CGRect(x: 0, y: 0, width: Constants.screen.width, height: 10))
-        triv.backgroundColor = .green
+        let triv = TriangleView(frame: CGRect(x: 0, y: 0, width: Constants.screen.width, height: NoteCellView.defaultHeight))
+        clipsToBounds = false
         addSubview(triv)
     }
     

@@ -20,22 +20,21 @@ class TriangleView : UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext() else { return }
         
-        let overdraw: CGFloat = 10
+        let line = CAShapeLayer()
+        let linePath = UIBezierPath()
+        let pointyness: CGFloat = 15
+        linePath.move(to: CGPoint(x: 0, y: rect.maxY-pointyness))
+        linePath.addLine(to: CGPoint(x: rect.maxX/2, y: rect.maxY))
+        linePath.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY-pointyness))
+        line.path = linePath.cgPath
+        line.strokeColor = UIColor.primary.darker(by:5).cgColor
+        line.fillColor = UIColor.clear.cgColor
+        line.lineWidth = 2
+        line.lineJoin = kCALineJoinRound
+        layer.addSublayer(line)
         
-        context.beginPath()
-        context.move(to: CGPoint(x: rect.minX, y: rect.minY))
-        context.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        context.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        context.addLine(to: CGPoint(x: (rect.maxX / 2.0), y: rect.maxY+overdraw))
-        context.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        
-        context.closePath()
-        context.setFillColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 0.60)
-        
-        // Gradient
-        
-        context.fillPath()
+        return
     }
 }
+
