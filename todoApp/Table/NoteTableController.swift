@@ -334,8 +334,8 @@ class NoteTableController: UIViewController, UITableViewDelegate {
                     cell.updateWith(note: dataSource.notes[indexOfCell.row])
                 }
             }
-            self.tableView.dg_stopLoading()
         }
+        self.tableView.dg_stopLoading()
     }
     
     func indicateError() {

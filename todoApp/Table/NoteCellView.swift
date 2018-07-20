@@ -56,6 +56,8 @@ final class NoteCellView: UIView {
         backgroundColor = .primary
         
         addSubviewsWithoutNumber() // FIXME: Improve this default
+        
+        addTriangleView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,6 +65,14 @@ final class NoteCellView: UIView {
     }
     
     // MAKR: Methods
+    
+    private func addTriangleView() {
+        log.warning("would add triangle")
+        return
+        let triv = TriangleView(frame: CGRect(x: 0, y: 0, width: Constants.screen.width, height: 10))
+        triv.backgroundColor = .green
+        addSubview(triv)
+    }
     
     private func updateSubviewsAndConstraints(for note: Note?) {
         currentNote = note

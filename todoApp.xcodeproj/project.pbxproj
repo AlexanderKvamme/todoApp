@@ -21,6 +21,7 @@
 		112D96152084B1510052BBC6 /* NoteTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96142084B1510052BBC6 /* NoteTableViewDelegate.swift */; };
 		112D96192086266C0052BBC6 /* Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D96182086266C0052BBC6 /* Vibration.swift */; };
 		112D961B20864BCD0052BBC6 /* BigCaretTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */; };
+		11330765210109E80071B581 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11330764210109E80071B581 /* TriangleView.swift */; };
 		113512A320BAFA8C007BB0C6 /* Mallet_Note1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1135129E20BAFA8A007BB0C6 /* Mallet_Note1.wav */; };
 		113512A420BAFA8C007BB0C6 /* Mallet_Note2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1135129F20BAFA8B007BB0C6 /* Mallet_Note2.wav */; };
 		113512A520BAFA8C007BB0C6 /* Mallet_Note3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 113512A020BAFA8B007BB0C6 /* Mallet_Note3.wav */; };
@@ -104,6 +105,7 @@
 		112D96142084B1510052BBC6 /* NoteTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewDelegate.swift; sourceTree = "<group>"; };
 		112D96182086266C0052BBC6 /* Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vibration.swift; sourceTree = "<group>"; };
 		112D961A20864BCD0052BBC6 /* BigCaretTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCaretTextField.swift; sourceTree = "<group>"; };
+		11330764210109E80071B581 /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		1135129E20BAFA8A007BB0C6 /* Mallet_Note1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note1.wav; sourceTree = "<group>"; };
 		1135129F20BAFA8B007BB0C6 /* Mallet_Note2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note2.wav; sourceTree = "<group>"; };
 		113512A020BAFA8B007BB0C6 /* Mallet_Note3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Mallet_Note3.wav; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 			children = (
 				11D3AC4920825DF8005CD575 /* NoteExtensions.swift */,
 				114061CA20EA3A38004F7619 /* CategoryExtensions.swift */,
+				11330764210109E80071B581 /* TriangleView.swift */,
 				DD370A0E203C1E3F00AEFEA1 /* todoApp */,
 				DD370A26203C1E3F00AEFEA1 /* todoAppTests */,
 				DD370A31203C1E3F00AEFEA1 /* todoAppUITests */,
@@ -717,6 +720,7 @@
 				11D3AC48207D42DD005CD575 /* CoreDataFacade.swift in Sources */,
 				111D9F732083A7FE006B1B66 /* UIFontExtensions.swift in Sources */,
 				111D01A92072391A009D3BA5 /* SlideAnimator.swift in Sources */,
+				11330765210109E80071B581 /* TriangleView.swift in Sources */,
 				111D01AB20724439009D3BA5 /* NoteMakerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
