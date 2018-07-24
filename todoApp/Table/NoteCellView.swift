@@ -57,6 +57,7 @@ final class NoteCellView: UIView {
         backgroundColor = .primary
         
         addSubviewsWithoutNumber() // FIXME: Improve this default
+        
         addTriangleView()
     }
     
@@ -77,15 +78,17 @@ final class NoteCellView: UIView {
             addSubviewsWithoutNumber()
             return
         }
-        
+        /*
         if note.category!.isNumbered {
             addSubviewsWithNumber()
             numberLabel.text = String(note.number)
-            textLabel.textAlignment = .center
         } else {
-            textLabel.textAlignment = .center
             addSubviewsWithoutNumber()
         }
+ */
+
+        textLabel.textAlignment = .center
+        addSubviewsWithoutNumber()
     }
     
     /// Sets up cell no not have a numberindicator to the left
@@ -147,12 +150,13 @@ final class NoteCellView: UIView {
             textLabel.text = ""
             backgroundColor = .primary
             updateSubviewsAndConstraints(for: nil)
+            updateBackground(for: nil, animated: true)
             return
         }
         
         textLabel.text = note.getText()
         updateSubviewsAndConstraints(for: note)
-        updateBackgroundColor(for: note, animated: true)
+        updateBackground(for: note, animated: true)
     }
     
     func animateToNewNumber() {
@@ -163,7 +167,13 @@ final class NoteCellView: UIView {
         numberLabel.text = String(note.number)
     }
     
-    private func updateBackgroundColor(for note: Note, animated: Bool) {
+    private func updateBackground(for note: Note?, animated: Bool) {
+        log.info("updateBackground")
+        
+        guard let note = note else {
+            triangleView.isHidden = true
+            return
+        }
 
         switch animated {
         case false:
@@ -189,6 +199,14 @@ final class NoteCellView: UIView {
                     self.backgroundColor = .primary
                 }
             }
+        }
+        
+        // remove triangleview if note is not sequential
+        
+        if note.category!.isNumbered {
+            triangleView.isHidden = false
+        } else {
+            triangleView.isHidden = true
         }
     }
 }

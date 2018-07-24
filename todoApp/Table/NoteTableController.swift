@@ -201,6 +201,7 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         if visibleCount > noteCount {
             // Remove / hide some rows
             for (i, cell) in visibleRows.enumerated() {
+                print("updating \(i)")
                 cell.updateWith(note: (i < dataSource.notes.count) ? dataSource.notes[i] : nil)
             }
         }

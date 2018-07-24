@@ -38,7 +38,7 @@ final class CategoryEditorController: UIViewController {
         self.nameController = SettingsController(withHeader: "NAME",
                                                  category: category,
                                                  settingType: .name)
-        self.isNumberedController = SettingsController(withHeader: "NUMBERED",
+        self.isNumberedController = SettingsController(withHeader: "SEQUENTIAL",
                                                        category: category,
                                                        settingType: .isNumbered)
         super.init(nibName: nil, bundle: nil)
