@@ -20,7 +20,6 @@ class TriangleView : UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        
         let line = CAShapeLayer()
         let linePath = UIBezierPath()
         let pointyness: CGFloat = 15

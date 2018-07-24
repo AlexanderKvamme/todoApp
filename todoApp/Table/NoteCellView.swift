@@ -19,6 +19,7 @@ final class NoteCellView: UIView {
     static let defaultWidth: CGFloat = Constants.screen.width
     
     private var currentNote: Note?
+    private var triangleView = TriangleView(frame: CGRect(x: 0, y: 0, width: Constants.screen.width, height: NoteCellView.defaultHeight))
     
     // Computed properties
     
@@ -56,7 +57,6 @@ final class NoteCellView: UIView {
         backgroundColor = .primary
         
         addSubviewsWithoutNumber() // FIXME: Improve this default
-        
         addTriangleView()
     }
     
@@ -67,10 +67,8 @@ final class NoteCellView: UIView {
     // MAKR: Methods
     
     private func addTriangleView() {
-        log.warning("would add triangle")
-        let triv = TriangleView(frame: CGRect(x: 0, y: 0, width: Constants.screen.width, height: NoteCellView.defaultHeight))
         clipsToBounds = false
-        addSubview(triv)
+        addSubview(triangleView)
     }
     
     private func updateSubviewsAndConstraints(for note: Note?) {
@@ -170,11 +168,14 @@ final class NoteCellView: UIView {
         switch animated {
         case false:
             if note.isPinned {
+                triangleView.isHidden = true
+                
                 if let hex = note.category?.hexColor {
                     let newCol = UIColor.init(hexString: hex).darker(by: 10)
                     backgroundColor = newCol
                 }
             } else {
+                triangleView.isHidden = false
                 backgroundColor = .primary
             }
         case true:
