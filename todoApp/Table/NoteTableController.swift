@@ -22,7 +22,7 @@ enum Globals {
 }
 
 /// Contains a tableview with a pull to refresh
-class NoteTableController: UIViewController, UITableViewDelegate {
+class NoteTableController: UIViewController {
     
     private var audioPlayer: AVAudioPlayer?
     private let noteStorage: NoteStorage
@@ -66,7 +66,6 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         
         dataSource.delegate = self
         dataSource.tableView = tableView
-        tableView.delegate = self
         
         setupTableView()
     }
@@ -280,8 +279,9 @@ class NoteTableController: UIViewController, UITableViewDelegate {
         tableView.dataSource = dataSource
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         tableView.backgroundColor = .clear
+        tableView.allowsSelection = true
+        tableView.delegate = self
     }
     
     /// Presents a notemaker over the first cell and lets user make a note. if user saves, the note is injected into the table
@@ -395,6 +395,29 @@ class NoteTableController: UIViewController, UITableViewDelegate {
     
     func handlePullToRefreshCompletion() {
         //
+    }
+}
+
+extension NoteTableController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.row < currentlySelectedCategory.notes!.count else {
+            log.warning("tapped empty note")
+            // FIXME: Let user edit note directly if tapping first avaiable note
+            return
+        }
+        
+        presentDetailedNoteController(for: dataSource.notes[indexPath.row])
+    }
+    
+    func presentDetailedNoteController(for note: Note) {
+        let detailedController = NotePreviewController(with: note, on: view)
+        detailedController.modalPresentationStyle = .overCurrentContext // Funker litt
+        
+        DispatchQueue.main.async {
+            self.present(detailedController, animated: true) {
+                print("done presenting")
+            }
+        }
     }
 }
 
