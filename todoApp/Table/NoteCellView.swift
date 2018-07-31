@@ -168,8 +168,6 @@ final class NoteCellView: UIView {
     }
     
     private func updateBackground(for note: Note?, animated: Bool) {
-        log.info("updateBackground")
-        
         guard let note = note else {
             triangleView.isHidden = true
             return
@@ -177,36 +175,29 @@ final class NoteCellView: UIView {
 
         switch animated {
         case false:
-            if note.isPinned {
-                triangleView.isHidden = true
-                
-                if let hex = note.category?.hexColor {
-                    let newCol = UIColor.init(hexString: hex).darker(by: 10)
-                    backgroundColor = newCol
-                }
-            } else {
-                triangleView.isHidden = false
-                backgroundColor = .primary
-            }
+            changeBackgroundColor(note: note)
         case true:
             UIView.animate(withDuration: Constants.animation.categorySwitchLength) {
-                if note.isPinned {
-                    if let hex = note.category?.hexColor {
-                        let newCol = UIColor.init(hexString: hex).darker(by: 10)
-                        self.backgroundColor = newCol
-                    }
-                } else {
-                    self.backgroundColor = .primary
-                }
+                self.changeBackgroundColor(note: note)
             }
         }
-        
-        // remove triangleview if note is not sequential
-        
-        if note.category!.isNumbered {
-            triangleView.isHidden = false
-        } else {
+    }
+    
+    private func changeBackgroundColor(note: Note) {
+        if note.isPinned {
             triangleView.isHidden = true
+            
+            if let hex = note.category?.hexColor {
+                let newCol = UIColor.init(hexString: hex).darker(by: 10)
+                backgroundColor = newCol
+            }
+        } else {
+            if note.category!.isNumbered {
+                triangleView.isHidden = false
+            } else {
+                triangleView.isHidden = true
+            }
+            backgroundColor = .primary
         }
     }
 }

@@ -20,7 +20,7 @@ extension Note {
     // MARK: Text methods
     
     func getText() -> String {
-        return content ?? "TEXT MISSING"
+        if let content = content { return content } else { return "TEXT MISSING" }
     }
     
     func setText(_ string: String) {
