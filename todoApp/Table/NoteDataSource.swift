@@ -318,6 +318,8 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             return nil
         }
         
+        defer { DatabaseFacade.saveContext() }
+        
         stopTrackingPull()
         
         switch orientation {
@@ -351,7 +353,6 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             pinAction.backgroundColor = delegate?.getCurrentCategoryColor()
             return [pinAction]
         }
-        DatabaseFacade.saveContext()
     }
     
     
