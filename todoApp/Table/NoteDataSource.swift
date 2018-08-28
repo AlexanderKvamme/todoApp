@@ -318,7 +318,9 @@ extension NoteDataSource: SwipeTableViewCellDelegate {
             return nil
         }
         
-        defer { DatabaseFacade.saveContext() }
+        defer {
+            DatabaseFacade.saveContext()
+        }
         
         stopTrackingPull()
         

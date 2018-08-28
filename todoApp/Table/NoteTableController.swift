@@ -81,7 +81,6 @@ class NoteTableController: UIViewController {
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
-        //        setupNavbar()
         addIt()
         addPullToRefresh()
         noteMaker.delegate = self
@@ -340,9 +339,9 @@ class NoteTableController: UIViewController {
     }
     
     func indicateError() {
-        self.tableView.dg_stopLoading()
+        tableView.dg_stopLoading()
         VibrationController.vibrate()
-        self.playErrorSound()
+        playErrorSound()
     }
     
     // MARK: - Observer Methods
@@ -387,6 +386,16 @@ class NoteTableController: UIViewController {
     
     @objc func handleHardPullAndRelease() {
         isPulling = false
+        
+        if dataSource.isFull {
+            indicateError()
+
+            dataSource.stopTrackingPull()
+            dataSource.startTtrackingPull()
+            
+            return
+        }
+        
         let todoTextField = noteMaker.noteMakerView.textField
         todoTextField.delegate = self
         todoTextField.becomeFirstResponder()
