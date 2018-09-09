@@ -26,6 +26,7 @@ final class NoteCellView: UIView {
     let textLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.custom(style: .bold, ofSize: .medium)
+        lbl.textAlignment = .left
         lbl.textColor = .primaryContrast
         lbl.numberOfLines = 2
         return lbl
@@ -74,7 +75,7 @@ final class NoteCellView: UIView {
     
     private func updateSubviewsAndConstraints(for note: Note?) {
         currentNote = note
-        guard let note = note else {
+        guard let _ = note else {
             addSubviewsWithoutNumber()
             return
         }
@@ -87,7 +88,6 @@ final class NoteCellView: UIView {
         }
  */
 
-        textLabel.textAlignment = .center
         addSubviewsWithoutNumber()
     }
     
@@ -101,7 +101,7 @@ final class NoteCellView: UIView {
         textLabel.sizeToFit()
         
         textLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(snp.leftMargin)
+            make.left.equalTo(snp.leftMargin).offset(18)
             make.right.equalTo(snp.rightMargin)
             make.top.equalTo(snp.top)
             make.bottom.equalTo(snp.bottom)
