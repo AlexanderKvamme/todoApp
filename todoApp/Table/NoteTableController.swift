@@ -43,6 +43,7 @@ class NoteTableController: UIViewController {
     
     // Backgrounds to enable scrolling from missing cells
     fileprivate var bottomBackground = UIView()
+    fileprivate var overlayView = UIView()
     fileprivate var topBackground = UIView()
     fileprivate var transitioning = false
     fileprivate var beganScrollingAt: CGPoint!
@@ -66,6 +67,10 @@ class NoteTableController: UIViewController {
         
         dataSource.delegate = self
         dataSource.tableView = tableView
+        
+        overlayView.alpha = 0
+        overlayView.backgroundColor = .black
+        overlayView.isUserInteractionEnabled = false
         
         setupTableView()
     }
@@ -147,6 +152,7 @@ class NoteTableController: UIViewController {
         view.addSubview(bottomBackground)
         view.addSubview(topBackground)
         view.addSubview(tableView)
+        view.addSubview(overlayView)
         
         bottomBackground.isUserInteractionEnabled = false
         
@@ -169,6 +175,13 @@ class NoteTableController: UIViewController {
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.top.equalTo(view.snp.top)
+        }
+        
+        overlayView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -405,6 +418,12 @@ class NoteTableController: UIViewController {
     func handlePullToRefreshCompletion() {
         //
     }
+    
+    func animateBackground(visible: Bool) {
+        UIView.animate(withDuration: 0.5) {
+            self.overlayView.alpha = visible ? 1 : 0
+        }
+    }
 }
 
 extension NoteTableController: UITableViewDelegate {
@@ -416,11 +435,15 @@ extension NoteTableController: UITableViewDelegate {
         }
         
         presentDetailedNoteController(for: dataSource.notes[indexPath.row])
+        
     }
     
     func presentDetailedNoteController(for note: Note) {
         let detailedController = NotePreviewController(with: note, on: view)
         detailedController.modalPresentationStyle = .overCurrentContext // Funker litt
+        detailedController.owner = self
+        
+        animateBackground(visible: true)
         
         DispatchQueue.main.async {
             self.present(detailedController, animated: true) {

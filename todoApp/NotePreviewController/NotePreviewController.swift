@@ -18,6 +18,8 @@ final class NotePreviewController: UIViewController {
     private let backgroundView = UIView()
     private let notePreviewView = NotePreviewView()
     
+    weak var owner: NoteTableController?
+    
     // MARK: - Initializers
     
     init(with note: Note, on parentView: UIView) {
@@ -43,8 +45,7 @@ final class NotePreviewController: UIViewController {
         view.addSubview(backgroundView)
         view.addSubview(notePreviewView)
 
-        backgroundView.backgroundColor = .black
-        backgroundView.alpha = 0.6
+        backgroundView.backgroundColor = .clear
         
         backgroundView.snp.makeConstraints { (make) in
             make.left.equalTo(view.snp.left)
@@ -73,6 +74,8 @@ final class NotePreviewController: UIViewController {
         dismiss(animated: true) {
             log.info("finished dismissing")
         }
+        
+        owner?.animateBackground(visible: false)
     }
 }
 
