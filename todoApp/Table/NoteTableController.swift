@@ -212,7 +212,6 @@ class NoteTableController: UIViewController {
         if visibleCount > noteCount {
             // Remove / hide some rows
             for (i, cell) in visibleRows.enumerated() {
-                print("updating \(i)")
                 cell.updateWith(note: (i < dataSource.notes.count) ? dataSource.notes[i] : nil)
             }
         }
@@ -435,7 +434,6 @@ extension NoteTableController: UITableViewDelegate {
         }
         
         presentDetailedNoteController(for: dataSource.notes[indexPath.row])
-        
     }
     
     func presentDetailedNoteController(for note: Note) {
@@ -747,6 +745,8 @@ extension NoteTableController {
                     
                     dataSource.swap(Path.initialIndexPath!.row, and: indexPath!.row)
                     tableView.moveRow(at: Path.initialIndexPath!, to: indexPath!)
+                    updateNumbers(
+                    
                     Path.initialIndexPath = indexPath
                 }
             }
@@ -777,7 +777,6 @@ extension NoteTableController {
                 })
             }
         }
-
     }
 
     func snapshotOfCell(_ inputView: UIView) -> UIView {

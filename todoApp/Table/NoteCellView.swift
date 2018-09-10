@@ -38,6 +38,7 @@ final class NoteCellView: UIView {
         lbl.textAlignment = .center
         lbl.textColor = .primaryContrast
         lbl.numberOfLines = 1
+        lbl.alpha = 0.2
         return lbl
     }()
     
@@ -59,7 +60,7 @@ final class NoteCellView: UIView {
         
         addSubviewsWithoutNumber() // FIXME: Improve this default
         
-        addTriangleView()
+//        addTriangleView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,20 +76,17 @@ final class NoteCellView: UIView {
     
     private func updateSubviewsAndConstraints(for note: Note?) {
         currentNote = note
-        guard let _ = note else {
+        guard let note = note else {
             addSubviewsWithoutNumber()
             return
         }
-        /*
+
         if note.category!.isNumbered {
             addSubviewsWithNumber()
             numberLabel.text = String(note.number)
         } else {
             addSubviewsWithoutNumber()
         }
- */
-
-        addSubviewsWithoutNumber()
     }
     
     /// Sets up cell no not have a numberindicator to the left
@@ -124,8 +122,9 @@ final class NoteCellView: UIView {
         numberLabel.snp.makeConstraints { (make) in
             make.left.equalTo(snp.leftMargin)
             make.top.equalTo(snp.topMargin)
-            make.bottom.equalTo(snp.bottom)
+//            make.bottom.equalTo(snp.bottom)
             make.width.equalTo(40)
+            make.centerY.equalToSuperview()
         }
         
         cellMoveIcon.snp.makeConstraints { (make) in
@@ -139,8 +138,9 @@ final class NoteCellView: UIView {
         textLabel.snp.makeConstraints { (make) in
             make.left.equalTo(numberLabel.snp.right).offset(8)
             make.right.equalTo(cellMoveIcon.snp.left).offset(-8)
-            make.top.equalTo(snp.top)
-            make.bottom.equalTo(snp.bottom)
+            make.centerY.equalToSuperview()
+//            make.top.equalTo(snp.top).offset(8)
+//            make.bottom.equalTo(snp.bottom)
         }
     }
 
