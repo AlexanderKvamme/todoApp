@@ -17,19 +17,22 @@ final class NotePreviewController: UIViewController {
     private var currentNote: Note
     private let backgroundView = UIView()
     private let notePreviewView = NotePreviewView()
+    private let indexPathOfNote: IndexPath
     
     weak var owner: NoteTableController?
     
     // MARK: - Initializers
     
-    init(with note: Note, on parentView: UIView) {
+    init(with note: Note, on parentView: UIView, at indexPath: IndexPath) {
         self.currentNote = note
+        self.indexPathOfNote = indexPath
         
         super.init(nibName: nil, bundle: nil)
         
         setup(on: parentView)
         notePreviewView.update(with: note)
         addDismissTapRecognizer()
+        notePreviewView.owner = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,15 +69,16 @@ final class NotePreviewController: UIViewController {
     }
     
     private func addDismissTapRecognizer() {
-        let tapRec = UITapGestureRecognizer(target: self, action: #selector(dismissMe))
+        let tapRec = UITapGestureRecognizer(target: self, action: #selector(dismissPreviewer))
         backgroundView.addGestureRecognizer(tapRec)
     }
     
-    @objc private func dismissMe() {
+    @objc func dismissPreviewer() {
         dismiss(animated: true) {
             log.info("finished dismissing")
         }
         
+        owner?.tableView.reloadRows(at: [indexPathOfNote], with: .automatic)
         owner?.animateBackground(visible: false)
     }
 }

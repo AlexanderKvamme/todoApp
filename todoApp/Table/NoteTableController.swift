@@ -433,11 +433,11 @@ extension NoteTableController: UITableViewDelegate {
             return
         }
         
-        presentDetailedNoteController(for: dataSource.notes[indexPath.row])
+        presentDetailedNoteController(for: dataSource.notes[indexPath.row], at: indexPath)
     }
     
-    func presentDetailedNoteController(for note: Note) {
-        let detailedController = NotePreviewController(with: note, on: view)
+    func presentDetailedNoteController(for note: Note, at indexPath: IndexPath) {
+        let detailedController = NotePreviewController(with: note, on: view, at: indexPath)
         detailedController.modalPresentationStyle = .overCurrentContext // Funker litt
         detailedController.owner = self
         

@@ -16,7 +16,9 @@ final class NotePreviewView: UIView {
     // MARK: - Properties
     
     private let textView = UITextView() // to let user edit notes
+    private var currentNote: Note?
     
+    weak var owner: NotePreviewController?
     // MARK: - Initializers
     
     init() {
@@ -43,6 +45,7 @@ final class NotePreviewView: UIView {
     
     func update(with note: Note) {
         textView.text = note.content ?? "NO CONTENT"
+        currentNote = note
     }
     
     private func addSubviewsAndConstraints() {
@@ -56,8 +59,8 @@ final class NotePreviewView: UIView {
         }
     }
     
-    private func animateDismissal() {
-        print("would animate dismissal")
+    private func saveChanges() {
+        currentNote?.setText(textView.text)
     }
 }
 
@@ -67,11 +70,14 @@ extension NotePreviewView: UITextViewDelegate {
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
+            saveChanges()
             textView.resignFirstResponder()
-            animateDismissal()
+            DatabaseFacade.saveContext()
+            owner?.dismissPreviewer()
             return false
         }
         
         return true
     }
 }
+
