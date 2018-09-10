@@ -20,6 +20,10 @@ final class NoteCell: SwipeTableViewCell {
     
     let noteCellView = NoteCellView()
     
+    lazy var hasNumber: Bool = {
+       return noteCellView.isNumbered
+    }()
+    
     // MARK: Initializers
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

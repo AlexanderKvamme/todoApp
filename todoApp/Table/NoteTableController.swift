@@ -707,6 +707,15 @@ extension NoteTableController {
             if indexPath != nil {
                 Path.initialIndexPath = indexPath
                 let cell = (tableView.cellForRow(at: indexPath!))!
+
+                // hide cell number
+                if let cell = tableView.cellForRow(at: indexPath!) {
+                    let castedCell = (cell as! NoteCell)
+                    if castedCell.noteCellView.isNumbered {
+                        castedCell.noteCellView.numberLabel.alpha = 0
+                    }
+                }
+                
                 My.cellSnapshot  = snapshotOfCell(cell)
                 var center = cell.center
                 My.cellSnapshot!.center = center
@@ -745,7 +754,10 @@ extension NoteTableController {
                     
                     dataSource.swap(Path.initialIndexPath!.row, and: indexPath!.row)
                     tableView.moveRow(at: Path.initialIndexPath!, to: indexPath!)
-                    updateNumbers(
+                    
+                    let fromIP = Path.initialIndexPath!
+                    let toIP = indexPath!
+                    tableView.reloadRows(at: [fromIP, toIP], with: .automatic)
                     
                     Path.initialIndexPath = indexPath
                 }

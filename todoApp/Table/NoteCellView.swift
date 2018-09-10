@@ -21,6 +21,10 @@ final class NoteCellView: UIView {
     private var currentNote: Note?
     private var triangleView = TriangleView(frame: CGRect(x: 0, y: 0, width: Constants.screen.width, height: NoteCellView.defaultHeight))
     
+    lazy var isNumbered: Bool = {
+        return currentNote?.isNumbered() ?? false
+    }()
+    
     // Computed properties
     
     let textLabel: UILabel = {
