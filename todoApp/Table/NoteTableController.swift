@@ -775,6 +775,15 @@ extension NoteTableController {
                     cell.isHidden = false
                     cell.alpha = 0.0
                 }
+                
+                // show cell number
+                if let cell = tableView.cellForRow(at: indexPath!) {
+                    let castedCell = (cell as! NoteCell)
+                    if castedCell.noteCellView.isNumbered {
+                        castedCell.noteCellView.numberLabel.alpha = 0.2
+                    }
+                }
+                
                 UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     My.cellSnapshot!.center = cell.center
                     My.cellSnapshot!.transform = CGAffineTransform.identity
