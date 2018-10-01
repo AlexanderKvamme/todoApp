@@ -40,6 +40,17 @@ extension Note {
         }
     }
     
+    func isLast() -> Bool {
+        guard let cat = category else {
+            assertionFailure()
+            return false
+        }
+        
+        let isLast = cat.getAllNotes()?.last == self
+        print("note: \(content!) isLast: \(isLast)")
+        return isLast
+    }
+    
     func removeNumber() {
         number = -1
     }

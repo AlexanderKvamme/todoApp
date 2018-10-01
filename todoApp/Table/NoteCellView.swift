@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import SnapKit
 
+struct CellDesign {
+    static let shouldIncludeSeparator = true
+}
 
 final class NoteCellView: UIView {
 
@@ -24,6 +27,13 @@ final class NoteCellView: UIView {
     lazy var isNumbered: Bool = {
         return currentNote?.isNumbered() ?? false
     }()
+    
+    lazy var isLastcell: Bool = {
+        print("returning false")
+        return false
+    }()
+    
+    private lazy var separator = getTwoLineSeparator()
     
     // Computed properties
     
@@ -91,6 +101,8 @@ final class NoteCellView: UIView {
         } else {
             addSubviewsWithoutNumber()
         }
+        
+        addSeparator(for: note)
     }
     
     /// Sets up cell no not have a numberindicator to the left
@@ -147,6 +159,58 @@ final class NoteCellView: UIView {
 //            make.bottom.equalTo(snp.bottom)
         }
     }
+    
+    fileprivate func addSeparator(for note: Note?) {
+        guard let note = note else {
+            separator.removeFromSuperview()
+            return
+        }
+        
+        if CellDesign.shouldIncludeSeparator && !note.isLast() && !note.isPinned {
+            addSubview(separator)
+            
+            separator.snp.makeConstraints { (make) in
+                make.height.equalTo(2)
+                make.left.right.bottom.equalToSuperview()
+            }
+        } else {
+            separator.removeFromSuperview()
+        }
+    }
+    
+    fileprivate func getSeparator() -> UIView {
+        let separator = UIView()
+        separator.backgroundColor = .black
+        separator.alpha = 0.1
+        return separator
+    }
+    
+    fileprivate func getTwoLineSeparator() -> UIView {
+        let container = UIView()
+        
+        let top = UIView()
+        top.backgroundColor = .white
+        top.alpha = 0.02
+        
+        let bot = UIView()
+        bot.backgroundColor = .black
+        bot.alpha = 0.1
+        
+        container.addSubview(top)
+        container.addSubview(bot)
+        
+        top.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
+        bot.snp.makeConstraints { (make) in
+            make.bottom.left.right.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
+        return container
+    }
 
     func updateWith(note: Note?) {
         self.currentNote = note
@@ -155,6 +219,7 @@ final class NoteCellView: UIView {
             backgroundColor = .primary
             updateSubviewsAndConstraints(for: nil)
             updateBackground(for: nil, animated: true)
+            addSeparator(for: nil)
             return
         }
         
