@@ -223,6 +223,7 @@ final class NoteCellView: UIView {
             return
         }
         
+        numberLabel.alpha = note.isPinned ? 0 : 1
         textLabel.text = note.getText()
         updateSubviewsAndConstraints(for: note)
         updateBackground(for: note, animated: true)
