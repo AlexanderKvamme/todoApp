@@ -68,6 +68,7 @@
 		11D8669B20AB4FD8000B951F /* Space_Note3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11D8669620AB4FD7000B951F /* Space_Note3.wav */; };
 		11D8669C20AB4FD8000B951F /* Space_Note1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11D8669720AB4FD7000B951F /* Space_Note1.wav */; };
 		11E9CECE2595E8DEDE8345CB /* Pods_todoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7200701BDB3C3B44020CCC6D /* Pods_todoAppUITests.framework */; };
+		11FEA7C3216229C6006FC15B /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FEA7C2216229C6006FC15B /* Design.swift */; };
 		BFB77E954C9B51BF0B488293 /* Pods_todoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4675ED494EE69B3777E490CF /* Pods_todoApp.framework */; };
 		C681F7D1651B9663E961C82B /* Pods_todoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0BCCE69A11022E8214F07 /* Pods_todoAppTests.framework */; };
 		DD370A10203C1E3F00AEFEA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */; };
@@ -157,6 +158,7 @@
 		11D8669520AB4FD7000B951F /* Space_Note2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note2.wav; sourceTree = "<group>"; };
 		11D8669620AB4FD7000B951F /* Space_Note3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note3.wav; sourceTree = "<group>"; };
 		11D8669720AB4FD7000B951F /* Space_Note1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Space_Note1.wav; sourceTree = "<group>"; };
+		11FEA7C2216229C6006FC15B /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		276F321B032183564F7D5FD5 /* Pods-todoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		33497C3CABFFCEC248D9FC1B /* Pods-todoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppTests/Pods-todoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39D2B7DEFA1FA62550C6F0F3 /* Pods-todoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-todoAppUITests/Pods-todoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -407,6 +409,14 @@
 			name = "Category change";
 			sourceTree = "<group>";
 		};
+		11FEA7C42162348B006FC15B /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				11FEA7C2216229C6006FC15B /* Design.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
 		37B421347512FC49395801B9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +458,7 @@
 		DD370A0E203C1E3F00AEFEA1 /* todoApp */ = {
 			isa = PBXGroup;
 			children = (
+				11FEA7C42162348B006FC15B /* Design */,
 				DD370A0F203C1E3F00AEFEA1 /* AppDelegate.swift */,
 				111D01A62070F097009D3BA5 /* MyNavigationController.swift */,
 				112CCEAE209470A000071578 /* Components */,
@@ -768,6 +779,7 @@
 				11D3AC48207D42DD005CD575 /* CoreDataFacade.swift in Sources */,
 				111D9F732083A7FE006B1B66 /* UIFontExtensions.swift in Sources */,
 				111D01A92072391A009D3BA5 /* SlideAnimator.swift in Sources */,
+				11FEA7C3216229C6006FC15B /* Design.swift in Sources */,
 				11330765210109E80071B581 /* TriangleView.swift in Sources */,
 				111D01AB20724439009D3BA5 /* NoteMakerView.swift in Sources */,
 			);

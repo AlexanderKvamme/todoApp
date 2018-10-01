@@ -52,7 +52,7 @@ final class NoteCellView: UIView {
         lbl.textAlignment = .center
         lbl.textColor = .primaryContrast
         lbl.numberOfLines = 1
-        lbl.alpha = 0.2
+        lbl.alpha = Design.cell.alpha.number.unpinned
         return lbl
     }()
     
@@ -123,8 +123,6 @@ final class NoteCellView: UIView {
     }
 
     private func addSubviewsWithNumber() {
-        let iconsize: CGFloat = 20
-        
         textLabel.removeFromSuperview()
         numberLabel.removeFromSuperview()
         cellMoveIcon.removeFromSuperview()
@@ -138,7 +136,6 @@ final class NoteCellView: UIView {
         numberLabel.snp.makeConstraints { (make) in
             make.left.equalTo(snp.leftMargin)
             make.top.equalTo(snp.topMargin)
-//            make.bottom.equalTo(snp.bottom)
             make.width.equalTo(40)
             make.centerY.equalToSuperview()
         }
@@ -146,17 +143,14 @@ final class NoteCellView: UIView {
         cellMoveIcon.snp.makeConstraints { (make) in
             make.right.equalTo(snp.rightMargin).offset(-16)
             make.centerY.equalTo(snp.centerY)
-            
-            make.width.equalTo(iconsize)
-            make.height.equalTo(iconsize)
+            make.width.equalTo(Design.cell.size.moveIcon)
+            make.height.equalTo(Design.cell.size.moveIcon)
         }
         
         textLabel.snp.makeConstraints { (make) in
             make.left.equalTo(numberLabel.snp.right).offset(8)
             make.right.equalTo(cellMoveIcon.snp.left).offset(-8)
             make.centerY.equalToSuperview()
-//            make.top.equalTo(snp.top).offset(8)
-//            make.bottom.equalTo(snp.bottom)
         }
     }
     
@@ -190,11 +184,11 @@ final class NoteCellView: UIView {
         
         let top = UIView()
         top.backgroundColor = .white
-        top.alpha = 0.02
+        top.alpha = Design.cell.alpha.separator.top
         
         let bot = UIView()
         bot.backgroundColor = .black
-        bot.alpha = 0.1
+        bot.alpha = Design.cell.alpha.separator.bottom
         
         container.addSubview(top)
         container.addSubview(bot)
@@ -223,8 +217,8 @@ final class NoteCellView: UIView {
             return
         }
         
-        numberLabel.alpha = note.isPinned ? 0 : 1
-        cellMoveIcon.alpha = note.isPinned ? 0 : 1
+        numberLabel.alpha = note.isPinned ? Design.cell.alpha.number.pinned : Design.cell.alpha.number.unpinned
+        cellMoveIcon.alpha = note.isPinned ? Design.cell.alpha.moveCellIcon.pinned : Design.cell.alpha.moveCellIcon.unpinned
         textLabel.text = note.getText()
         updateSubviewsAndConstraints(for: note)
         updateBackground(for: note, animated: true)
