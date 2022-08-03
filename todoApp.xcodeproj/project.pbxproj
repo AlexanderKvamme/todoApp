@@ -682,7 +682,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-todoApp/Pods-todoApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-todoApp/Pods-todoApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DGElasticPullToRefresh/DGElasticPullToRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
@@ -697,7 +697,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-todoApp/Pods-todoApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-todoApp/Pods-todoApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BFEB3A5C44407B9BE59A0E39 /* [CP] Check Pods Manifest.lock */ = {

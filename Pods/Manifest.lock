@@ -11,7 +11,7 @@ DEPENDENCIES:
   - SwipeCellKit (from `https://github.com/SwipeCellKit/SwipeCellKit.git`, branch `swift_4.2`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - SnapKit
     - SwiftyBeaver
 
@@ -38,4 +38,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5273d1c6198b679689ebfc86967a9e5e982435e6
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.11.3
